@@ -529,7 +529,13 @@ python3 _build/verify.py && python3 _build/verify_wissen.py
 ```
 
 Ein Neulauf erzeugt bit-identisch denselben Stand – geprüft über
-`git status` nach einem `rm -rf layouts content webroot data`.
+`git status` nach einem `rm -rf content webroot data`.
+
+**`layouts/` gehört nicht dazu.** Dort liegen seit dem Auflösen von
+`_build/templates/` auch handgeschriebene Dateien – die Templates des
+Wissensbereichs –, die `build.sh` nicht erzeugt. `build.sh` prüft das beim
+Start und bricht mit einem Hinweis ab, statt eine kaputte Seite zu bauen;
+wiederherzustellen sind sie mit `git checkout -- layouts`.
 
 Die Reihenfolge ist: `gen_layouts.py` (Gerüst aus dem Referenz-Render),
 `gen_tpl.py` (Städte- und Themen-Template aus der PHP-Quelle),
