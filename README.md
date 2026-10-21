@@ -212,19 +212,60 @@ Bildbestand neu überträgt. Am Registry gemessen:
 
 Ein Durchgang, der nur Texte anfasst, überträgt deshalb **24 MB**.
 
+### Einmalig: das Package öffentlich stellen
+
+GHCR-Packages sind **auch bei öffentlichem Repository zunächst privat**.
+Ohne diesen Schritt braucht der Server ein Pull-Token:
+
+> github.com/orgs/datamate-rethink-it/packages → `ionas-com` →
+> Package settings → Danger Zone → *Change package visibility* → **Public**
+
+Steht „Public" dort ausgegraut mit *„Setting is disabled by organization
+administrators"*, dann liegt das an einer Richtlinie der Organisation, nicht
+an fehlenden Rechten – auch Admins bindet sie. Zu heben unter
+`github.com/organizations/datamate-rethink-it/settings/packages` →
+**Package creation** → Haken bei „Public". Danach ist der Schalter im
+Package-Dialog wählbar.
+
+Prüfen, ob es geklappt hat:
+
+```bash
+T=$(curl -s "https://ghcr.io/token?scope=repository%3Adatamate-rethink-it%2Fionas-com%3Apull&service=ghcr.io" \
+     | python3 -c 'import json,sys; print(json.load(sys.stdin)["token"])')
+curl -s -o /dev/null -w 'anonym: HTTP %{http_code}\n' -H "Authorization: Bearer $T" \
+  -H "Accept: application/vnd.oci.image.index.v1+json" \
+  https://ghcr.io/v2/datamate-rethink-it/ionas-com/manifests/latest
+```
+
+`200` heißt: der Server kann ohne Zugangsdaten ziehen.
+
 ### Einmalig auf dem Server
 
 ```bash
 mkdir -p /opt/ionas.com && cd /opt/ionas.com
-# deploy/docker-compose.yml hierher kopieren
-echo "IONAS_VERSION=2026-10-21" > .env
-docker compose up -d
+curl -fsSL -O https://raw.githubusercontent.com/datamate-rethink-it/ionas-com/main/deploy/docker-compose.yml
+echo "IONAS_VERSION=2026-10-21c" > .env
+docker compose pull && docker compose up -d
 curl -sI http://127.0.0.1:8081/ | head -1        # erwartet: 200
 
-# deploy/nginx-vhost.conf nach /etc/nginx/sites-available/ionas.com,
-# Zertifikatspfade anpassen, verlinken, prüfen, neu laden:
+curl -fsSL -o /etc/nginx/sites-available/ionas.com \
+  https://raw.githubusercontent.com/datamate-rethink-it/ionas-com/main/deploy/nginx-vhost.conf
+# Zertifikatspfade anpassen, dann:
+rm /etc/nginx/sites-enabled/ionas.com                  # alter vhost, falls vorhanden
+ln -sf /etc/nginx/sites-available/ionas.com /etc/nginx/sites-enabled/
 nginx -t && systemctl reload nginx
 ```
+
+Der bisherige vhost muss **weg**, nicht ergänzt werden: er enthält noch die
+PHP-Weitergabe, die `/wissen`-Regeln und die `/agb`-Rewrite. Alles davon
+steckt jetzt im Image, doppelte Regeln kämen sich in die Quere.
+
+**`ionas.com` braucht einen eigenen `server`-Block.** In
+`deploy/nginx-vhost.conf` sind es deshalb drei: Port 80 für beide Namen,
+dann je einer für `ionas.com` (nur `return 301`) und `www.ionas.com` (der
+`proxy_pass`). Stünden beide Namen auf einem Block, liefe der Apex einfach
+mit und die Weiterleitung käme nie zum Zug – nginx bevorzugt den exakt
+passenden Block, und genau den braucht es hier.
 
 Der Container läuft `read_only` mit `cap_drop: ALL`; zurückgegeben wird nur
 `NET_BIND_SERVICE`, weil die Caddy-Binärdatei diese Capability als
@@ -241,6 +282,7 @@ for u in / /pc-hilfe/münchen /agb /wissen/feed/ /wissen/suche/; do
   curl -sI "https://www.ionas.com$u" | head -1
 done
 curl -sI https://www.ionas.com/pc-hilfe/muenchen | grep -i location   # 301
+curl -sI https://ionas.com/ | grep -i location                      # 301 auf www
 ```
 
 Und `/wissen/suche/` einmal im Browser öffnen und einen Begriff eintippen –
