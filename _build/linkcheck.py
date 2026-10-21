@@ -45,6 +45,25 @@ BEKANNT_KAPUTT = {
 }
 
 
+
+def meta_bild_verweise(text):
+    """URLs aus <meta ... content="...">, soweit es Bildangaben sind.
+
+    og:image und twitter:image zeigen auf echte Dateien, tauchen aber in
+    keinem src/href auf. Ohne diese Funktion haelt der Scanner das Bild
+    fuer verwaist - und das og:image der Startseite zeigte jahrelang auf
+    eine Datei, die es nie gab, ohne dass es jemandem auffiel.
+    """
+    out = []
+    for tag in re.findall(r'<meta\b[^>]*>', text, re.I):
+        if not re.search(r'(?:property|name)\s*=\s*["\'][^"\']*image[^"\']*["\']', tag, re.I):
+            continue
+        m = re.search(r'content\s*=\s*["\']([^"\']+)["\']', tag, re.I)
+        if m:
+            out.append(m.group(1))
+    return out
+
+
 def vorhanden(pfad):
     f = os.path.join(PUB, pfad.lstrip('/'))
     return (os.path.isfile(f) or os.path.isfile(os.path.join(f, 'index.html'))
@@ -67,6 +86,7 @@ def main():
             roh.update(x.group(1) for x in m.finditer(text))
         for m in re.finditer(r'srcset\s*=\s*["\']([^"\']+)["\']', text):
             roh.update(p.strip().split(' ')[0] for p in m.group(1).split(','))
+        roh.update(meta_bild_verweise(text))
         for u in roh:
             u = u.strip()
             for h in HOSTS:

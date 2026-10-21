@@ -141,6 +141,34 @@ GOOGLE_FONT = ("<link href='//fonts.googleapis.com/css?family=Open+Sans+Condense
 EIGENE_FONT = '<link rel="stylesheet" href="/static/css/fonts.css" />'
 assert GOOGLE_FONT in site_head, 'Google-Fonts-Zeile nicht gefunden'
 site_head = site_head.replace(GOOGLE_FONT, EIGENE_FONT)
+# --- toter Code im Kopf ----------------------------------------------
+# Google+ ist seit April 2019 abgeschaltet, Alexa seit Mai 2022. Die
+# Zeilen stehen seitdem wirkungslos in jeder Seite.
+#
+# Nicht entfernt werden google-site-verification und msvalidate.01: daran
+# kann die Bestaetigung der Property in der Search Console bzw. bei Bing
+# haengen. Ein Entfernen wuerde erst Monate spaeter auffallen.
+TOT = [
+    '        <link href="https://plus.google.com/116393713732767018174" rel="author" />\n',
+    '        <link href="https://plus.google.com/+ionasOHGMainz/" rel="publisher" />\n',
+    '        <meta name="alexaVerifyID" content="Qsa4yU-EGFDYpT5A4pJZg40o_LA"/> <!-- Amazon Alexa -->\n',
+]
+for zeile in TOT:
+    assert zeile in site_head, 'tote Zeile nicht gefunden: %s' % zeile[:60]
+    site_head = site_head.replace(zeile, '')
+
+# --- og:image --------------------------------------------------------
+# Zeigte ueber http auf /images/ionas-logo-facebook.jpg - eine Datei, die
+# es nie gab (404 auch auf der alten Seite). Jede Freigabe bei Facebook,
+# LinkedIn oder WhatsApp blieb deshalb ohne Vorschaubild. Jetzt auf das
+# einzige eigene Bild, das Facebooks Mindestmass erfuellt: 1000x479.
+OG_ALT = ('<meta property="og:image" '
+          'content="http://www.ionas.com/images/ionas-logo-facebook.jpg" />')
+OG_NEU = ('<meta property="og:image" '
+          'content="https://www.ionas.com/static/presse/ionas_logo_freigestellt.png" />')
+assert OG_ALT in site_head, 'og:image-Zeile nicht gefunden'
+site_head = site_head.replace(OG_ALT, OG_NEU)
+
 write('layouts/_partials/kopf-ionas.html', site_head)
 
 # Fuss: footer.php + Skriptblock. Der Startseiten-Zusatzblock steckt

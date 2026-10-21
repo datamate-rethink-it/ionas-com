@@ -18,6 +18,10 @@ sie bewusst in Kauf genommen sind:
      lokal unter /static/css/fonts.css - die eine <link>-Zeile im Kopf
      unterscheidet sich deshalb auf jeder Seite.
 
+  4. Totes Markup im Kopf ist entfallen (Google+ seit 2019 abgeschaltet,
+     Alexa seit 2022 eingestellt), und das og:image zeigt nicht mehr ueber
+     http auf eine Datei, die es nie gab.
+
 Jede andere Abweichung ist ein Fehler und landet in verify-diff.txt.
 """
 import difflib
@@ -45,11 +49,31 @@ SCHRIFT = [
     '<link rel="stylesheet" href="/static/css/fonts.css" />',
 ]
 
+# Totes Markup, das beim Umstieg entfallen ist: Google+ (abgeschaltet 2019)
+# und Alexa (eingestellt 2022). Steht nur noch im Referenz-Snapshot.
+ENTFALLEN = [
+    '<link href="https://plus.google.com/116393713732767018174" rel="author" />',
+    '<link href="https://plus.google.com/+ionasOHGMainz/" rel="publisher" />',
+    '<meta name="alexaVerifyID" content="Qsa4yU-EGFDYpT5A4pJZg40o_LA"/>',
+]
+
+# Das og:image zeigte ueber http auf eine Datei, die es nie gab.
+OG_BILD = [
+    ('<meta property="og:image" '
+     'content="http://www.ionas.com/images/ionas-logo-facebook.jpg" />'),
+    ('<meta property="og:image" '
+     'content="https://www.ionas.com/static/presse/ionas_logo_freigestellt.png" />'),
+]
+
 def normalize(text):
     for ent, raw in ENTITIES:
         text = text.replace(ent, raw)
     for zeile in SCHRIFT:
         text = text.replace(zeile, '@@SCHRIFT@@')
+    for zeile in OG_BILD:
+        text = text.replace(zeile, '@@OGBILD@@')
+    for zeile in ENTFALLEN:
+        text = text.replace(zeile, '')
     text = re.sub(r'<!--.*?-->', '', text, flags=re.S)
     text = re.sub(r'[ \t]+\n', '\n', text)      # Leerraum am Zeilenende
     text = re.sub(r'\n{2,}', '\n', text)        # Leerzeilen zusammenfassen

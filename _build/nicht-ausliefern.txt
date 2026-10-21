@@ -4,7 +4,7 @@
 #
 # Erzeugt von _build/verwaiste_assets.py --schreiben,
 # jeweils gegen ein vollstaendig gebautes public/.
-# 419 Dateien, 67.9 MB
+# 406 Dateien, 64.9 MB
 /downloads/AGB-ionas_old.pdf
 /downloads/InnovationspreisIT2015-ionasPCHilfe.pdf
 /downloads/Pressemitteilung_ionas.pdf
@@ -304,7 +304,6 @@
 /wissen/wp-content/uploads/2016/02/registry4.png
 /wissen/wp-content/uploads/2016/03/Aufruf_Einstellungsmenue_Thunderbird.png
 /wissen/wp-content/uploads/2016/03/Editor_Signatur_Thunderbird.png
-/wissen/wp-content/uploads/2016/04/Screenshot_Windows_Paint.png
 /wissen/wp-content/uploads/2016/04/Screenshot_Windows_PowerPoint.png
 /wissen/wp-content/uploads/2016/04/W10-Upgrade-Empfehlung.png
 /wissen/wp-content/uploads/2016/04/ubuntu-windows.png
@@ -355,7 +354,6 @@
 /wissen/wp-content/uploads/2017/06/Lollipop-installiert.jpg
 /wissen/wp-content/uploads/2017/06/Unbenannt.png
 /wissen/wp-content/uploads/2017/09/DWORD.png
-/wissen/wp-content/uploads/2017/09/Outlook_iCloud.jpg
 /wissen/wp-content/uploads/2017/09/installierte_Updates-1.png
 /wissen/wp-content/uploads/2017/09/installierte_Updates.png
 /wissen/wp-content/uploads/2017/11/AnyDesk-Logo-large.png
@@ -391,29 +389,18 @@
 /wissen/wp-content/uploads/2018/05/adapter2.jpg
 /wissen/wp-content/uploads/2018/05/adapter3.jpg
 /wissen/wp-content/uploads/2018/05/hero_dsc_0195_small.jpg
-/wissen/wp-content/uploads/2018/05/nathan-dumlao-609931-unsplash_small-2.jpg
 /wissen/wp-content/uploads/2018/05/netztwerk_freigabecenter.jpg
 /wissen/wp-content/uploads/2019/02/Tabellenvorlagen_ErweiterteTabellenformatvorlagen.png
 /wissen/wp-content/uploads/2019/03/Weg_zu_VirenUndBedrohungsschutz_mitPfeilen.png
-/wissen/wp-content/uploads/2019/08/Dice.jpg
 /wissen/wp-content/uploads/2019/08/road-sign-464656_1280.jpg
-/wissen/wp-content/uploads/2019/09/Grafikkarte-GPU.jpg
 /wissen/wp-content/uploads/2019/10/Acronis_Cyber_Cloud_Dashboard.png
 /wissen/wp-content/uploads/2019/10/Ausführung_Backup_Ziel.png
 /wissen/wp-content/uploads/2019/10/Auswahl_Backup_Ziel-1.png
 /wissen/wp-content/uploads/2020/03/MailBenachrichtigung.png
 /wissen/wp-content/uploads/2020/03/Mail_Benachrichtigung.png
-/wissen/wp-content/uploads/2020/08/ComputerFrustration.jpg
 /wissen/wp-content/uploads/2020/08/Festplatte-SSD.jpg
-/wissen/wp-content/uploads/2020/08/Ordner-symbolisch.jpg
-/wissen/wp-content/uploads/2020/10/vpn-4330220_640.jpg
-/wissen/wp-content/uploads/2020/11/laptop-336369_640.jpg
-/wissen/wp-content/uploads/2020/12/games-2453777_1280.jpg
 /wissen/wp-content/uploads/2021/03/pexels-photomix-company-887751-scaled.jpg
 /wissen/wp-content/uploads/2021/03/pexels-photomix-company-887751.jpg
-/wissen/wp-content/uploads/2021/06/web-3963945_1920.jpg
-/wissen/wp-content/uploads/2021/10/social-media-g355146f3a_1920.jpg
-/wissen/wp-content/uploads/2021/11/Artificial_Intelligence_1.jpg
 /wissen/wp-content/uploads/2021/11/Artificial_Intelligence_2.jpg
 /wissen/wp-content/uploads/2021/11/Laptop-Frappucino_Loftoffice-scaled.jpg
 /wissen/wp-content/uploads/2021/11/Laptop-Frappucino_Loftoffice.jpg
