@@ -1,0 +1,60 @@
+{{ define "main" }}
+<section class="content-10 blog">
+  <div class="container">
+    <div class="row">
+
+{{- /* data-pagefind-body grenzt den Suchindex auf die Artikel ein.
+       Ohne diese Markierung wuerde Pagefind auch Uebersichts-, Schlagwort-
+       und Archivseiten samt Seitenleiste aufnehmen. */ -}}
+      <div class="col-sm-9"{{ if .Params.wp_id }} data-pagefind-body{{ end }}>
+{{- if .Params.suche }}
+        <h1 class='nomarginbottom'>Suche</h1>
+        <div class="entry">
+          <div id="suche"></div>
+          <noscript><p>Für die Suche in den Wissensartikeln wird JavaScript
+          benötigt. Alternativ hilft die <a href="/wissen/">Artikelübersicht</a>
+          oder das Schlagwortverzeichnis in der Seitenleiste.</p></noscript>
+          <hr>
+        </div>
+{{- else }}
+        <h1 class='nomarginbottom'><a href="{{ .Permalink }}">{{ .Title }}</a></h1>
+        <div id="meta">
+            <p>geschrieben am {{ .Date.Format "02.01.2006" }}<br/>
+{{- /* Schlagwoerter wie bei the_tags(): "Schlagwörter: a, b, c",
+       Anzeigenamen aus data/tagnamen.yaml, alphabetisch. */ -}}
+{{- $links := slice -}}
+{{- range $slug := .Params.tags }}
+  {{- with index (index hugo.Data "tagnamen") $slug }}
+    {{- $links = $links | append (dict "name" .name "html" (printf "<a href=\"/wissen/tag/%s/\" rel=\"tag\">%s</a>" $slug .name)) -}}
+  {{- end }}
+{{- end }}
+{{- with $links }} Schlagwörter: {{ delimit (apply (sort . "name") "index" "." "html") ", " | safeHTML }}{{ end }}</p>
+         </div>
+        <div class="entry">
+          {{ .Content }}
+          <hr>
+        </div>
+{{- partial "wissen-kommentare.html" . }}
+
+      <hr/>
+
+{{- /* Vor- und Zurueck-Verweise wie previous_post_link()/next_post_link():
+       chronologisch, aelter links, neuer rechts. */ -}}
+{{- $alle := (where (where site.RegularPages "Section" "wissen") "Params.suche" "!=" true).ByDate }}
+{{- $i := -1 }}
+{{- range $k, $p := $alle }}{{ if eq $p.File.Path $.File.Path }}{{ $i = $k }}{{ end }}{{ end }}
+        <p align="center">
+{{- if gt $i 0 }}{{ $p := index $alle (sub $i 1) }}&laquo; <a href="{{ $p.Permalink }}" rel="prev">{{ $p.Title }}</a>{{ end }}
+{{- if and (gt $i 0) (lt (add $i 1) (len $alle)) }} | {{ end }}
+{{- if lt (add $i 1) (len $alle) }}{{ $n := index $alle (add $i 1) }}<a href="{{ $n.Permalink }}" rel="next">{{ $n.Title }}</a> &raquo;{{ end }}</p>
+{{- end }}
+      </div>
+
+      <div class="col-sm-3">
+{{- partial "wissen-sidebar.html" . }}
+      </div>
+
+    </div>
+  </div>
+</section>
+{{ end }}

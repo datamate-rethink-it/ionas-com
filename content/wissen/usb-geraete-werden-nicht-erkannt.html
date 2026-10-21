@@ -1,0 +1,147 @@
+---
+title: "&#8222;USB-Geräte werden nicht richtig erkannt&#8220; &#8211; Schritt für Schritt Anleitung zur Behebung von USB-Problemen"
+date: 2016-04-18T14:54:18
+lastmod: 2019-11-05T12:53:52
+url: "/wissen/usb-geraete-werden-nicht-erkannt/"
+wissen: true
+wp_id: 2636
+autor: "Takayoshi Sasano"
+autor_id: "https://www.ionas.com/wissen/#/schema/person/488493e9ac7b5b13bd31e76de0c1753a"
+beschreibung: "Gelegentlich funktionieren USB-Geräte nicht richtig unter Windows. In dieser Anleitung zeigen wir Ihnen, wie Sie USB-Probleme lösen können."
+titel_seo: "\"USB-Geräte werden nicht erkannt\" - Einfache Hilfe bei USB-Problemen"
+canonical_url: "https://www.ionas.com/wissen/usb-geraete-werden-nicht-erkannt/"
+bild: "https://www.ionas.com/wissen/wp-content/uploads/2019/11/banner-buddy.png"
+lesezeit: "8 Minuten"
+wortanzahl: 1566
+kategorie: "Uncategorized"
+bilder:
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2019/11/banner-buddy.png"
+    text: "Buddy-PC, spezielles Angebot für alle ionas Leser"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Geraetemanager-300x227.png"
+    text: "Gerätemanager"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_ErweiterteSystemeigenschaftenoeffnen-300x227.png"
+    text: "Erweiterte Systemeigenschaften öffnen"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_ErweiterteSystemeigenschaften-260x300.png"
+    text: "Erweiterte Systemeigenschaften"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Umgebungsvariablen-271x300.png"
+    text: "Umgebungsvariablen editieren"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_devmgr_show_nonpresent_devices-300x127.png"
+    text: "devmgr_show_nonpresent_devices"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_AusgeblendeteGeraeteanzeigen-300x229.png"
+    text: "Ausgeblendete Geräte anzeigen"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Geraetdeinstallieren-300x145.png"
+    text: "Gerät im Gerätemanager deinstallieren"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan-300x227.png"
+    text: "Energiesparplan bearbeiten"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan_aendern-300x227.png"
+    text: "Energiesparplan bearbeiten"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan_USB-280x300.png"
+    text: "Energiesparplan für USB Geräte ändern"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_cmdAdministrator-238x300.png"
+    text: "Eingabeaufforderung als Administrator"
+kommentare: 9
+tags:
+  - "anleitung"
+  - "probleme"
+  - "usb"
+  - "windows"
+teaser: |-
+  <p>USB-Geräte funktionieren in aller Regel sehr zuverlässig und verursachen nur sehr selten Probleme. Stößt man dennoch auf ein “Unbekanntes Gerät”, wird im Internet oft zu waghalsigen Manövern in der sogenannten Windows-Registrierungsdatei geraten.<br />
+  Im folgenden Artikel finden Sie deshalb eine Anleitung anhand derer Sie zunächst Ursachenforschung betreiben, und den Fehler eventuell sogar direkt beheben können.</p>
+  <p> <a href="https://www.ionas.com/wissen/usb-geraete-werden-nicht-erkannt/#more-2636" class="more-link"><span aria-label="&#8222;USB-Geräte werden nicht richtig erkannt&#8220; &#8211; Schritt für Schritt Anleitung zur Behebung von USB-Problemen weiterlesen">(mehr&#160;&hellip;)</span></a></p>
+---
+<p>USB-Geräte funktionieren in aller Regel sehr zuverlässig und verursachen nur sehr selten Probleme. Stößt man dennoch auf ein “Unbekanntes Gerät”, wird im Internet oft zu waghalsigen Manövern in der sogenannten Windows-Registrierungsdatei geraten.<br />
+Im folgenden Artikel finden Sie deshalb eine Anleitung anhand derer Sie zunächst Ursachenforschung betreiben, und den Fehler eventuell sogar direkt beheben können.</p>
+<p><span id="more-2636"></span></p>
+<p><a href="https://buddy-pc.de" target="_blank" rel="noopener noreferrer"><img width="800" height="200" src="https://www.ionas.com/wissen/wp-content/uploads/2019/11/banner-buddy.png" alt="Buddy-PC, spezielles Angebot für alle ionas Leser" class="alignleft size-full wp-image-4998" style="padding-bottom:20px;" srcset="https://www.ionas.com/wissen/wp-content/uploads/2019/11/banner-buddy.png 800w, https://www.ionas.com/wissen/wp-content/uploads/2019/11/banner-buddy-300x75.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2019/11/banner-buddy-768x192.png 768w" sizes="(max-width: 800px) 100vw, 800px" /></a></p>
+<h2>&#8222;USB-Probleme&#8220; &#8211; Ursachen</h2>
+<p>Manchmal ist es nur ein beschädigtes Kabel oder ein verschmutzter Steckkontakt. Funktioniert das betroffene Gerät jedoch beispielsweise an einem anderen Computer anstandslos, setzt sich die Analyse des Problems in der Software fort. Im Verlauf dieses Artikels stellen wir verschiedene Ansätze vor. Wir gehen dabei nach dem Prinzip &#8222;von unten nach oben&#8220; vor, d. h. mit der Analyse des Gerätes an sich über die Treiber im System bis hin zu Zwischenspeichern im Betriebssystem. Die Komplexität nimmt dabei schrittweise zu, da immer mehr Komponenten beteiligt sind.</p>
+<h2>Schritt 1. Testen Sie Ihre Hardware</h2>
+<p><strong>Kabel/Stecker</strong></p>
+<p>Eine einfache Sichtprüfung sollte als erster Test genügen. Falls möglich kann man z. B. das verwendete Kabel mit anderen USB-Geräten oder sowohl Kabel als auch USB-Gerät an einem anderen Computer testen.<br />
+Ob Kabel knotenfrei, unbeschädigt und in den Steckern alle Kontakte unversehrt vorhanden sind, lässt sich auch mit einem schnellen Blick und gegebenenfalls einem Vergleichsbild feststellen.</p>
+<p><strong>USB Anschluß am Computer</strong></p>
+<p>Der einfachste Test hierfür ist, eine Maus oder Tastatur anzuschließen. Wird das Gerät korrekt erkannt, kann man davon ausgehen, dass der Anschluß einwandfrei funktioniert.</p>
+<p><strong>Die Stromversorgung</strong></p>
+<p>USB-Geräte werden über den USB Port mit Strom versorgt. Unter Umständen benötigen sie allerdings zu viel davon, laut Spezifikation ist bei 5,5V/500mA (USB2) bzw. 5,5V/900mA (USB3) Schluß.<br />
+Als Notlösung existieren spezielle Kabel, die mit zwei Steckern am Computer angesteckt werden und dadurch von zwei USB Anschlüssen Strom weiterleiten, diese sind allerdings laut USB-Spezifizierung nicht zulässig.<br />
+Um sicherzugehen, dass die Stromversorgung nicht Quell allen Übels ist, kann man einen aktiven USB Hub zwischenschalten. Dieser versorgt dann das Endgerät mit ausreichender Stromstärke.<br />
+Für detailliertere Diagnose empfiehlt sich das Tool <a href="http://www.nirsoft.net/utils/usb_devices_view.html">USB Deview</a>, da dieses den Stromverbrauch aktiver USB Geräte anzeigen kann.</p>
+<h2>Schritt 2. Analyse der Software</h2>
+<p><strong>Installationsreihenfolge</strong></p>
+<p>Mittlerweile sind Hersteller dazu übergegangen, die USB Anschlüsse bei Druckern zuzukleben und plakatartig anmutende Hinweise in den Verpackungen zu verteilen, die uns allesamt darauf hinweisen sollen, unbedingt die mitgelieferte Software zu installieren, bevor wir das neue Gerät an unserem Computer anschließen. Sollte es versehentlich passiert sein, diese Reihenfolge nicht eingehalten zu haben, kann man über die Systemsteuerung etwaige Fehlversuche der Softwareinstallation wieder beseitigen.</p>
+<p>Dafür gibt man in der Suchleiste &#8222;Programme&#8220; ein und öffnet das Suchergebnis &#8222;Programme und Funktionen&#8220;. Wurde die Ansicht fertig aufgebaut, kann man sie durch Klick auf die Spalte &#8222;Hersteller&#8220; bequem sortieren. Durch einfachen Klick auf ein zu entfernendes Programm und anschließendem Klick auf die Schaltfläche &#8222;Entfernen/Deinstallieren&#8220; wird nicht benötigte Software vom Computer entfernt. In jedem Fall sollte man sich die Hinweise in den eventuell erscheinenden Fenstern und Dialogen aufmerksam durchlesen und sich überlegen, ob die vorgestellten Änderungen am System wirklich erwünscht sind.</p>
+<p><strong>Versionen</strong></p>
+<p>Die auf den mitgelieferten Datenträgern vorliegenden Treiber und Programme sind oft veraltet, dafür aber auf jeden Fall vollständig, da sie auch ohne Internetverbindung eine zuverlässige Inbetriebnahme des zu installierenden Gerätes gewährleisten müssen. Daher sollte die erste Installation genau von diesen Quellen durchgeführt werden, da manche Updates nicht alle Komponenten vollständig installieren.</p>
+<p><strong>Installierte Geräte</strong></p>
+<p>Welches USB Gerät welchen Treiber verwenden soll, kann man im Gerätemanager von Microsoft Windows feststellen. Um diesen zu öffnen klicken Sie mit der rechten Maustaste auf <i>Computer -&gt; Eigenschaften</i>, und auf der linken Seite des nun neu geöffneten Fensters mit der linken Maustaste auf den Eintrag <i>Gerätemanager</i>.</p>
+<p><a href="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Geraetemanager.png" data-slb-active="1" data-slb-asset="899746109" data-slb-internal="0" data-slb-group="2636"><img loading="lazy" src="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Geraetemanager-300x227.png" alt="Gerätemanager" width="300" height="227" class="alignnone size-medium wp-image-2686" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Geraetemanager-300x227.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Geraetemanager.png 443w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
+<p>Selbst aktuell nicht am Computer angeschlossene Geräte lassen sich anzeigen, allerdings ist dazu ein wenig Vorarbeit nötig.<br />
+Klicken Sie hierfür auf Start und öffnen per Rechtsklick die Eigenschaften Ihres Computers</p>
+<p>In dem nun offenen Fenster klicken Sie auf den Punkt <i>Erweiterte Systemeinstellungen</i></p>
+<p><a href="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_ErweiterteSystemeigenschaftenoeffnen.png" data-slb-active="1" data-slb-asset="1445728817" data-slb-internal="0" data-slb-group="2636"><img loading="lazy" src="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_ErweiterteSystemeigenschaftenoeffnen-300x227.png" alt="Erweiterte Systemeigenschaften öffnen" width="300" height="227" class="alignnone size-medium wp-image-2684" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_ErweiterteSystemeigenschaftenoeffnen-300x227.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_ErweiterteSystemeigenschaftenoeffnen.png 443w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
+<p>Der jetzt sichtbare Dialog für die erweiterten Systemeigenschaften beinhaltet die Möglichkeit, Umgebungsvariablen zu verwalten. Klicken Sie auf die Schaltfläche <i>Umgebungsvariablen</i><br />
+<a href="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_ErweiterteSystemeigenschaften.png" data-slb-active="1" data-slb-asset="2142052663" data-slb-internal="0" data-slb-group="2636"><img loading="lazy" src="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_ErweiterteSystemeigenschaften-260x300.png" alt="Erweiterte Systemeigenschaften" width="260" height="300" class="alignnone size-medium wp-image-2683" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_ErweiterteSystemeigenschaften-260x300.png 260w, https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_ErweiterteSystemeigenschaften.png 428w" sizes="(max-width: 260px) 100vw, 260px" /></a></p>
+<p>Fügen Sie durch Klick auf die Schaltfläche <i>Neu</i> eine Systemvariable hinzu<br />
+<a href="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Umgebungsvariablen.png" data-slb-active="1" data-slb-asset="1514338283" data-slb-internal="0" data-slb-group="2636"><img loading="lazy" src="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Umgebungsvariablen-271x300.png" alt="Umgebungsvariablen editieren" width="271" height="300" class="alignnone size-medium wp-image-2687" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Umgebungsvariablen-271x300.png 271w, https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Umgebungsvariablen.png 394w" sizes="(max-width: 271px) 100vw, 271px" /></a></p>
+<p>Der Name der neuen Systemvariable muss <i>devmgr_show_nonpresent_devices</i> lauten, als Wert tragen Sie <i>1</i> ein.<br />
+<a href="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_devmgr_show_nonpresent_devices.png" data-slb-active="1" data-slb-asset="1131864982" data-slb-internal="0" data-slb-group="2636"><img loading="lazy" src="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_devmgr_show_nonpresent_devices-300x127.png" alt="devmgr_show_nonpresent_devices" width="300" height="127" class="size-medium wp-image-2679" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_devmgr_show_nonpresent_devices-300x127.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_devmgr_show_nonpresent_devices.png 361w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
+<p>Schließen Sie alle offenen Dialoge durch Klick auf die <i>OK</i> Schaltfläche und starten Sie dem Computer neu, um die neu angelegte Systemvariable zu aktivieren.<br />
+Nun können Sie im Gerätemanager unter <i>Ansicht -&gt; Ausgeblendete Geräte anzeigen</i> einstellen, dass alle bisher installierten Geräte sichtbar werden.<br />
+<a href="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_AusgeblendeteGeraeteanzeigen.png" data-slb-active="1" data-slb-asset="1217403749" data-slb-internal="0" data-slb-group="2636"><img loading="lazy" src="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_AusgeblendeteGeraeteanzeigen-300x229.png" alt="Ausgeblendete Geräte anzeigen" width="300" height="229" class="alignnone size-medium wp-image-2677" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_AusgeblendeteGeraeteanzeigen-300x229.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_AusgeblendeteGeraeteanzeigen.png 370w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
+<p>Nun kann man unter Umständen verwaiste Einträge entfernen. Dies erledigen Sie mit einem <i>Rechtsklick -&gt; Deinstallieren</i>.<br />
+<a href="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Geraetdeinstallieren.png" data-slb-active="1" data-slb-asset="968258358" data-slb-internal="0" data-slb-group="2636"><img loading="lazy" src="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Geraetdeinstallieren-300x145.png" alt="Gerät im Gerätemanager deinstallieren" width="300" height="145" class="alignnone size-medium wp-image-2685" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Geraetdeinstallieren-300x145.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Geraetdeinstallieren.png 564w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
+<p>Auch Einträge, die durch ein gelbes Fragezeichen hervorgehoben sind, sollte man auf diese Weise entfernen.</p>
+<p><strong>USB Filter</strong></p>
+<p>Diese Funktion ermöglicht unkomplizierte Erweiterung diverser Treiberfunktionen. Sind diese allerdings nicht sorgfältig programmiert, können unliebsame Nebenwirkungen auftreten, wie z. B., dass die Laufwerksbuchstabenzuordnung bei USB Sticks nicht mehr funktioniert. Die typischen Verdächtigen hier sind kleine Gratisprogramme, die beispielsweise DVD Lauferke simulieren oder kleine Brennprogramme. Abhilfe kann eine testweise Deinstallation solcher Programme schaffen.</p>
+<h2>Schritt 3. Energiemanagement</h2>
+<p><strong>Resetversuch</strong></p>
+<p>Es kann vorkommen, dass USB Geräte, die im Rahmen des Energiemanagenets vorübergehend deaktiviert wurden, nicht mehr richtig &#8222;aufwachen&#8220;. In diesem Fall kann es helfen, das gesamte System einmal stromlos zu machen und auch etwaige Restspannung entladen zu lassen. Dies erreicht man, indem man den Computer von allen Stromquellen trennt (beim Notebook also auch den Akku entfernt) und ihn für etwa eine halbe Stunde so stehen läßt.</p>
+<p><strong>Ändern des Energiesparprofils</strong></p>
+<p>Durch den Energiesparplan lässt sich sehr genau einstellen, nach welchen Kriterien Geräte in einen energiesparenden Modus geschaltet werden. Um dies für USB Geräte zu ändern muss das aktuell verwendete Profil angepasst werden. Geben Sie hierfür in der Systemsteuerung im Suchfenster oben rechts &#8222;Energie&#8220; ein. Öffnen Sie in den angezeigten Suchergebnissen den Eintrag <i>Energiesparplan bearbeiten</i><br />
+<a href="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan.png" data-slb-active="1" data-slb-asset="1332442779" data-slb-internal="0" data-slb-group="2636"><img loading="lazy" src="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan-300x227.png" alt="Energiesparplan bearbeiten" width="300" height="227" class="alignnone size-medium wp-image-2680" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan-300x227.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan.png 443w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
+<p>Die benötigten Einstellungen findet man unter dem Menüpunkt <i>Erweiterte Energieeinstellungen ändern</i></p>
+<p><a href="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan_aendern.png" data-slb-active="1" data-slb-asset="1514195663" data-slb-internal="0" data-slb-group="2636"><img loading="lazy" src="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan_aendern-300x227.png" alt="Energiesparplan bearbeiten" width="300" height="227" class="alignnone size-medium wp-image-2681" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan_aendern-300x227.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan_aendern.png 443w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
+<p>In der Kategorie <i>USB-Einstellungen</i> läßt sich das Energiemanagement deaktivieren<br />
+<a href="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan_USB.png" data-slb-active="1" data-slb-asset="682022196" data-slb-internal="0" data-slb-group="2636"><img loading="lazy" src="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan_USB-280x300.png" alt="Energiesparplan für USB Geräte ändern" width="280" height="300" class="alignnone size-medium wp-image-2682" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan_USB-280x300.png 280w, https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_Energiesparplan_USB.png 418w" sizes="(max-width: 280px) 100vw, 280px" /></a></p>
+
+<h2>Schritt 4. INF Cache</h2>
+<p>Unter Microsoft Windows werden benutzte Treiber im INF Cache gespeichert, um sie bei Bedarf schneller zur Verfügung zu haben. Man kann diesen testweise löschen, um ihn nach einem Neustart des Systems automatisch wieder erzeugen zu lassen. In Einzelfällen kann diese Vorgehensweise zum Erfolg führen.<br />
+Da diese Datei allerdings mit speziellen Berechtigungen versehen ist, muß man deutlich tiefer in das System eingreifen.<br />
+Öffnen Sie aus dem <i>Startmenü -&gt; Alle Programme -&gt; Zubehör</i> die Eingabeaufforderung durch Rechtsklick als Administrator.<br />
+<a href="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_cmdAdministrator.png" data-slb-active="1" data-slb-asset="2074729016" data-slb-internal="0" data-slb-group="2636"><img loading="lazy" src="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_cmdAdministrator-238x300.png" alt="Eingabeaufforderung als Administrator" width="238" height="300" class="alignnone size-medium wp-image-2678" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_cmdAdministrator-238x300.png 238w, https://www.ionas.com/wissen/wp-content/uploads/2016/04/USB-Probleme_cmdAdministrator.png 417w" sizes="(max-width: 238px) 100vw, 238px" /></a></p>
+<p>Geben Sie die folgenden Befehle ein und bestätigen Sie jede Zeile mit der <i>Return-Taste</i></p>
+<pre>	cd %systemroot%\System32\DriverStore
+	takeown /f infcache.1
+	icacls infcache.1 /grant %USERNAME%:F
+	del infcache.1
+	exit
+</pre>
+<p>Starten Sie den Computer neu, hierbei wird der INF Cache neu erzeugt.</p>
+<p>Was hier im einzelnen geschieht:<br />
+Der erste Befehl wechselt, ähnlich wie Sie dies im Windows Explorer tun würden, in das entsprechende Verzeichnis. Mit dem zweiten Befehl ändern Sie den Besitzer der Datei infcache.1, denn nur dieser darf die erforderlichen Operationen durchführen, wie z. B. im darauffolgenden Schritt die Berechtigungen zu ändern. Schließlich löschen Sie die Datei mit dem vorletzten Befehl und verlassen die Eingabeaufforderung durch das Kommando &#8222;exit&#8220;.</p>
+<p>Ergänzung für neuere Windowsversionen:<br />
+Seit Windows 8 existiert der INF Cache nicht mehr in der zuvor erwähnten Form, daher läßt sich diese Vorgehensweise leider nicht mehr anwenden. Zwar kann man sich mit dem vorinstallierten Tool pnputil die vorhandenen nachinstallierten Treiber auflisten lassen und verwalten, jedoch nicht die mit Windows mitgelieferten oder über Plug &amp; Play nachinstallierten. Bezeichnenderweise tragen die gelisteten Treiber auch das Präfix &#8222;oem&#8220;. Mit folgendem Befehl auf der Kommandozeile listet man alle registrierten Treiber auf:</p>
+<pre>	pnputil -e
+        ...
+        Veröffentlichter Name:            oem12.inf
+        Treiberpaketanbieter:   Microsoft
+        Klasse:                     Eingabegeräte (Human Interface Devices)
+        Treiberversion und -datum:   10/27/2015 9.9.108.0
+        Name des Signaturgebers:               Microsoft Windows Hardware Compatibility
+                                               Publisher
+        ...
+        exit
+</pre>
+<p>Sollte hier ein Treiber gelistet sein, der direkt mit dem problematischen Gerät in Verbindung gebracht werden kann, läßt sich dieser mit demselben Tool entfernen:</p>
+<pre>   pnputil -d oem12.inf
+        Microsoft-PnP-Hilfsprogramm
+
+        Das Treiberpaket wurde erfolgreich gelöscht.
+        exit
+</pre>
+<p>Leider läßt sich dies wie bereits erwähnt nur bei nachträglich installierten Treibern anwenden.</p>
+<h2>&#8222;USB-Probleme&#8220; &#8211; Wenn alle Stricke reißen</h2>
+<p>Sollten alle Lösungsansätze fehlschlagen, bleibt nur noch die Neuinstallation des gesamten Systems übrig. Hierbei sollte man die Gelegenheit nutzen, Treiber-CDs und Installationsdateien zusammenzustellen und für evtl. zukünftigen Gebrauch auf einem Datenträger zu sichern. Besonders wichtig ist dabei natürlich eine aktuelle und unbeschädigte Datensicherung, um nach der Installation alle Nutzdaten zuverlässig wiederherstellen zu können.</p>
+<h2>Fazit</h2>
+<p>Sie werden diesen Artikel wohl nur dann vollständig gelesen haben, wenn Sie in der konkreten Situation sind, dass auf Ihrem System ein USB-Gerät nicht richtig erkannt wird. Wir hoffen, dass wir Ihnen in dieser Anleitung einen Lösungsweg zur Beseitigung der Problematik beschreiben konnten oder dass wir Ihnen zumindest eine Idee geben konnten, was Sie machen können. Wenn Ihnen der Artikel gefällt, dann freuen wir uns, wenn Sie uns das zeigen. Entweder per Like auf unserer Facebook-Seite oder per E-Mail an feedback@ionas.com. In jedem Fall schauen wir von ionas – Ihr Online Assistent uns auch gerne Probleme mit nicht erkannten USB-Geräten auf Ihrem Computer mit Ihnen zusammen an und helfen Ihnen, die oben genannten Schritte auszuführen. Sie erreichen uns 7 Tage die Woche von 8:00 – 20:00 Uhr.</p>

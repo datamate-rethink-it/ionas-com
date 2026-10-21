@@ -1,0 +1,59 @@
+---
+title: "Nein zur Microsoft Cloud &#8211; OneDrive deinstallieren"
+date: 2016-11-08T12:08:11
+lastmod: 2016-11-08T12:08:11
+url: "/wissen/nein-zur-microsoft-cloud-onedrive-deinstallieren/"
+wissen: true
+wp_id: 3687
+autor: "Ralf Dyllick-Brenzinger"
+autor_id: "https://www.ionas.com/wissen/#/schema/person/4f6d598597b4cb184645f0851f8bdea7"
+beschreibung: "Cloud-Gegner ebenso wie Dropbox-Nutzer haben keine Verwendung für OneDrive, der Microsoft Cloud. In dem Fall bietet es sch an, OneDrive zu deinstallieren."
+titel_seo: "Nein zur Microsoft Cloud - OneDrive deinstallieren | ionas"
+canonical_url: "https://www.ionas.com/wissen/nein-zur-microsoft-cloud-onedrive-deinstallieren/"
+bild: "https://www.ionas.com/wissen/wp-content/uploads/2016/11/Befehle_OneDrive_Deinstallation.png"
+lesezeit: "3 Minuten"
+wortanzahl: 609
+kategorie: "Uncategorized"
+bilder:
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/11/Befehle_OneDrive_Deinstallation.png"
+    text: "OneDrive deinstallieren - Konsolenbefehle"
+kommentare: 1
+tags:
+  - "deinstallation"
+  - "onedrive"
+  - "windows-10"
+teaser: |-
+  <p>OneDrive, das Dropbox-Äquivalent von Microsoft, findet sich auf jedem neuen Windows 10-System. Gefragt, ob man es haben geschweige denn nutzen will, wird man dazu nicht. Es ist einfach da &#8211; bei Rechnern mit vorinstalliertem Windows genauso wie bei Neuinstallationen. OneDrive unter Windows 8 los zu werden, war schwierig: <a href="/wissen/entfernen-von-onedrive-unter-windows-8-und-8-1-2/">OneDrive ausblenden ja; OneDrive deinstallieren nein</a>. In dieser Hinsicht hat sich die Situation unter Windows 10 positiv geändert. Wie Sie <b>OneDrive auf Ihrem Windows 10-System deinstallieren</b>, erklären wir in diesem Beitrag.</p>
+  <p> <a href="https://www.ionas.com/wissen/nein-zur-microsoft-cloud-onedrive-deinstallieren/#more-3687" class="more-link"><span aria-label="Nein zur Microsoft Cloud &#8211; OneDrive deinstallieren weiterlesen">(mehr&#160;&hellip;)</span></a></p>
+---
+<p>OneDrive, das Dropbox-Äquivalent von Microsoft, findet sich auf jedem neuen Windows 10-System. Gefragt, ob man es haben geschweige denn nutzen will, wird man dazu nicht. Es ist einfach da &#8211; bei Rechnern mit vorinstalliertem Windows genauso wie bei Neuinstallationen. OneDrive unter Windows 8 los zu werden, war schwierig: <a href="/wissen/entfernen-von-onedrive-unter-windows-8-und-8-1-2/">OneDrive ausblenden ja; OneDrive deinstallieren nein</a>. In dieser Hinsicht hat sich die Situation unter Windows 10 positiv geändert. Wie Sie <b>OneDrive auf Ihrem Windows 10-System deinstallieren</b>, erklären wir in diesem Beitrag.</p>
+<p><span id="more-3687"></span></p>
+<h2>OneDrive deinstallieren</h2>
+<p>Die Deinstallation von OneDrive erfolgt über die Konsole. Administratorrechte sind dafür logischerweise notwendig. Klicken Sie also auf den Start-Button (d.h. das Windows-Logo in der linken unteren Ecke) und geben Sie auf der Tastatur ‚cmd‘ ein. Klicken Sie mit der rechten Maustaste auf den Suchtreffer <i>Eingabeaufforderung</i> und wählen Sie aus dem Kontextmenü ‚Als Administrator ausführen‘. Voilà.</p>
+<p>Auf einem <b>64 Bit-System</b> geben Sie nun in Folge diese Befehle ein.</p>
+<pre>
+taskkill /f /im onedrive.exe
+%systemroot%\syswow64\onedrivesetup.exe /uninstall
+</pre>
+<p><img src="https://www.ionas.com/wissen/wp-content/uploads/2016/11/Befehle_OneDrive_Deinstallation.png" style="float: right; margin-top: 10px; margin-left: 15px;" alt="OneDrive deinstallieren - Konsolenbefehle" width="500" class="alignnone size-full wp-image-3701" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/11/Befehle_OneDrive_Deinstallation.png 860w, https://www.ionas.com/wissen/wp-content/uploads/2016/11/Befehle_OneDrive_Deinstallation-300x124.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2016/11/Befehle_OneDrive_Deinstallation-768x318.png 768w" sizes="(max-width: 860px) 100vw, 860px" /> Mit dem Befehl <i>taskkill</i> werden alle Prozesse beendet, die zu OneDrive gehören. Erst danach lässt sich das Programm deinstallieren. Die eigentliche Deinstallation erfolgt mit dem darauffolgenden Befehl. Die Installationspakete von OneDrive liegen bei einem 64bittigen Windows im Ordner <i>Syswow64</i> im Root-Verzeichnis des Systems. (Das Root-Verzeichnis ist normalerweise C:\Windows.)</p>
+<p>Auf einem <b>Windows 10 mit 32 Bit</b> ist der zweite Befehl abweichend, weil die Installationsdateien in einem anderen Ordner liegen. Geben Sie in dem Fall folgendes ein:</p>
+<pre>
+taskkill /f /im onedrive.exe
+%systemroot%\system32\onedrivesetup.exe /uninstall
+</pre>
+<p>In beiden Fällen – 32 Bit und 64 Bit – erfolgt die OneDrive Deinstallation ohne weitere Rückmeldung. Schlimm ist das aber nicht, denn der Prozess ist reversibel. Wenn man Reue verspürt und OneDrive zu einem späteren Zeitpunkt doch nutzen möchte, dann lässt sich der Microsoft Cloud-Dienst mit dem Befehlsparameter <i>/install</i> wieder installieren und damit auf dem Rechner verfügbar machen.</p>
+<p>OneDrive zu deinstallieren ist folglich recht einfach. Um die vom Programm hinterlassenen Fingerabdrücke im System zu entfernen, ist ein weiterer Schritt notwendig: Die Entfernung von OneDrive aus dem Navigationsbereich des Windows Explorer.</p>
+<h2>OneDrive im Datei-Explorer ausblenden</h2>
+<p>Das Ausblenden des OneDrive-Icons im Datei-Explorer muss über den Registry-Editor erfolgen, genauer über die Manipulation des Registrierungsdatenbankschlüssels HKEY_CLASSES_ROOT\CLSID\{018D5C66-4533-4307-9B53-224DE2ED1FE6}. Dies kann kurz und schmerzlos so erfolgen:</p>
+<ol>
+<li>Kopieren Sie diese Zeichenfolge in die Zwischenablage <i>018D5C66-4533-4307-9B53-224DE2ED1FE6}</i> </li>
+<li>Nutzen Sie die Tastenkombination Windows-Taste + R, um den Ausführen-Dialog aufzurufen.</li>
+<li>Geben Sie ‚regedit‘ ein und bestätigen Sie die folgende Abfrage der Benutzerkontensteuerung.</li>
+<li>Klicken Sie im Editor auf das Menü Bearbeiten und wählen Suche.</li>
+<li>Kopieren Sie die Zeichenfolge aus dem Zwischenspeicher mit der Tastenkombination STRG + V ein und starten Sie die Suche. (Achten Sie darauf, dass der Haken vor ‚Schlüssel‘ gesetzt und vor ‚Ganze Zeichenfolge vergleichen‘ <u>nicht</u> gesetzt ist.)</li>
+<li>Den Eintrag <i>System.IsPinnedToNameSpaceTree</i> klicken Sie doppelt an und setzen den Wert auf 0.</li>
+</ol>
+<p>Mit diesem Schritt haben Sie die Deinstallation von OneDrive abgeschlossen. Starten Sie den Explorer-Prozess neu oder fahren Sie Ihren Computer runter und wieder hoch. Dann sollte OneDrive aus dem Navigationsmenü verschwunden sein. Sie haben OneDrive erfolgreich vom System verbannt. </p>
+<h2>OneDrive Deinstallation nur der Anfang</h2>
+<p>Wenn Sie nicht nur OneDrive deinstallieren, sondern auch weitere Windows-Komponenten vom System entfernen wollen, dann finden Sie in diesem Blog weitere Anleitungen, z.B. wie Sie <a href="/wissen/keine-chance-dem-lauscher-cortana-deaktivieren">Cortana deaktivieren bzw. deinstallieren</a>.</p>
+<p>Gleiches gilt für die individuelle Anpassung des Navigationsmenüs im Datei Explorer. In dieser Anleitung haben Sie bereits erfahren, wie Sie das OneDrive-Icon entfernen können. Im Artikel <a href="/wissen/der-navigationsbereich-im-windows-explorer-ganz-wie-sie-ihn-wollen/">Der Navigationsbereich im Windows Explorer ganz wie Sie ihn wollen!</a> erfahren Sie, wie Sie die Schnellstartelemente verändern, Bibliotheken ein- und ausblenden sowie den Bereich unter <i>Mein PC</i> individualisieren können.</p>

@@ -1,0 +1,157 @@
+---
+title: "Lokale DATEV-Datensicherung per Skript"
+date: 2017-06-23T14:35:05
+lastmod: 2018-06-14T14:08:17
+url: "/wissen/lokale-datev-datensicherung-per-skript/"
+wissen: true
+wp_id: 3843
+autor: "Chris Schütz"
+autor_id: "https://www.ionas.com/wissen/#/schema/person/a4a9df5dc0288fb1743994e3bf44c640"
+beschreibung: "Datenbanken von DATEV-Anwendungen müssen regelmäßig gesichert werden. Eine Alternative zum Backup in der DATEV-Cloud ist die skriptbasierte Datensicherung."
+titel_seo: "Lokale DATEV-Datensicherung per Skript | ionas"
+canonical_url: "https://www.ionas.com/wissen/lokale-datev-datensicherung-per-skript/"
+bild: "https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten.jpg"
+lesezeit: "6 Minuten"
+wortanzahl: 817
+kategorie: "Uncategorized"
+bilder:
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten-300x225.jpg"
+    text: "Datenverlust - Schreck lass nach!"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2017/05/DATEV_Administrator-205x300.png"
+    text: "Vorgehen zum Ausführen einer Programmdatei mit erhöhten Rechten"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2017/04/DatevGrün-300x157.png"
+    text: "Erfolgreiche DATEV-Sicherung"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2017/04/DatevRot-300x153.png"
+    text: "Fehler bei der Sicherung der DATEV-Datenbanken"
+kommentare: 3
+tags:
+  - "backup"
+  - "datensicherung"
+  - "datev"
+  - "skript"
+teaser: |-
+  <p>Jüngstens rief uns ein Unternehmen aus der <a href="/pc-hilfe/duesseldorf">NRW-Landeshauptstadt Düsseldorf</a> an und erkundigte sich nach dem Sicherungsverzeichnis seiner DATEV Buchhaltungssoftware. Gemäß Aussage des Anrufers wies die Datenbank mehrere Lücken auf. Wie wir dann per <a href="/pc-fernwartung">Fernwartung</a> herausfanden, wurden von der DATEV-Datenbank gar keine Sicherungen gemacht, geschweige denn regelmäßige Sicherungen. Und es kam noch schlimmer: Die Daten liessen sich aufgrund von Festplattenfehlern auch nicht wiederherstellen. Mit diesem Artikel wollen wir zeigen, wie sich ein DATEV-System mit wenig Aufwand lokal sichern lässt. Wenn das Sicherungsziel ein RAID-System ist, dann hat man damit schon mal die halbe Miete gegen Datenverlust.</p>
+  <p><img loading="lazy" class="alignright wp-image-2915 size-medium" style="float: right; margin-left: 15px; margin-top: 15px;" src="https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten-300x225.jpg" alt="Datenverlust - Schreck lass nach!" width="300" height="225" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten-300x225.jpg 300w, https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten-768x576.jpg 768w, https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten-1024x768.jpg 1024w, https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten.jpg 2016w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+  <p> <a href="https://www.ionas.com/wissen/lokale-datev-datensicherung-per-skript/#more-3843" class="more-link"><span aria-label="Lokale DATEV-Datensicherung per Skript weiterlesen">(mehr&#160;&hellip;)</span></a></p>
+---
+<p>Jüngstens rief uns ein Unternehmen aus der <a href="/pc-hilfe/duesseldorf">NRW-Landeshauptstadt Düsseldorf</a> an und erkundigte sich nach dem Sicherungsverzeichnis seiner DATEV Buchhaltungssoftware. Gemäß Aussage des Anrufers wies die Datenbank mehrere Lücken auf. Wie wir dann per <a href="/pc-fernwartung">Fernwartung</a> herausfanden, wurden von der DATEV-Datenbank gar keine Sicherungen gemacht, geschweige denn regelmäßige Sicherungen. Und es kam noch schlimmer: Die Daten liessen sich aufgrund von Festplattenfehlern auch nicht wiederherstellen. Mit diesem Artikel wollen wir zeigen, wie sich ein DATEV-System mit wenig Aufwand lokal sichern lässt. Wenn das Sicherungsziel ein RAID-System ist, dann hat man damit schon mal die halbe Miete gegen Datenverlust.</p>
+<p><img class="alignright wp-image-2915 size-medium" style="float: right; margin-left: 15px; margin-top: 15px;" src="https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten-300x225.jpg" alt="Datenverlust - Schreck lass nach!" width="300" height="225" srcset="https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten-300x225.jpg 300w, https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten-768x576.jpg 768w, https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten-1024x768.jpg 1024w, https://www.ionas.com/wissen/wp-content/uploads/2016/06/Wiederherstellen_von_Daten.jpg 2016w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p><span id="more-3843"></span></p>
+<h2>Alternative zur Datensicherung im DATEV-Rechenzentrum</h2>
+<p>Die Finanzdaten eines Unternehmens sind aus leicht verständlichen Gründen von großer Bedeutung. Gehen diese verloren, drohen neben den internen Querelen auch noch unangenehme Diskussionen mit Finanzamt und Sozialbehörden.</p>
+<p>DATEV-Software bietet von Haus aus eine bequeme Backup-Lösungen an. Diese lädt neue Daten automatisch in regelmäßigen Abständen in das DATEV-eigene Rechenzentrum hoch und verwart sie dort revisionssicher. Das Rechenzentrum steht in Deutschland, erfüllt also deutsche Datenschutzvorschriften, und man kann davon ausgehen, dass die Daten dort gut geschützt liegen. Ein Aber gibt es natürlich schon: DATEV &#8211; nicht gerade bekannt für knapp mittelstandsfreundliche Preise &#8211; stellt die Rechenzentrumskapazitäten nicht kostenlos zur Verfügung.</p>
+<p>Eine Alternative zum Backup in der DATEV-Cloud ist ein lokales Backup der DATEV-Daten. Die Daten werden also auf einem eigenen Datenträger gespeichert und nicht zu DATEV hochgeladen. Dabei sollte das Wort &#8222;lokal&#8220; nicht zu wörtlich interpretiert werden. Neben einem Backup kann auf eine angeschlossene Festplatte die Sicherung natürlich auch auf einen Speicher im lokalen Netzwerk erfolgen. Letzters bietet sich tatsächlich an, da sich dadurch problemlos die Sicherung auf einem redundanten Datenträgerverbund, also einem RAID, verwirklichen lässt.</p>
+<p>Letzeres haben wir für das betroffene Unternehmen schliesslich eingerichtet &#8211; den Schaden konnten wir damit zwar nicht beheben, wohl aber zukünftigen Schaden vermeiden. Zielanforderung war eine zuverlässige automatische Sicherung, so dass Eingabefehler vermieden und ein Vergessen ausgeschlossen werden können. Das Ergebnis war ein Batch-Skript, dass alle notwendigen Aktivitäten in regelmäßigen Abständen ausführt. Sicherungsziel war ein Netzlaufwerk, dass auf einem RAID 1 lag.</p>
+<h2>DATEV &#8211; Sicherungsskripte</h2>
+<p>Tatsächlich handelt es sich nicht um eine einzelnes Skript, sondern um 3 Skripte in Kombination mit einem Master-Skript. Die Aufgabe des Master-Skripts ist es, die Skripte nacheinander zu starten, die erfolgreiche Rückmeldung abzuwarten und dann das nächste Skript zu starten. Das erste Skript beendet den DATEV-Dienst, das zweite führt die eigentliche Sicherung durch und das dritte startet den Dienst wieder. Dieses Vorgehen hat den Vorteil, dass man so sicher gehen kann, dass der Dienst von DATEV wirklich beendet und am Ende wieder gestartet wird. Wenn der Dienst noch läuft, wenn die Sicherung startet, dann können wichtige Datenbankdateien nicht gesichert werden.</p>
+<p>Diese drei Skripte stellen wir nachfolgend vor. Änderungen wie die Dateipfade der Quelle und des Ziels müssen natürlich selbst noch vorgenommen werden. Diese sind jeweils in #-Zeichen gesetzt</p>
+<h3>prejob.bat: Skript zum Beenden des DATEV-Dienstes</h3>
+<pre><em> net stop MSSQL$DATEV_DBENGINE /Y</em>
+<em> exit</em>
+</pre>
+<p>&nbsp;</p>
+<h3>DatevSicherung.bat: Skript zum Sichern des DATEV-Systems</h3>
+<pre><em> CLS</em>
+<em> @ECHO OFF</em>
+<em> COLOR 1F</em>
+<em> REM ****************************************************************************</em>
+<em> REM ** SCRIPT : DATEV-Sicherung</em>
+<em> REM ** BESCHREIBUNG: Führt die Sicherung des Datev-Datenbankverzeichnisses durch</em>
+<em> REM ** AUTOR : Christopher Schütz - ionas</em>
+<em> REM ** VERSION : 23.06.2017</em>
+<em> REM **</em>
+<em> REM ** - Für Umlaute in ECHO: ä=„ ö=” ü= Ä=Ž Ö=™ Ü=š</em>
+<em> REM ****************************************************************************</em>
+
+<em> CHCP 1252</em>
+<em> REM KONFIGURATION ----------------------</em>
+<em> REM Quell- und Zielverzeichnis angeben. WICHTIG:</em>
+<em> REM Verzeichnisse die Leerzeichen enthalten müssen mit Anführungszeichen umschlossen werden</em>
+<em> REM Kein Backslash \ am Ende, außer wenn komplettes Laufwerk synchronisiert werden soll</em>
+<em> SET quelle=<span style="color: #ff0000;">#Bitte hier das Quellverzeichnis eingeben#</span></em>
+<em> SET ziel=<span style="color: #ff0000;">#Bitte hier das Zielverzeichnis eingeben#</span></em>
+<em> REM ------------------------------------</em>
+<em> CHCP 850</em>
+<em> CLS</em>
+
+<em> ECHO.</em>
+<em> ECHO ++++++++++++++++++++++++++</em>
+<em> ECHO +++DATEV-DATENSICHERUNG+++</em>
+<em> ECHO ++++++++++++++++++++++++++</em>
+<em> ECHO.</em>
+
+<em>SET timestamp=%date:~-4%%date:~3,2%%date:~0,2%-%time:~0,2%%time:~3,2%</em>
+
+<em> ECHO.</em>
+<em> ECHO Überprüfen der Verzeichnisse...</em>
+<em> IF NOT EXIST %quelle% GOTO ERRSOURCE</em>
+<em> IF NOT EXIST %ziel% GOTO ERRDEST</em>
+
+<em> ECHO.</em>
+<em> ECHO SYNCHRONISIERUNG STARTEN...</em>
+<em> ECHO.</em>
+<em> ROBOCOPY %quelle% %ziel% /COPY:DAT /MIR /R:3 /W:20</em>
+<em> IF %ERRORLEVEL% GEQ 8 GOTO ERRCOPY</em>
+<em> GOTO END</em>
+
+<em> REM FEHLERBEHANDLUNG</em>
+<em> :ERRCOPY</em>
+<em> ECHO.</em>
+<em> ECHO FEHLER: Mindestens eine Datei konnte nicht kopiert/gel”scht werden!</em>
+<em> ECHO %timestamp% FEHLER: Mindestens eine Datei konnte nicht kopiert/geloescht werden! &gt;&gt; "%~n0.log"</em>
+<em> GOTO ERREND</em>
+<em> :ERRSOURCE</em>
+<em> ECHO.</em>
+<em> ECHO FEHLER: Quellverzeichnis nicht vorhanden!</em>
+<em> ECHO %timestamp% FEHLER: Quellverzeichnis nicht vorhanden! %quelle"&gt;&gt; "%~n0.log"</em>
+<em> GOTO ERREND</em>
+<em> :ERRDEST</em>
+<em> ECHO.</em>
+<em> ECHO FEHLER: Zielverzeichnis nicht vorhanden!</em>
+<em> ECHO %timestamp% FEHLER: Zielverzeichnis nicht vorhanden! %ziel% &gt;&gt; "%~n0.log"</em>
+<em> GOTO ERREND</em>
+
+<em> REM VORGANG ABGEBROCHEN</em>
+<em> :ERREND</em>
+<em> COLOR 4F</em>
+<em> ECHO.</em>
+<em> ECHO VORGANG MIT MINDESTENS EINEM FEHLER ABGESCHLOSSEN</em>
+<em> ECHO.</em>
+<em> ECHO Dieses Fenster schliesst sich in 5 Sekunden.</em>
+<em> ECHO.</em>
+<em> ping -n 5 localhost &gt;nul</em>
+<em> EXIT</em>
+
+<em> REM VORGANG ERFOLGREICH</em>
+<em> :END</em>
+<em> COLOR 2F</em>
+<em> ECHO.</em>
+<em> ECHO VORGANG ERFOLGREICH ABGESCHLOSSEN</em>
+<em> ECHO.</em>
+<em> ECHO Dieses Fenster schliesst sich in 5 Sekunden.</em>
+<em> ECHO.</em>
+<em> ping -n 5 localhost &gt;nul</em>
+<em> EXIT</em>
+</pre>
+<p>&nbsp;</p>
+<h3>afterjob.bat: Skript zum Starten des DATEV-Dienstes</h3>
+<pre><em> net start MSSQL$DATEV_DBENGINE</em>
+<em> exit</em>
+</pre>
+<p>&nbsp;</p>
+<h3>master.bat: Skript zum Ausführen aller Skripte</h3>
+<pre><em> start /wait <span style="color: #ff0000;">#Dateipfad#</span>prejob.bat</em>
+<em> start /wait <span style="color: #ff0000;">#Dateipfad#</span>DatevSicherung.bat</em>
+<em> start /wait <span style="color: #ff0000;">#Dateipfad#</span>afterjob.bat</em>
+</pre>
+<p>&nbsp;</p>
+<p><img loading="lazy" class="size-medium wp-image-3955 alignright" style="float: right; margin-left: 35px; margin-top: 5px;" src="https://www.ionas.com/wissen/wp-content/uploads/2017/05/DATEV_Administrator-205x300.png" alt="Vorgehen zum Ausführen einer Programmdatei mit erhöhten Rechten" width="175" height="175" /></p>
+<p>Das Master Skript muss als Administrator ausgeführt werden. Ganz einfach lässt sich das umsetzen, indem eine Verknüpfung für die master.bat erstellt und in deren Eigenschaften „Als Administrator ausführen“ gesetzt wird (siehe Screenshot). Dann wird die Batch-Datei ohne weitere Maßnahme beim Aufruf über die Verknüpfung mit erhöhten Rechten ausgeführt.</p>
+<h2>Lokale Datensicherung von DATEV als Alternative zur Cloud-Sicherung</h2>
+<h2><img loading="lazy" style="float: left; margin-right: 15px;" src="https://www.ionas.com/wissen/wp-content/uploads/2017/04/DatevGrün-300x157.png" alt="Erfolgreiche DATEV-Sicherung" width="300" height="157" /></h2>
+<p>Die Ausführung der Skripte führt zu einer Sicherung der relevanten DATEV-Datenbanken. Das Ergebnis sehen Sie im nebenangestellten Screenshot. Bei einer erfolgreichen Sicherung der DATEV-Datenbanken wird das Konsolenfenster durch das Skript grün eingefärbt.</p>
+<p>Als Sicherungsziel empfehlen wir auf jeden Fall ein RAID-System. Ansonsten droht beim Ausfall der Sicherungsfestplatte der Verlust des Backups. Das RAID sollte wiederum regelmäßig überwacht werden, so dass die Redundanz der Sicherung nicht durch einen unbemerkten Ausfall einer Festplatte im Verbund verloren geht. <a href="https://www.datamate.org">Fellow</a>, der Small Businss Server aus dem Hause datamate, bietet eine solche RAID-Absicherung von Hause aus.</p>
+<p><img loading="lazy" style="float: right; margin-left: 15px;" src="https://www.ionas.com/wissen/wp-content/uploads/2017/04/DatevRot-300x153.png" alt="Fehler bei der Sicherung der DATEV-Datenbanken" width="300" height="153" /><br />
+Tritt im Rahmen des Backups ein Fehler auf, dann wird die resultierende Fehlermeldung in einem roten Konsolenfenster angezeigt. Mögliche Fehlerursachen können fehlende Berechtigungen, Probleme beim Stoppen des Dienstes oder Zugriffsprobleme auf das Sicherungslaufwerk sein. Dann kommt man nicht um ein wenig Debugging herum.</p>
+<p>Die Automatisierung der Sicherung lässt sich umsetzen, indem man das Master Skript als Aufgabe in der Windows Aufgabenplanung anlegt. Dann bietet das hier vorgestellt Skript einen guten Schutz gegen den Verlust der wertvollen Buchhaltungsdaten dar.</p>
+<p>Gerne unterstützen wir Sie auch bei der Einrichtung Ihrer lokalen DATEV-Sicherung oder der Umsetzung individueller Sicherungsstrategien. Sie erreichen uns telefonisch unter der +49 (0)6131 327070 oder per E-Mail unter info@ionas.com.</p>

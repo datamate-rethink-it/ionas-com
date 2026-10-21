@@ -1,10 +1,10 @@
 # ionas.com – statische Seite mit Hugo
 
-Ersetzt den alten PHP-Teil von ionas.com (alles **außer** `/wissen`).
-`/wissen` bleibt unverändert das bestehende WordPress und wird vom Webserver
-durchgereicht.
+Ersetzt ionas.com vollständig: den alten PHP-Teil **und** das WordPress
+unter `/wissen`. Das WordPress kann nach dem Umstieg abgeschaltet werden.
 
-Stand: 21.10.2026 · Hugo 0.168.0 (extended) · Quelle: `ionas-com.tar.gz`
+Stand: 21.10.2026 · Hugo 0.168.0 (extended) · Quellen: `ionas-com.tar.gz`
+und die WordPress-REST-API der Live-Installation
 
 ---
 
@@ -20,13 +20,34 @@ $ _build/verify.py
 identisch: 96    abweichend: 0    fehlend: 0    (von 96 Seiten)
 ```
 
-Alle 96 Seiten kommen Byte für Byte so heraus wie bisher – bis auf zwei
-bewusste, systematische Abweichungen, die der Vergleich normalisiert:
+Alle 96 Seiten des PHP-Teils kommen Byte für Byte so heraus wie bisher –
+bis auf zwei bewusste, systematische Abweichungen, die der Vergleich
+normalisiert:
 
 | Abweichung | Grund |
 |---|---|
 | `&` und `'` in Titel/Description sind jetzt `&amp;` / `&#39;` | Hugo kodiert korrekt; das alte PHP gab sie roh aus (formal invalides HTML, identische Darstellung) |
 | HTML-Kommentare im `<head>` fehlen im Ergebnis | Go's `html/template` entfernt sie beim Rendern. Sie stehen weiterhin in `layouts/baseof.html` – nur nicht mehr im ausgelieferten HTML |
+
+Für die 150 Wissensartikel ist Byte-Gleichheit **nicht** das Ziel: der
+WordPress-Kopf enthielt Emoji-Skripte, oEmbed- und wp-json-Verweise,
+XML-RPC-Pingback und Gutenberg-CSS, die bewusst nicht mitgekommen sind.
+Geprüft wird, was für Besucher und Suchmaschinen zählt:
+
+```
+$ _build/verify_wissen.py
+Wissensartikel geprüft: 150
+  Artikeltext identisch        150 / 150
+  title                       150 / 150
+  description                 150 / 150
+  canonical                   150 / 150
+  robots                      150 / 150
+  Kommentare vollständig       150 / 150  (280 Kommentare)
+  Vor/Zurück-Verweise          150 / 150
+  Schlagwort-Verweise          150 / 150
+  Teaser der Übersicht         150 / 150
+keine Abweichungen
+```
 
 ---
 
@@ -34,23 +55,42 @@ bewusste, systematische Abweichungen, die der Vergleich normalisiert:
 
 ```
 hugo.toml                   Konfiguration (kommentiert)
-content/                    96 Seiten – nur Inhalt, kein Layout
+content/                    316 Seiten – nur Inhalt, kein Layout
   _index.html               Startseite
   <slug>.html               21 einfache Seiten (Leistungen, Impressum, …)
   pc-hilfe/_index.html      Übersicht /pc-hilfe
   pc-hilfe/<stadt>.html     56 Städte-Landingpages
   <thema>.html              19 Hilfethemen (type: thema)
-layouts/                    602 Zeilen – das gesamte Seitengerüst
-  baseof.html               <head>, Rahmen
+  wissen/_index.html        Artikelübersicht /wissen/
+  wissen/<slug>.html        150 Wissensartikel
+  wissen/suche.html         Suchseite
+  wissen-archiv/<jahr-monat>.html   68 Monatsarchive
+layouts/                    1095 Zeilen – das gesamte Seitengerüst
+  baseof.html               Rahmen, wählt zwischen den beiden <head>-Varianten
+  _partials/kopf-ionas.html     <head> des PHP-Teils
+  _partials/kopf-wissen.html    <head> der Wissensartikel (SEO-Metadaten)
   _partials/site-header.html    Navigation
   _partials/site-footer.html    Footer
   _partials/home-seo.html       SEO-Textblock, nur auf der Startseite
   _partials/pc-hilfe.html       Städte-Template (aus staedte/pc-hilfe.php)
+  _partials/wissen-sidebar.html     Seitenleiste der Artikel
+  _partials/wissen-liste.html       ein Eintrag der Artikellisten
+  _partials/wissen-kommentare.html  die übernommenen Kommentare
+  _partials/wissen-schema.html      JSON-LD, Form wie bisher von Yoast
   thema/page.html               Hilfethemen-Template (aus themen/hilfethemen.php)
+  wissen/page.html              ein Wissensartikel
+  wissen/section.html           Artikelübersicht, 100 je Seite
+  wissen/section.wissenfeed.xml     /wissen/feed.xml
+  wissen/section.wissen*sitemap*.xml  die drei Sitemaps aus /wissen/
+  wissen-archiv/page.html       Monatsarchiv
+  term.html                     Schlagwortseite /wissen/tag/<slug>/
   home.mainsitemap.xml          erzeugt sitemap/main.xml
   404.html
 data/sitemap_extra.yaml     Sitemap-Einträge, die keine Seiten sind (PDFs, /agb)
-webroot/                    41 MB, wird unverändert unter / ausgeliefert
+data/kommentare.yaml        280 übernommene Kommentare, nach Artikel gruppiert
+data/tagnamen.yaml          Anzeigenamen der 333 benutzten Schlagwörter
+webroot/                    169 MB, wird unverändert unter / ausgeliefert
+  wissen/wp-content/uploads/    die Artikelbilder unter ihren alten Adressen
 deploy/Caddyfile            fertige Caddy-Konfiguration
 deploy/nginx-ionas.conf     Alternative für den bestehenden nginx
 _build/                     Einmal-Migrationswerkzeug, nach dem Umstieg löschbar
@@ -65,8 +105,13 @@ selbst einen Pfad `/static/` für CSS und JS benutzt – zwei Bedeutungen von
 
 ```bash
 hugo --gc                                   # erzeugt public/
+npx pagefind --site public                  # Suchindex für /wissen/suche/
 rsync -a --delete public/ server:/var/www/ionas/
 ```
+
+Der Pagefind-Lauf ist nur für die Suche nötig. Ohne ihn steht die Seite
+`/wissen/suche/` da und meldet, dass die Suche nicht verfügbar ist – alles
+andere funktioniert.
 
 Kein `--minify`: das würde die Byte-Gleichheit mit dem alten Stand aufgeben.
 `[minify] disableHTML = true` in `hugo.toml` ist die Bremse, falls es doch
@@ -105,6 +150,109 @@ steuert Breadcrumb und Überschriften, `canonical:` die URL im
 `sitemap_lastmod` der Frontmatter erzeugt, plus `data/sitemap_extra.yaml` für
 die PDFs. `sitemap.xml` selbst bleibt ein statischer Index in `webroot/`,
 weil er auch auf `wissen/sitemap_index.xml` zeigt.
+
+## Die Wissensartikel
+
+150 Beiträge aus den Jahren 2014 bis 2026, geholt über die REST-API der
+WordPress-Installation. Der **Artikeltext** stammt aus den gerenderten
+Seiten, nicht aus der API: nur dort steht die `<span id="more-NNN">`-Marke,
+an der WordPress den Teaser für die Übersicht abschneidet.
+
+Mitgekommen sind auch:
+
+- **280 Kommentare** auf 38 Artikeln (2015–2019, seit dann keine neuen) als
+  reines HTML unter dem Artikel. Kein Formular mehr – eine statische Seite
+  nimmt keine Eingaben an.
+- **333 Schlagwörter** mit ihren Seiten unter `/wissen/tag/<slug>/`, auf
+  `noindex, follow` – genau wie Yoast sie behandelt hat (sie standen nie in
+  der Sitemap). 47 Schlagwörter ohne Beitrag sind weggefallen.
+- **68 Monatsarchive** unter `/wissen/<jahr>/<monat>/`, ebenfalls noindex.
+- Der **RSS-Feed** unter `/wissen/feed/` (im Footer jeder Seite verlinkt).
+- Die **drei Yoast-Sitemaps** `/wissen/sitemap_index.xml`,
+  `post-sitemap.xml` und `page-sitemap.xml`. Der Index ist in der Search
+  Console eingetragen und bleibt deshalb unter derselben Adresse.
+- Das **JSON-LD** in Yoasts Form (Organization, WebSite, ImageObject,
+  WebPage, BreadcrumbList, Article, Person), erzeugt in
+  `_partials/wissen-schema.html` statt 150 Mal gespeichert.
+- Die **Bilder** bleiben unter `/wissen/wp-content/uploads/…`. Unschön, aber
+  so brechen keine Verweise aus Google Bilder oder von fremden Seiten.
+
+### Drei Plugins ersetzt
+
+| vorher | jetzt |
+|---|---|
+| simple-lightbox, 217 KB, neun Skriptdateien, jQuery | `webroot/static/js/lightbox.js`, 2 KB Vanilla-JS auf `<dialog>`. Greift dieselbe Auszeichnung ab (`<a href="bild.jpg"><img>`), kein Artikel musste angefasst werden |
+| WordPress-Suche (`?s=`) | Pagefind unter `/wissen/suche/`, Index aus 150 Artikeln. Die Seitenleiste zeigt dorthin |
+| Yoast SEO | `_partials/kopf-wissen.html` und `_partials/wissen-schema.html` |
+
+### Abweichungen im Erscheinungsbild
+
+- Die **Schriftgrößen der Schlagwortwolke** folgen der dokumentierten
+  linearen WordPress-Formel (8–22 pt). Das Widget benutzte eine nicht
+  nachvollziehbare Skalierung; die Abstufung wirkt gleich, einzelne
+  Begriffe sind ein bis zwei Punkt größer oder kleiner.
+- Der **viewport**-Meta stand im WordPress viermal im Kopf, zuletzt mit
+  `maximum-scale=1.0, user-scalable=no`. Das verhindert Zoomen auf dem
+  Handy. Jetzt steht dort nur noch die zoombare Variante wie im übrigen
+  Teil der Seite.
+- Hugo schreibt `"` als `&#34;` und `+` als `&#43;`, Yoast schrieb `&quot;`
+  bzw. `+`. Gleiche Darstellung; im `<title>` lässt sich Gos Maskierung
+  nicht abschalten.
+
+### Einen Artikel schreiben
+
+Eine Datei in `content/wissen/` anlegen:
+
+```markdown
+---
+title: "Überschrift des Artikels"
+date: 2026-11-02
+url: "/wissen/mein-neuer-artikel/"
+wissen: true
+autor: "Christoph Dyllick-Brenzinger"
+beschreibung: "Ein Satz für Suchergebnis und Vorschau."
+canonical_url: "https://www.ionas.com/wissen/mein-neuer-artikel/"
+tags: ["backup", "windows"]
+---
+
+Erster Absatz, der als Teaser in der Übersicht erscheint.
+
+<!--more-->
+
+Der Rest des Artikels.
+```
+
+Markdown geht hier, anders als bei den übernommenen Artikeln: die liegen als
+HTML vor, weil sie wortgleich aus WordPress kommen. Beides darf im selben
+Verzeichnis liegen.
+
+Die übernommenen Artikel haben ein Feld `teaser` mit dem Übersichtstext.
+Neue Artikel brauchen es nicht – ohne `teaser` greift Hugos `.Summary`, also
+der Text vor `<!--more-->`. Der Grund für das Feld: WordPress hängt den
+„(mehr …)"-Verweis bei 122 Artikeln als eigenen Absatz an, bei 28 mitten in
+den letzten Absatz. Aus dem Volltext ist das nicht zu rekonstruieren.
+
+Schlagwörter stehen als Slug in der Frontmatter; der Anzeigename kommt aus
+`data/tagnamen.yaml`. Ein neues Schlagwort dort ergänzen, sonst fehlt es in
+der Wolke und auf der Seitenleiste.
+
+### Das WordPress abschalten
+
+Nach dem Umstieg wird unter `/wissen` nichts mehr dynamisch ausgeliefert –
+`deploy/Caddyfile` enthält keinen Proxy mehr dorthin. Damit entfallen
+WordPress 5.9.2 (über vier Jahre ohne Updates), die neun Plugins, die
+MySQL-Datenbank und der Login unter `/wissen/wp-admin/`.
+
+Vorher sichern, weil es danach keine Oberfläche mehr gibt, über die man
+herankommt:
+
+```bash
+mysqldump wp_ionas_com | gzip > wp_ionas_com_$(date +%F).sql.gz
+tar czf wissen-wp-content_$(date +%F).tar.gz wissen/wp-content
+```
+
+Die Artikel selbst liegen danach als Dateien in `content/wissen/` und
+brauchen die Datenbank nicht mehr.
 
 ## Was bewusst nicht mitgekommen ist
 
@@ -146,9 +294,19 @@ Damit sinkt das Auszuliefernde von rund 100 MB auf **41 MB**.
 - neu: `ionas.com` → `www.ionas.com`. Bisher lieferten **beide** Hosts 200
   ohne Weiterleitung, obwohl alle `canonical` auf `www` zeigen.
 
+Dazu drei Weiterleitungen aus den Wissensartikeln: `/drucker-druckt-nicht/`,
+`/datensicherung-mit-windows-bordmitteln/` und
+`/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/`.
+Drei Artikel verlinken aufeinander ohne das `/wissen`-Präfix; diese Adressen
+liefern auch im WordPress 404. Die Weiterleitung repariert das, ohne die
+Artikeltexte anzufassen.
+
 Hugo legt für die Aliase zusätzlich `meta-refresh`-Seiten ab. Die 301 greift
 zuerst; die Dateien sind der Rückfall, falls die Seite mal ohne diese
 Konfiguration ausgeliefert wird.
+
+`/wissen/feed/` wird intern auf die von Hugo erzeugte `/wissen/feed.xml`
+umgeschrieben, damit die im Footer verlinkte Adresse gleich bleibt.
 
 `/agb` liefert weiterhin `downloads/AGB-ionas.pdf`. Das war eine
 Rewrite-Regel im nginx-vhost und stand **nicht** im Tarball – leicht zu
@@ -167,6 +325,12 @@ sie aus einem Backup zurückkommen oder die Links weg sollen:
 | `/static/presse/1510_Gewinner Mainzer Wirtschaftspreis-2015.pdf` | `/presse` |
 
 Alle drei liefern live 404 und standen in der Sitemap – dort jetzt entfernt.
+
+Dasselbe gilt für zwei Hintergrundbilder, die das WordPress-Theme in seiner
+`style.css` unter `/wissen/startup/common-files/icons/menu-icon*@2x.png`
+sucht. Die Dateien liegen tatsächlich unter `/images/`; im WordPress fehlen
+sie seit immer. Nicht korrigiert, weil dafür das Theme-Stylesheet geändert
+werden müsste und die Symbole vom Haupt-CSS ohnehin gestellt werden.
 
 Harmlos, aber vorhanden: `bootstrap.min.css` sucht vier
 `glyphicons-halflings-regular.*`-Dateien, von denen nur die `.woff`
@@ -187,10 +351,19 @@ Byte-Vergleich oben sauber bleibt.
 `rel="author"`/`rel="publisher"` auf `plus.google.com` (Google+ ist seit 2019
 abgeschaltet) und eine `alexaVerifyID` (Alexa seit 2022 eingestellt).
 
-**`/wissen`.** Das ist der verbleibende Risikoträger: WordPress 5.9.2 von
-März 2022, über vier Jahre ohne Updates, 167 MB Uploads, acht neue Artikel
-pro Jahr. Der statische PHP-Teil senkt die Angriffsfläche nur um den
-kleineren Teil.
+**Bilder verkleinern.** `webroot/` ist mit 169 MB vom Bildbestand der
+Artikel bestimmt; einzelne Originale sind mehrere Megabyte groß und werden
+im Artikel auf 450 px angezeigt. 823 ungenutzte Zwischengrößen sind schon
+weggefallen. Eine Runde `cwebp` oder ein Resize der Originale würde den
+Rest deutlich drücken – ändert aber ausgelieferte Dateien und wurde deshalb
+nicht nebenbei gemacht.
+
+**Die Suchoberfläche einmal anklicken.** Der Pagefind-Index baut (150
+Seiten, 16 027 Wörter) und `pagefind-ui.js` setzt `window.PagefindUI` mit
+allen neun Übersetzungsschlüsseln, die `suche.js` verwendet – das ist
+geprüft. Die Oberfläche selbst wurde nicht im Browser bedient; hier stand
+keine Browser-Verbindung zur Verfügung. Nach dem Deploy einmal
+`/wissen/suche/` öffnen und einen Begriff eintippen.
 
 ## Migration nachvollziehen oder wiederholen
 
@@ -220,7 +393,15 @@ Ein Neulauf von `build.sh` erzeugt bit-identisch denselben Stand – geprüft
 Die Reihenfolge ist: `gen_layouts.py` (Gerüst aus dem Referenz-Render),
 `gen_tpl.py` (Städte- und Themen-Template aus der PHP-Quelle),
 `gen_content.py` (96 Seiten), `gen_static.py` (Assets + Sitemap),
+`gen_wissen.py` (150 Artikel, Kommentare, Schlagwörter, Archive),
 `gen_deploy.py` (Caddy/nginx).
+
+Die handgeschriebenen Templates des Wissensbereichs liegen als lesbare
+Dateien in `_build/templates/`, die Skripte in `_build/assets/`;
+`gen_wissen.py` kopiert sie nach `layouts/` bzw. `webroot/`. Die
+WordPress-Daten liegen als JSON in `_build/wp/` (Beiträge, Kommentare,
+Schlagwörter, Teaser) und die gerenderten Vergleichsseiten in
+`_build/reference-wissen/`.
 
 `gen_tpl.py` lässt PHP selbst tokenisieren (`tok.php`), statt mit Regexen
 HTML von PHP zu trennen: in `pc-hilfe.php` überspannt ein `/* */`-Kommentar
@@ -247,15 +428,9 @@ die beiden Kundenstimmen stehen jetzt als HTML in `content/preise.html`.
 
 ---
 
-## Noch zu tun, unabhängig von dieser Migration
+## Zum alten Quellbaum
 
-1. **`functions.php` im alten Quellbaum enthält Klartext-Zugangsdaten**:
-   MySQL-Credentials der WordPress-Datenbank und das SMTP-Passwort von
-   `noreply@datamate.de`, dazu eine auskommentierte Root-Verbindung zu
-   `37.148.137.58`. Passwörter rotieren, das Tarball nicht weitergeben.
-2. **`storage/contracts/` enthält 60 Kundenvertrags-PDFs** mit Klarnamen
-   (Muster `200107_NachnameVorname_106506.pdf`), dazu `storage/sepa-updates/`.
-   Prüfen, ob die öffentlich abrufbar sind:
-   `curl -sI https://www.ionas.com/storage/contracts/<datei>.pdf | head -1`
-   Ein `200` wäre ein meldepflichtiger Datenschutzvorfall. Im neuen Webroot
-   sind diese Dateien nicht enthalten.
+`functions.php` enthält MySQL- und SMTP-Zugangsdaten im Klartext und
+`storage/contracts/` 60 Kundenvertrags-PDFs. Beides ist im neuen Webroot
+nicht enthalten und wird mit Seite und Datenbank abgelöst – erledigt sich
+also mit dem Umstieg.

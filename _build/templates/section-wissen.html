@@ -1,0 +1,26 @@
+{{ define "main" }}
+<section class="content-10 blog">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-9">
+{{- $beitraege := (where (where site.RegularPages "Section" "wissen") "Params.suche" "!=" true).ByDate.Reverse }}
+{{- $seite := .Paginate $beitraege 100 }}
+{{- partial "wissen-liste.html" $seite.Pages }}
+{{- with $seite }}{{ if gt .TotalPages 1 }}
+        <p align="center">
+{{- with .Prev }}          <a href="{{ .URL }}">&laquo; neuere Artikel</a>{{ end }}
+{{- if and .Prev .Next }} | {{ end }}
+{{- with .Next }}          <a href="{{ .URL }}">ältere Artikel &raquo;</a>{{ end }}
+        </p>
+{{ end }}{{ end }}
+      </div>
+
+      <div class="col-sm-3">
+{{- partial "wissen-sidebar.html" . }}
+      </div>
+
+    </div>
+  </div>
+</section>
+{{ end }}

@@ -1,0 +1,1336 @@
+# Anzeigenamen und WordPress-Term-IDs der Schlagwoerter.
+# Hugo leitet Begriffsseiten aus den Slugs in der Frontmatter ab;
+# der Anzeigename steht hier, damit "backup" nicht zu "Backup"
+# normalisiert wird und die tag-link-NN-Klassen gleich bleiben.
+abzocke:
+  name: "Abzocke"
+  id: 179
+  anzahl: 1
+acronis:
+  name: "Acronis"
+  id: 372
+  anzahl: 1
+adobe:
+  name: "Adobe"
+  id: 223
+  anzahl: 1
+adobe-reader:
+  name: "Adobe Reader"
+  id: 238
+  anzahl: 1
+alternative:
+  name: "Alternative"
+  id: 170
+  anzahl: 1
+android:
+  name: "Android"
+  id: 81
+  anzahl: 4
+anleitung:
+  name: "Anleitung"
+  id: 276
+  anzahl: 2
+anmeldung:
+  name: "Anmeldung"
+  id: 68
+  anzahl: 1
+anonym:
+  name: "Anonym"
+  id: 73
+  anzahl: 1
+antivirenprogramm:
+  name: "Antivirenprogramm"
+  id: 22
+  anzahl: 6
+antivirenprogramme:
+  name: "Antivirenprogramme"
+  id: 367
+  anzahl: 1
+antivirensoftware:
+  name: "Antivirensoftware"
+  id: 192
+  anzahl: 1
+antivirus:
+  name: "Antivirus"
+  id: 25
+  anzahl: 1
+antivirusprogramm:
+  name: "Antivirusprogramm"
+  id: 311
+  anzahl: 1
+antivirussoftware:
+  name: "Antivirussoftware"
+  id: 193
+  anzahl: 1
+anwendungsprogramme:
+  name: "Anwendungsprogramme"
+  id: 97
+  anzahl: 1
+apple:
+  name: "Apple"
+  id: 245
+  anzahl: 1
+askozia:
+  name: "askozia"
+  id: 349
+  anzahl: 1
+auffrischung:
+  name: "Auffrischung"
+  id: 128
+  anzahl: 1
+ausfallsicherheit:
+  name: "Ausfallsicherheit"
+  id: 107
+  anzahl: 1
+ausfuehren:
+  name: "Ausführen"
+  id: 162
+  anzahl: 1
+authentifizierung:
+  name: "Authentifizierung"
+  id: 67
+  anzahl: 1
+avast:
+  name: "Avast"
+  id: 194
+  anzahl: 1
+avira:
+  name: "Avira"
+  id: 24
+  anzahl: 3
+backup:
+  name: "backup"
+  id: 212
+  anzahl: 7
+backupsoftware:
+  name: "Backupsoftware"
+  id: 246
+  anzahl: 1
+badoo:
+  name: "Badoo"
+  id: 176
+  anzahl: 1
+benutzerkonten:
+  name: "Benutzerkonten"
+  id: 137
+  anzahl: 2
+benutzerkontensteuerung:
+  name: "Benutzerkontensteuerung"
+  id: 138
+  anzahl: 2
+benutzerprofil:
+  name: "Benutzerprofil"
+  id: 164
+  anzahl: 1
+benutzerrechte:
+  name: "Benutzerrechte"
+  id: 204
+  anzahl: 1
+berechnung:
+  name: "Berechnung"
+  id: 317
+  anzahl: 1
+betrug:
+  name: "Betrug"
+  id: 178
+  anzahl: 1
+bewerbung:
+  name: "Bewerbung"
+  id: 315
+  anzahl: 2
+bildschirmfoto:
+  name: "Bildschirmfoto"
+  id: 277
+  anzahl: 1
+bios:
+  name: "BIOS"
+  id: 98
+  anzahl: 1
+blacklist:
+  name: "Blacklist"
+  id: 198
+  anzahl: 1
+boot-camp:
+  name: "Boot Camp"
+  id: 181
+  anzahl: 1
+bordmittel:
+  name: "Bordmittel"
+  id: 219
+  anzahl: 1
+browser:
+  name: "Browser"
+  id: 187
+  anzahl: 1
+buddy:
+  name: "buddy"
+  id: 369
+  anzahl: 1
+buero-pc:
+  name: "Büro-PC"
+  id: 61
+  anzahl: 1
+caldav:
+  name: "caldav"
+  id: 14
+  anzahl: 1
+carddav:
+  name: "carddav"
+  id: 15
+  anzahl: 1
+chkdsk:
+  name: "chkdsk"
+  id: 155
+  anzahl: 1
+chrome:
+  name: "Chrome"
+  id: 115
+  anzahl: 1
+chromequick_startcontentindex-html:
+  name: "chrome://quick_start/content/index.html"
+  id: 121
+  anzahl: 1
+client:
+  name: "Client"
+  id: 279
+  anzahl: 1
+cloud-backup:
+  name: "Cloud Backup"
+  id: 373
+  anzahl: 1
+cloud-computing:
+  name: "cloud computing"
+  id: 228
+  anzahl: 1
+cloudspeicher:
+  name: "cloudspeicher"
+  id: 33
+  anzahl: 1
+cookies:
+  name: "Cookies"
+  id: 113
+  anzahl: 1
+cortana:
+  name: "Cortana"
+  id: 342
+  anzahl: 1
+datamate:
+  name: "datamate"
+  id: 368
+  anzahl: 1
+dateiexplorer:
+  name: "Dateiexplorer"
+  id: 268
+  anzahl: 1
+dateihistorie:
+  name: "dateihistorie"
+  id: 218
+  anzahl: 1
+dateipruefung:
+  name: "Dateiprüfung"
+  id: 314
+  anzahl: 1
+dateiversionsverlauf:
+  name: "dateiversionsverlauf"
+  id: 214
+  anzahl: 2
+datendatei:
+  name: "Datendatei"
+  id: 329
+  anzahl: 2
+datenhoheit:
+  name: "Datenhoheit"
+  id: 231
+  anzahl: 1
+datenredundanz:
+  name: "Datenredundanz"
+  id: 105
+  anzahl: 1
+datensicherheit:
+  name: "Datensicherheit"
+  id: 104
+  anzahl: 3
+datensicherung:
+  name: "datensicherung"
+  id: 211
+  anzahl: 6
+datenverfuegbarkeit:
+  name: "Datenverfügbarkeit"
+  id: 106
+  anzahl: 1
+datenwiederherstellung:
+  name: "Datenwiederherstellung"
+  id: 283
+  anzahl: 1
+datev:
+  name: "DATEV"
+  id: 355
+  anzahl: 1
+dating-apps:
+  name: "Dating-Apps"
+  id: 177
+  anzahl: 1
+deaktivierung:
+  name: "Deaktivierung"
+  id: 343
+  anzahl: 1
+defender:
+  name: "Defender"
+  id: 23
+  anzahl: 1
+defragmenter:
+  name: "Defragmenter"
+  id: 46
+  anzahl: 1
+defragmentierungsprogramm:
+  name: "Defragmentierungsprogramm"
+  id: 47
+  anzahl: 1
+deinstallation:
+  name: "Deinstallation"
+  id: 12
+  anzahl: 5
+desktop-pc:
+  name: "desktop pc"
+  id: 370
+  anzahl: 1
+diagramm:
+  name: "Diagramm"
+  id: 377
+  anzahl: 1
+dienstprogramm:
+  name: "Dienstprogramm"
+  id: 43
+  anzahl: 1
+domain:
+  name: "Domain"
+  id: 383
+  anzahl: 1
+doppelstrich:
+  name: "Doppelstrich"
+  id: 272
+  anzahl: 1
+driver-updater:
+  name: "Driver Updater"
+  id: 44
+  anzahl: 1
+dropbox-alternative:
+  name: "dropbox alternative"
+  id: 32
+  anzahl: 1
+drucker:
+  name: "Drucker"
+  id: 90
+  anzahl: 1
+druckerdienst:
+  name: "Druckerdienst"
+  id: 92
+  anzahl: 1
+druckerprobleme:
+  name: "Druckerprobleme"
+  id: 91
+  anzahl: 1
+e-mail:
+  name: "E-Mail"
+  id: 140
+  anzahl: 9
+e-mail-client:
+  name: "E-Mail Client"
+  id: 280
+  anzahl: 1
+e-mail-konto:
+  name: "E-Mail Konto"
+  id: 195
+  anzahl: 1
+e-mail-made-in-germany:
+  name: "E-Mail made in Germany"
+  id: 145
+  anzahl: 1
+e-mail-programm:
+  name: "E-Mail Programm"
+  id: 281
+  anzahl: 1
+e-mail-provider:
+  name: "E-Mail Provider"
+  id: 196
+  anzahl: 1
+e-mailanbieter:
+  name: "E-Mailanbieter"
+  id: 76
+  anzahl: 1
+easybell:
+  name: "easybell"
+  id: 353
+  anzahl: 1
+efi:
+  name: "efi"
+  id: 99
+  anzahl: 1
+eingabeaufforderung:
+  name: "Eingabeaufforderung"
+  id: 151
+  anzahl: 2
+einrichtung:
+  name: "einrichtung"
+  id: 191
+  anzahl: 2
+elster:
+  name: "elster"
+  id: 54
+  anzahl: 1
+empfehlung:
+  name: "Empfehlung"
+  id: 26
+  anzahl: 1
+enigmail:
+  name: "Enigmail"
+  id: 142
+  anzahl: 1
+entfernung:
+  name: "Entfernung"
+  id: 39
+  anzahl: 1
+excel:
+  name: "Excel"
+  id: 316
+  anzahl: 2
+explorer:
+  name: "Explorer"
+  id: 117
+  anzahl: 1
+export:
+  name: "Export"
+  id: 332
+  anzahl: 1
+fehler-beim-start:
+  name: "Fehler beim Start"
+  id: 56
+  anzahl: 1
+fehlermeldung:
+  name: "Fehlermeldung"
+  id: 120
+  anzahl: 2
+fehlfunktion:
+  name: "fehlfunktion"
+  id: 89
+  anzahl: 1
+felder:
+  name: "Felder"
+  id: 305
+  anzahl: 1
+feldfunktionen:
+  name: "Feldfunktionen"
+  id: 306
+  anzahl: 1
+fenstermanagement:
+  name: "Fenstermanagement"
+  id: 252
+  anzahl: 1
+festplattenwechsel:
+  name: "Festplattenwechsel"
+  id: 338
+  anzahl: 1
+find-my-phone:
+  name: "Find My Phone"
+  id: 83
+  anzahl: 1
+firefox:
+  name: "Firefox"
+  id: 114
+  anzahl: 2
+firewall:
+  name: "firewall"
+  id: 63
+  anzahl: 3
+formatierung:
+  name: "Formatierung"
+  id: 366
+  anzahl: 1
+formatvorlage:
+  name: "Formatvorlage"
+  id: 167
+  anzahl: 3
+formel:
+  name: "Formel"
+  id: 307
+  anzahl: 1
+foxit-reader:
+  name: "Foxit Reader"
+  id: 239
+  anzahl: 1
+fritzbox:
+  name: "fritzbox"
+  id: 64
+  anzahl: 1
+g-data:
+  name: "G Data"
+  id: 74
+  anzahl: 1
+gaming:
+  name: "Gaming"
+  id: 379
+  anzahl: 1
+gaming-pc:
+  name: "Gaming-PC"
+  id: 60
+  anzahl: 1
+gmx:
+  name: "GMX"
+  id: 250
+  anzahl: 1
+gnupg:
+  name: "GnuPG"
+  id: 143
+  anzahl: 1
+gpg4win:
+  name: "GPG4Win"
+  id: 144
+  anzahl: 1
+hardware-empfehlung:
+  name: "Hardware-Empfehlung"
+  id: 59
+  anzahl: 1
+hash:
+  name: "Hash"
+  id: 66
+  anzahl: 1
+hashwert:
+  name: "Hashwert"
+  id: 70
+  anzahl: 1
+hdd:
+  name: "HDD"
+  id: 336
+  anzahl: 1
+hkcmd:
+  name: "hkcmd"
+  id: 262
+  anzahl: 1
+hochverfuegbarkeitsloesung:
+  name: "Hochverfügbarkeitslösung"
+  id: 108
+  anzahl: 1
+holzgehaeuse:
+  name: "holzgehäuse"
+  id: 371
+  anzahl: 1
+https:
+  name: "HTTPS"
+  id: 209
+  anzahl: 1
+icloud:
+  name: "icloud"
+  id: 17
+  anzahl: 1
+igfxhkcmd:
+  name: "igfxhkcmd"
+  id: 263
+  anzahl: 1
+igfxpers:
+  name: "igfxpers"
+  id: 261
+  anzahl: 1
+igfxsrvc:
+  name: "igfxsrvc"
+  id: 259
+  anzahl: 1
+igfxtray:
+  name: "igfxtray"
+  id: 260
+  anzahl: 1
+image:
+  name: "image"
+  id: 216
+  anzahl: 1
+import:
+  name: "Import"
+  id: 333
+  anzahl: 1
+inhaltsverzeichnis:
+  name: "Inhaltsverzeichnis"
+  id: 166
+  anzahl: 2
+inkrementell:
+  name: "inkrementell"
+  id: 247
+  anzahl: 1
+installation:
+  name: "Installation"
+  id: 134
+  anzahl: 1
+intel:
+  name: "Intel"
+  id: 256
+  anzahl: 1
+internet:
+  name: "Internet"
+  id: 112
+  anzahl: 4
+ionas-server:
+  name: "ionas-server"
+  id: 18
+  anzahl: 3
+ios:
+  name: "iOS"
+  id: 254
+  anzahl: 1
+ip-adresse:
+  name: "IP-Adresse"
+  id: 197
+  anzahl: 1
+ipconfig:
+  name: "ipconfig"
+  id: 150
+  anzahl: 1
+iphone:
+  name: "iPhone"
+  id: 82
+  anzahl: 2
+ipv4:
+  name: "IPv4"
+  id: 148
+  anzahl: 1
+kalenderserver:
+  name: "Kalenderserver"
+  id: 173
+  anzahl: 1
+kennwort:
+  name: "Kennwort"
+  id: 362
+  anzahl: 1
+konsole:
+  name: "Konsole"
+  id: 152
+  anzahl: 1
+kontaktsynchronisation:
+  name: "kontaktsynchronisation"
+  id: 20
+  anzahl: 1
+kostenlos:
+  name: "kostenlos"
+  id: 111
+  anzahl: 1
+libreoffice:
+  name: "LibreOffice"
+  id: 278
+  anzahl: 1
+lightning:
+  name: "Lightning"
+  id: 172
+  anzahl: 1
+linux:
+  name: "Linux"
+  id: 29
+  anzahl: 2
+lizenz:
+  name: "lizenz"
+  id: 78
+  anzahl: 1
+locky:
+  name: "Locky"
+  id: 265
+  anzahl: 1
+loeschen:
+  name: "Löschen"
+  id: 118
+  anzahl: 1
+lokalisierung:
+  name: "Lokalisierung"
+  id: 85
+  anzahl: 1
+lovoo:
+  name: "Lovoo"
+  id: 174
+  anzahl: 1
+mac:
+  name: "Mac"
+  id: 30
+  anzahl: 3
+mac-os:
+  name: "Mac OS"
+  id: 200
+  anzahl: 2
+mac-os-x:
+  name: "Mac OS X"
+  id: 249
+  anzahl: 1
+macos:
+  name: "MacOS"
+  id: 180
+  anzahl: 1
+malware:
+  name: "Malware"
+  id: 10
+  anzahl: 10
+microsoft:
+  name: "microsoft"
+  id: 77
+  anzahl: 2
+migration:
+  name: "Migration"
+  id: 327
+  anzahl: 1
+mozilla:
+  name: "mozilla"
+  id: 119
+  anzahl: 1
+msconfig:
+  name: "msconfig"
+  id: 157
+  anzahl: 1
+msinfo32:
+  name: "msinfo32"
+  id: 154
+  anzahl: 1
+msvcr120-dll:
+  name: "msvcr120.dll"
+  id: 55
+  anzahl: 1
+navigationsbereich:
+  name: "Navigationsbereich"
+  id: 270
+  anzahl: 1
+netzwerk:
+  name: "Netzwerk"
+  id: 146
+  anzahl: 2
+netzwerkprobleme:
+  name: "Netzwerkprobleme"
+  id: 147
+  anzahl: 1
+neuinstallation:
+  name: "Neuinstallation"
+  id: 80
+  anzahl: 1
+ninite:
+  name: "Ninite"
+  id: 94
+  anzahl: 2
+onedrive:
+  name: "OneDrive"
+  id: 35
+  anzahl: 2
+opera:
+  name: "Opera"
+  id: 116
+  anzahl: 1
+ortung:
+  name: "Ortung"
+  id: 84
+  anzahl: 1
+ost:
+  name: "OST"
+  id: 331
+  anzahl: 2
+outlook:
+  name: "Outlook"
+  id: 169
+  anzahl: 7
+outlook-2013:
+  name: "Outlook 2013"
+  id: 325
+  anzahl: 1
+outlook-2016:
+  name: "Outlook 2016"
+  id: 326
+  anzahl: 1
+owncloud-alternative:
+  name: "owncloud alternative"
+  id: 31
+  anzahl: 1
+paragon:
+  name: "Paragon"
+  id: 322
+  anzahl: 1
+parallels-desktop:
+  name: "Parallels Desktop"
+  id: 185
+  anzahl: 1
+passwort:
+  name: "Passwort"
+  id: 57
+  anzahl: 4
+passwortmanager:
+  name: "Passwortmanager"
+  id: 58
+  anzahl: 1
+pc-probleme:
+  name: "PC-Probleme"
+  id: 122
+  anzahl: 1
+pdf-dateibetrachter:
+  name: "PDF Dateibetrachter"
+  id: 237
+  anzahl: 1
+pdf-drucken:
+  name: "PDF drucken"
+  id: 233
+  anzahl: 1
+pdf-drucker:
+  name: "PDF Drucker"
+  id: 234
+  anzahl: 1
+pdf-erstellen:
+  name: "PDF erstellen"
+  id: 232
+  anzahl: 1
+pdf-viewer:
+  name: "PDF Viewer"
+  id: 236
+  anzahl: 1
+pdf-xchange-editor:
+  name: "PDF-XChange Editor"
+  id: 240
+  anzahl: 1
+pgp:
+  name: "PGP"
+  id: 141
+  anzahl: 1
+ping:
+  name: "ping"
+  id: 149
+  anzahl: 1
+portable-document-format:
+  name: "Portable Document Format"
+  id: 235
+  anzahl: 1
+praevention:
+  name: "Prävention"
+  id: 53
+  anzahl: 1
+private-cloud:
+  name: "private cloud"
+  id: 229
+  anzahl: 1
+problembehandlung:
+  name: "problembehandlung"
+  id: 88
+  anzahl: 1
+probleme:
+  name: "Probleme"
+  id: 275
+  anzahl: 1
+programme:
+  name: "Programme"
+  id: 96
+  anzahl: 3
+programmierung:
+  name: "Programmierung"
+  id: 382
+  anzahl: 1
+proxy:
+  name: "Proxy"
+  id: 363
+  anzahl: 1
+pst:
+  name: "PST"
+  id: 330
+  anzahl: 2
+public-cloud:
+  name: "public cloud"
+  id: 230
+  anzahl: 1
+quicktipps:
+  name: "Quicktipps"
+  id: 251
+  anzahl: 1
+raid:
+  name: "RAID"
+  id: 103
+  anzahl: 1
+ransomware:
+  name: "Ransomware"
+  id: 266
+  anzahl: 1
+recovery-partition:
+  name: "Recovery Partition"
+  id: 205
+  anzahl: 1
+resetpassword:
+  name: "resetpassword"
+  id: 206
+  anzahl: 1
+resmon:
+  name: "resmon"
+  id: 153
+  anzahl: 1
+restore:
+  name: "Restore"
+  id: 375
+  anzahl: 1
+review:
+  name: "Review"
+  id: 7
+  anzahl: 1
+router:
+  name: "router"
+  id: 62
+  anzahl: 2
+schadprogramm:
+  name: "Schadprogramm"
+  id: 48
+  anzahl: 1
+schadsoftware:
+  name: "Schadsoftware"
+  id: 13
+  anzahl: 7
+schnelltabelle:
+  name: "Schnelltabelle"
+  id: 364
+  anzahl: 1
+schutz:
+  name: "Schutz"
+  id: 133
+  anzahl: 1
+screen-capture:
+  name: "Screen Capture"
+  id: 3
+  anzahl: 1
+screen-recording:
+  name: "Screen Recording"
+  id: 4
+  anzahl: 1
+screenrecording:
+  name: "Screenrecording"
+  id: 357
+  anzahl: 1
+screenshot:
+  name: "Screenshot"
+  id: 5
+  anzahl: 3
+serienbrief:
+  name: "Serienbrief"
+  id: 309
+  anzahl: 1
+seriendruck:
+  name: "Seriendruck"
+  id: 310
+  anzahl: 1
+service-pack:
+  name: "Service Pack"
+  id: 303
+  anzahl: 1
+services:
+  name: "services"
+  id: 161
+  anzahl: 1
+sfc:
+  name: "sfc"
+  id: 158
+  anzahl: 1
+sicherheit:
+  name: "Sicherheit"
+  id: 69
+  anzahl: 4
+sicherheitsarchitektur:
+  name: "Sicherheitsarchitektur"
+  id: 136
+  anzahl: 1
+sicherheitskonzept:
+  name: "Sicherheitskonzept"
+  id: 135
+  anzahl: 1
+sicherung:
+  name: "Sicherung"
+  id: 374
+  anzahl: 1
+sicherungskopie:
+  name: "Sicherungskopie"
+  id: 248
+  anzahl: 1
+signatur:
+  name: "Signatur"
+  id: 271
+  anzahl: 1
+skript:
+  name: "Skript"
+  id: 356
+  anzahl: 1
+skydrive:
+  name: "SkyDrive"
+  id: 36
+  anzahl: 1
+skype:
+  name: "skype"
+  id: 86
+  anzahl: 1
+smartphone:
+  name: "Smartphone"
+  id: 131
+  anzahl: 1
+softwareempfehlung:
+  name: "Softwareempfehlung"
+  id: 27
+  anzahl: 1
+softwaretest:
+  name: "Softwaretest"
+  id: 6
+  anzahl: 1
+spam:
+  name: "SPAM"
+  id: 71
+  anzahl: 3
+speedport:
+  name: "speedport"
+  id: 65
+  anzahl: 1
+spooler:
+  name: "Spooler"
+  id: 93
+  anzahl: 1
+sprachassistent:
+  name: "Sprachassistent"
+  id: 344
+  anzahl: 1
+spyhunter-4:
+  name: "Spyhunter 4"
+  id: 9
+  anzahl: 1
+spyware:
+  name: "Spyware"
+  id: 52
+  anzahl: 1
+ssd:
+  name: "SSD"
+  id: 337
+  anzahl: 1
+ssid:
+  name: "SSID"
+  id: 361
+  anzahl: 1
+ssl:
+  name: "SSL"
+  id: 207
+  anzahl: 1
+stiftung-warentest:
+  name: "Stiftung Warentest"
+  id: 75
+  anzahl: 3
+streaming:
+  name: "Streaming"
+  id: 380
+  anzahl: 1
+synchronisation:
+  name: "synchronisation"
+  id: 16
+  anzahl: 2
+system-optimizer:
+  name: "System Optimizer"
+  id: 41
+  anzahl: 1
+system-utility:
+  name: "System Utility"
+  id: 42
+  anzahl: 1
+systemabbild:
+  name: "systemabbild"
+  id: 215
+  anzahl: 2
+systemabbildsicherng:
+  name: "Systemabbildsicherng"
+  id: 220
+  anzahl: 1
+systemabbildsicherung:
+  name: "systemabbildsicherung"
+  id: 213
+  anzahl: 1
+systemauffrischung:
+  name: "Systemauffrischung"
+  id: 127
+  anzahl: 1
+systemimage:
+  name: "systemimage"
+  id: 217
+  anzahl: 1
+systemmigration:
+  name: "Systemmigration"
+  id: 334
+  anzahl: 1
+systempruefung:
+  name: "Systemprüfung"
+  id: 313
+  anzahl: 1
+systemwiederherstellung:
+  name: "Systemwiederherstellung"
+  id: 125
+  anzahl: 1
+systemzuruecksetzung:
+  name: "Systemzurücksetzung"
+  id: 123
+  anzahl: 1
+tabelle:
+  name: "Tabelle"
+  id: 378
+  anzahl: 1
+tabellenlayout:
+  name: "Tabellenlayout"
+  id: 365
+  anzahl: 1
+tablett:
+  name: "Tablett"
+  id: 132
+  anzahl: 1
+task-manager:
+  name: "Task-Manager"
+  id: 264
+  anzahl: 1
+taskmgr:
+  name: "taskmgr"
+  id: 156
+  anzahl: 2
+tastenkombination:
+  name: "tastenkombination"
+  id: 101
+  anzahl: 1
+tastenkombinationen:
+  name: "tastenkombinationen"
+  id: 102
+  anzahl: 1
+telefonanlage:
+  name: "telefonanlage"
+  id: 352
+  anzahl: 1
+telekom:
+  name: "telekom"
+  id: 354
+  anzahl: 1
+terminal:
+  name: "Terminal"
+  id: 203
+  anzahl: 1
+terminsynchronisation:
+  name: "terminsynchronisation"
+  id: 19
+  anzahl: 1
+terminverwaltung:
+  name: "Terminverwaltung"
+  id: 171
+  anzahl: 1
+teslacrypt:
+  name: "TeslaCrypt"
+  id: 267
+  anzahl: 1
+thunderbird:
+  name: "Thunderbird"
+  id: 168
+  anzahl: 4
+tim-capsule:
+  name: "Tim Capsule"
+  id: 244
+  anzahl: 1
+time-machine:
+  name: "Time Machine"
+  id: 243
+  anzahl: 1
+tinder:
+  name: "tinder"
+  id: 175
+  anzahl: 1
+tls:
+  name: "TLS"
+  id: 208
+  anzahl: 1
+treiber:
+  name: "Treiber"
+  id: 360
+  anzahl: 1
+treiber-updater:
+  name: "Treiber Updater"
+  id: 45
+  anzahl: 1
+trennstrich:
+  name: "Trennstrich"
+  id: 273
+  anzahl: 1
+trojaner:
+  name: "Trojaner"
+  id: 51
+  anzahl: 1
+troubleshooting:
+  name: "Troubleshooting"
+  id: 163
+  anzahl: 1
+uefi:
+  name: "uefi"
+  id: 100
+  anzahl: 1
+umzug:
+  name: "Umzug"
+  id: 328
+  anzahl: 1
+update:
+  name: "Update"
+  id: 95
+  anzahl: 2
+updatelizenz:
+  name: "updatelizenz"
+  id: 79
+  anzahl: 1
+upgrade:
+  name: "Upgrade"
+  id: 110
+  anzahl: 3
+usb:
+  name: "USB"
+  id: 274
+  anzahl: 1
+vergleich:
+  name: "vergleich"
+  id: 34
+  anzahl: 1
+verknuepfung:
+  name: "Verknüpfung"
+  id: 376
+  anzahl: 1
+versand:
+  name: "Versand"
+  id: 282
+  anzahl: 1
+verschluesselung:
+  name: "Verschlüsselung"
+  id: 139
+  anzahl: 1
+viren:
+  name: "Viren"
+  id: 49
+  anzahl: 1
+virenentfernung:
+  name: "Virenentfernung"
+  id: 11
+  anzahl: 1
+virenscanner:
+  name: "Virenscanner"
+  id: 21
+  anzahl: 2
+virtualbox:
+  name: "VirtualBox"
+  id: 184
+  anzahl: 1
+virtualisierungssoftware:
+  name: "Virtualisierungssoftware"
+  id: 182
+  anzahl: 1
+virus:
+  name: "Virus"
+  id: 312
+  anzahl: 3
+vmware-fusion:
+  name: "VMware Fusion"
+  id: 183
+  anzahl: 1
+voip:
+  name: "voip"
+  id: 350
+  anzahl: 1
+voip-umstellung:
+  name: "voip-umstellung"
+  id: 351
+  anzahl: 1
+web-de:
+  name: "web.de"
+  id: 190
+  anzahl: 2
+webcam:
+  name: "webcam"
+  id: 87
+  anzahl: 1
+wegwerf-e-mailadresse:
+  name: "Wegwerf-E-Mailadresse"
+  id: 72
+  anzahl: 1
+weiterbildung:
+  name: "Weiterbildung"
+  id: 381
+  anzahl: 1
+wiederherstellung:
+  name: "Wiederherstellung"
+  id: 126
+  anzahl: 2
+wifi:
+  name: "Wifi"
+  id: 359
+  anzahl: 1
+windows:
+  name: "Windows"
+  id: 28
+  anzahl: 20
+windows-10:
+  name: "Windows 10"
+  id: 109
+  anzahl: 7
+windows-7:
+  name: "Windows 7"
+  id: 129
+  anzahl: 2
+windows-7-neuinstallation:
+  name: "Windows 7 Neuinstallation"
+  id: 304
+  anzahl: 1
+windows-8:
+  name: "Windows 8"
+  id: 37
+  anzahl: 3
+windows-8-1:
+  name: "Windows 8.1"
+  id: 38
+  anzahl: 1
+windows-befehl:
+  name: "Windows-Befehl"
+  id: 160
+  anzahl: 1
+windows-explorer:
+  name: "Windows Explorer"
+  id: 269
+  anzahl: 1
+windows-hilfe:
+  name: "Windows-Hilfe"
+  id: 40
+  anzahl: 1
+windows-migration:
+  name: "Windows Migration"
+  id: 335
+  anzahl: 1
+windows-update:
+  name: "Windows Update"
+  id: 241
+  anzahl: 3
+windows-update-reparieren:
+  name: "Windows Update reparieren"
+  id: 242
+  anzahl: 1
+wlan:
+  name: "WLAN"
+  id: 358
+  anzahl: 3
+word:
+  name: "Word"
+  id: 165
+  anzahl: 5
+wuermer:
+  name: "Würmer"
+  id: 50
+  anzahl: 1
+youtube:
+  name: "Youtube"
+  id: 253
+  anzahl: 1
+zellformat:
+  name: "Zellformat"
+  id: 319
+  anzahl: 1
+zertifikate:
+  name: "Zertifikate"
+  id: 186
+  anzahl: 1
+zirkelbezug:
+  name: "Zirkelbezug"
+  id: 318
+  anzahl: 1
+zugriffsrechte:
+  name: "zugriffsrechte"
+  id: 199
+  anzahl: 1
+zuruecksetzung:
+  name: "Zurücksetzung"
+  id: 124
+  anzahl: 1

@@ -31,7 +31,9 @@ def main():
 
     write('deploy/Caddyfile', '''# ionas.com - statisch aus Hugo, /wissen weiterhin WordPress.
 #
-# Deploy:  hugo --gc --minify  &&  rsync -a --delete public/ server:/var/www/ionas/
+# Deploy:  hugo --gc
+#          npx pagefind --site public        (Suchindex fuer /wissen/suche/)
+#          rsync -a --delete public/ server:/var/www/ionas/
 # Pruefen: caddy validate --config /etc/caddy/Caddyfile
 
 # Die Seite lief bisher ohne Host-Weiterleitung auf ionas.com UND
@@ -45,11 +47,13 @@ www.ionas.com {
 \troot * /var/www/ionas
 \tencode zstd gzip
 
-\t# --- WordPress bleibt, wo es ist ---------------------------------
-\t# Alles unter /wissen geht unveraendert an das bestehende WordPress.
-\t# Adresse an die eigene Installation anpassen.
-\thandle /wissen* {
-\t\treverse_proxy 127.0.0.1:8080
+\t# --- /wissen/feed/ ----------------------------------------------
+\t# Hugo legt den Feed als /wissen/feed.xml ab; ausgeliefert wird er
+\t# unter der bisherigen Adresse, die im Footer jeder Seite steht.
+\thandle /wissen/feed* {
+\t\theader Content-Type "application/rss+xml; charset=utf-8"
+\t\trewrite * /wissen/feed.xml
+\t\tfile_server
 \t}
 
 \t# --- /agb liefert die AGB als PDF -------------------------------
@@ -65,6 +69,13 @@ www.ionas.com {
 \t# --- Weiterleitungen --------------------------------------------
 \t# In der Datenschutzerklaerung ist die URL mit grossem D abgedruckt.
 \tredir /Datenschutz /datenschutz permanent
+
+\t# Drei Wissensartikel verlinken aufeinander ohne das /wissen-Praefix.
+\t# Diese Adressen liefern auch im WordPress 404; die Weiterleitung
+\t# repariert sie, ohne die Artikeltexte anzufassen.
+\tredir /drucker-druckt-nicht/ /wissen/drucker-druckt-nicht/ permanent
+\tredir /datensicherung-mit-windows-bordmitteln/ /wissen/datensicherung-mit-windows-bordmitteln/ permanent
+\tredir /malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ /wissen/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ permanent
 
 \t# ASCII-Schreibweisen der Umlaut-Landingpages. Hugo legt dafuer
 \t# zusaetzlich meta-refresh-Seiten ab; diese 301 ist das Saubere und
@@ -85,7 +96,7 @@ www.ionas.com {
 \t}
 
 \t# Lange Cache-Zeiten fuer Assets, keine fuer HTML.
-\t@assets path /static/* /images/* /ionas-neu/* /senderlogos/*
+\t@assets path /static/* /images/* /ionas-neu/* /senderlogos/* /wissen/wp-content/* /pagefind/*
 \theader @assets Cache-Control "public, max-age=2592000"
 \theader /*.html Cache-Control "public, max-age=300"
 }
@@ -99,7 +110,16 @@ www.ionas.com {
 root /var/www/ionas;
 charset utf-8;
 
-# /wissen bleibt WordPress (bestehende location-Bloecke unveraendert lassen!)
+# /wissen/feed/ liefert die von Hugo erzeugte /wissen/feed.xml
+location ~ ^/wissen/feed/?$ {
+    default_type "application/rss+xml; charset=utf-8";
+    alias /var/www/ionas/wissen/feed.xml;
+}
+
+# Drei Wissensartikel verlinken aufeinander ohne /wissen-Praefix
+location = /drucker-druckt-nicht/ { return 301 /wissen/drucker-druckt-nicht/; }
+location = /datensicherung-mit-windows-bordmitteln/ { return 301 /wissen/datensicherung-mit-windows-bordmitteln/; }
+location = /malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ { return 301 /wissen/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/; }
 
 # /agb lieferte bisher downloads/AGB-ionas.pdf - hier mit korrektem Typ.
 location = /agb {
@@ -120,7 +140,7 @@ location / {
 error_page 404 /404.html;
 location = /404.html { internal; }
 
-location ~* ^/(static|images|ionas-neu|senderlogos)/ {
+location ~* ^/(static|images|ionas-neu|senderlogos|pagefind|wissen/wp-content)/ {
     expires 30d;
     add_header Cache-Control "public";
 }

@@ -4,7 +4,6 @@
 set -euo pipefail
 
 : "${IONAS_SRC:?Pfad zum entpackten website/-Verzeichnis setzen}"
-: "${IONAS_REF:?Pfad zum Referenz-Snapshot setzen}"
 export IONAS_PRJ="${IONAS_PRJ:-$(cd "$(dirname "$0")/.." && pwd)}"
 
 cd "$(dirname "$0")"
@@ -19,5 +18,13 @@ echo "== Inhalte =="
 python3 gen_content.py
 echo "== Assets + Sitemap =="
 python3 gen_static.py
+echo "== Wissensartikel =="
+python3 gen_wissen.py
 echo
 echo "fertig: $IONAS_PRJ"
+
+echo
+echo "Nächste Schritte:"
+echo "  hugo --gc                   # erzeugt public/"
+echo "  npx pagefind --site public  # Suchindex für /wissen/suche/"
+echo "  python3 _build/verify.py && python3 _build/verify_wissen.py"

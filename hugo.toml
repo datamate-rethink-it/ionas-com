@@ -6,11 +6,12 @@ defaultContentLanguage = 'de'
 # Die Seite ist ein Archiv: keine Taxonomien, kein RSS. Die sitemap.xml
 # ist ein Index, der auch auf das WordPress unter /wissen zeigt, und liegt
 # deshalb als statische Datei in static/ - erzeugt wird nur sitemap/main.xml.
-disableKinds = ['taxonomy', 'term', 'rss', 'sitemap']
+disableKinds = ['taxonomy', 'rss', 'sitemap']
 
 # Umlaut-URLs wie /pc-hilfe/muenchen -> /pc-hilfe/münchen muessen erhalten
 # bleiben, sonst brechen indexierte Landingpages weg.
 removePathAccents = false
+titleCaseStyle = 'none'
 disablePathToLower = true
 
 disableHugoGeneratorInject = true  # kein <meta name="generator">
@@ -23,6 +24,46 @@ staticDir = 'webroot'
 
 [outputs]
 home = ['html', 'mainsitemap']
+
+# Schlagwoerter der Wissensartikel. Die Begriffsseiten lagen im WordPress
+# unter /wissen/tag/<slug>/ und sind aus jedem Artikel verlinkt; die
+# Uebersicht aller Begriffe (/tags/) gab es nie -> Kind 'taxonomy' aus.
+[taxonomies]
+tag = 'tags'
+
+[permalinks.term]
+tags = '/wissen/tag/:slug/'
+
+# RSS-Feed der Wissensartikel. Die URL /wissen/feed/ ist im Footer jeder
+# Seite verlinkt, deshalb landet die Datei als index.xml in diesem Ordner.
+# Die Datei landet als /wissen/feed.xml; der Webserver liefert sie unter
+# der bisherigen Adresse /wissen/feed/ aus (siehe deploy/Caddyfile).
+[outputFormats.wissenfeed]
+mediaType = 'application/rss+xml'
+baseName = 'feed'
+isPlainText = true
+notAlternative = true
+
+# Die drei Sitemaps, die bisher Yoast SEO erzeugt hat. Der Index
+# /wissen/sitemap_index.xml ist in der Search Console eingetragen und
+# bleibt deshalb unter derselben Adresse erreichbar.
+[outputFormats.wissenpostsitemap]
+mediaType = 'application/xml'
+baseName = 'post-sitemap'
+isPlainText = true
+notAlternative = true
+
+[outputFormats.wissenpagesitemap]
+mediaType = 'application/xml'
+baseName = 'page-sitemap'
+isPlainText = true
+notAlternative = true
+
+[outputFormats.wissensitemapindex]
+mediaType = 'application/xml'
+baseName = 'sitemap_index'
+isPlainText = true
+notAlternative = true
 
 # sitemap/main.xml - gleicher Pfad wie bisher, damit sitemap.xml weiter stimmt
 [outputFormats.mainsitemap]

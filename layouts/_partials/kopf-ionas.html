@@ -1,0 +1,45 @@
+
+
+<!doctype html>
+<html lang="de">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content='{{ .Params.description }}' />
+        <title>{{ .Title }}</title>
+{{ with .Params.canonical }}        {{ printf `<link rel="canonical" href="https://www.ionas.com/%s" />` . | safeHTML }}
+        <meta name="robots" content="noarchive" />
+{{ end }}        
+        <!-- Facebook -->
+        <meta property="og:image" content="http://www.ionas.com/images/ionas-logo-facebook.jpg" /> 
+        <meta property="og:description" content="{{ .Params.description }}" /> 
+
+        <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
+        <link rel="apple-touch-icon" href="/images/ios-icon.png" />
+        <link rel="apple-touch-icon" sizes="72x72" href="/images/ios-icon-72.png" />
+        <link rel="apple-touch-icon" sizes="76x76" href="/images/ios-icon-76.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="/images/ios-icon-114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="/images/ios-icon-144.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/images/ios-icon-152.png" />
+        
+        <!-- SITE-Verification -->
+        <meta name="google-site-verification" content="nlHWx_j6hrAS-HGKc6qWScYProTOg0XaFPO18VaVZlc" /> <!-- Google -->
+        <meta name="msvalidate.01" content="499FF3D9A71124255B22802D63EF55E5" /> <!-- Bing -->
+        <meta name="alexaVerifyID" content="Qsa4yU-EGFDYpT5A4pJZg40o_LA"/> <!-- Amazon Alexa -->
+ 
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/static/css/startupframework.css" />
+        <link rel="stylesheet" href="/static/font-awesome/font-awesome.min.css" />
+        <link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css' />
+        <link rel="stylesheet" href="/static/css/ionas.css" />
+        
+        <link href="https://plus.google.com/116393713732767018174" rel="author" />
+        <link href="https://plus.google.com/+ionasOHGMainz/" rel="publisher" />
+    </head>
+
+    <body>
+    <div class='page-wrapper'>
+
+

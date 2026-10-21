@@ -1,0 +1,154 @@
+---
+title: "Zugriffsrechte auf dem Mac prüfen und ändern"
+date: 2015-12-26T20:08:05
+lastmod: 2019-04-13T18:43:17
+url: "/wissen/zugriffsrechte-auf-dem-mac-aendern-oder-reparieren/"
+wissen: true
+wp_id: 1545
+autor: "Lars Glinker"
+autor_id: "https://www.ionas.com/wissen/#/schema/person/b7a17f381036da15beedd2b2fdd5a90d"
+beschreibung: "Falsche Zugriffsrechte auf dem Mac? In diesem Wissensartikel erklären wir Ihnen wie Sie die Zugriffsrechte auf Ihrem Mac reparieren können."
+titel_seo: "Zugriffsrechte auf dem Mac prüfen und ändern | ionas"
+canonical_url: "https://www.ionas.com/wissen/zugriffsrechte-auf-dem-mac-aendern-oder-reparieren/"
+bild: "https://www.ionas.com/wissen/wp-content/uploads/2015/11/verboten.png"
+lesezeit: "9 Minuten"
+wortanzahl: 1793
+kategorie: "Uncategorized"
+bilder:
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2015/11/verboten-300x300.png"
+    text: "Zugriffsrechte Zugriff verboten"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-11.47.57-198x300.png"
+    text: "Zugriffsrechte Informationsfenster Apple"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-14.34.58-300x190.png"
+    text: "Zugriffsrechte Terminal Mac"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2015/12/mac1-1-300x134.png"
+    text: "Zugriffsrechte Aufschlüsselung"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-14.37.09-300x191.png"
+    text: "Zugriffsrechte chmod chown ls"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte-300x238.png"
+    text: "Zugriffsrechte Recovery Wiederherstellung Mac Apple"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte_3-300x190.png"
+    text: "Zugriffsrechte resetpassword"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte_2-272x300.png"
+    text: "Zugriffsrechte resetpassword Passwort zurücksetzen Mac Apple"
+kommentare: 1
+tags:
+  - "benutzerkonten"
+  - "benutzerkontensteuerung"
+  - "benutzerrechte"
+  - "mac"
+  - "mac-os"
+  - "passwort"
+  - "programme"
+  - "recovery-partition"
+  - "resetpassword"
+  - "terminal"
+  - "zugriffsrechte"
+teaser: |-
+  <p><img loading="lazy" class="alignnone wp-image-1559 size-medium" style="float: left; margin: 10px 10px 20px 20px;" src="https://www.ionas.com/wissen/wp-content/uploads/2015/11/verboten-300x300.png" alt="Zugriffsrechte Zugriff verboten" width="300" height="300" srcset="https://www.ionas.com/wissen/wp-content/uploads/2015/11/verboten-300x300.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2015/11/verboten-150x150.png 150w, https://www.ionas.com/wissen/wp-content/uploads/2015/11/verboten.png 600w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+  <p>Wer mit einem Mac arbeitet, wird früher oder später wohl mal mit dem Problem konfrontiert werden, dass sich eine Dateien nicht mehr öffnen lässt oder ein ein Programm nicht gestartet werden kann. Ganz ähnlich: Eine Dateien kann nicht gelöscht oder in einen Ordner verschoben werden. In den meisten Fällen sind fehlende oder falsche Zugriffsrechte für dieses Verhalten verantwortlich. Wir zeigen Ihnen in diesem Wissensartikel, wie Sie die Zugriffsrechte auf Ihrem Mac prüfen und gegebenfalls reparieren.</p>
+  <p> <a href="https://www.ionas.com/wissen/zugriffsrechte-auf-dem-mac-aendern-oder-reparieren/#more-1545" class="more-link"><span aria-label="Zugriffsrechte auf dem Mac prüfen und ändern weiterlesen">(mehr&#160;&hellip;)</span></a></p>
+---
+<p><img class="alignnone wp-image-1559 size-medium" style="float: left; margin: 10px 10px 20px 20px;" src="https://www.ionas.com/wissen/wp-content/uploads/2015/11/verboten-300x300.png" alt="Zugriffsrechte Zugriff verboten" width="300" height="300" srcset="https://www.ionas.com/wissen/wp-content/uploads/2015/11/verboten-300x300.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2015/11/verboten-150x150.png 150w, https://www.ionas.com/wissen/wp-content/uploads/2015/11/verboten.png 600w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p>Wer mit einem Mac arbeitet, wird früher oder später wohl mal mit dem Problem konfrontiert werden, dass sich eine Dateien nicht mehr öffnen lässt oder ein ein Programm nicht gestartet werden kann. Ganz ähnlich: Eine Dateien kann nicht gelöscht oder in einen Ordner verschoben werden. In den meisten Fällen sind fehlende oder falsche Zugriffsrechte für dieses Verhalten verantwortlich. Wir zeigen Ihnen in diesem Wissensartikel, wie Sie die Zugriffsrechte auf Ihrem Mac prüfen und gegebenfalls reparieren.</p>
+<p><span id="more-1545"></span></p>
+<h2>Zugriffsrechte auf dem Mac</h2>
+<p>Zum Öffnen und Bearbeiten von Dateien genauso wie für das Ausführen von Programmen und Skripten benötigt man als Benutzer bestimmte Zugriffsrechte. Fehlen solche Rechte, lassen sich z.B. Programme nicht öffnen oder Dateien nicht verschieben. </p>
+<p>Unter Zugriffsrechten versteht man also die auf administrativer Ebene festgelegten Rechte eines Benutzers oder einer Benutzergruppe. Von ganz wenigen Ausnahmen abgesehen, werden beim Mac drei Rechte unterschieden:</p>
+<ul>
+<li>Leserechte (englisch &#8222;read&#8220;): Die Datei kann betrachtet, aber nicht geändert werden.</li>
+<li>Schreibrechte (englisch &#8222;write&#8220;): Die Datei kann geändert werden. Schreibrechte beinhalten Leserechte.</li>
+<li>Recht eine Datei auszuführen (englisch &#8222;execute&#8220;): Die Datei kann ausgeführt werden.</li>
+</ul>
+<p>Weiter ist bei der Bearbeitung der Rechte zu beachten, dass auf dem Mac jeder Benutzer mindestens einer Benutzergruppe angehört. Damit man die Konsequenzen einer Änderung von Zugriffsrechten einer Benutzergruppe abschätzen kann, sollten die Benutzergruppen und deren Zusammensetzung bekannt sein. In Mac OS werden diese fünf Benutzergruppen unterschieden:</p>
+<ul>
+<li><em>staff:</em> Dieser Gruppe gehören alle lokalen Benutzer des Mac OS an. Auf älteren Mac OS-Systemen wird diese Gruppe als <em>users</em> angezeigt</li>
+<li><em>everyone:</em> Dieser Gruppe gehören alle an, die einen Account auf dem Mac haben.</li>
+<li><em>wheel:</em> Diese Gruppe ist eine private Gruppe des Benutzers root (root: aus dem Englischen Wurzel, bezeichnet den Superuser, der alles machen kann und darf).</li>
+<li><em>admin:</em> Dieser Gruppe gehören alle Benutzer an, die Administratorrechte haben.</li>
+<li><em>nobody:</em> Dieser Gruppe gehören alle restlichen Benutzer an, die kein eigenes Benutzerkonto auf dem Mac haben. Damit ist <em>nobody</em> gewissermaßen die Differenz der Gruppen <em>staff</em> und <em>everyone</em>.</li>
+</ul>
+<p>Probleme entstehen mit den Zugriffsrechten, wenn sich diese ungewollte verstellt haben bzw. ungewollt verstellt wurden. Verschiedene Aktionen können das auslösen. Besonders häufig passiert das durch Updates. Zwar werden Updates vom Hersteller vor der Freigabe geprüft, aber es lassen sich nicht alle Konstellation abbilden und somit gibt es immer wieder Konflikte. So kann es z.B. vorkommen, dass beim Update von iTunes das Recht, das Programm auszuführen, entzogen wird. In der Folge lässt sich dann iTunes nicht mehr öffnen. </p>
+<h2>Zugriffsrechte ändern oder reparieren</h2>
+<p><strong>Achtung, das Ändern von Zugriffsrechten kann unter Umständen dazu führen, dass Ihr System nicht mehr startet oder korrekt arbeitet. Ändern Sie Zugriffsrechte nur, wenn Sie absolut sicher sind.</strong></p>
+<p>Um Probleme mit Zugriffsrechten aufzulösen, muss man selbt Hand anlgegen und die verstellten Zugriffsrechte korrigieren. In Mac OS lassen sich Zugriffsrechte auf 4 verschiedene Arten ändern:</p>
+<ul>
+<li>Über das Fenster Informationen.</li>
+<li>Über das Terminal.</li>
+<li>Über das Festplattendienstprogramm</li>
+<li>Über Passwörter zurücksetzen.</li>
+</ul>
+<h3>Über das Fenster Informationen</h3>
+<p><img loading="lazy" class="alignnone wp-image-1599 size-medium" style="float: right; margin: 10px 20px 10px 20px;" src="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-11.47.57-198x300.png" alt="Zugriffsrechte Informationsfenster Apple" width="198" height="300" srcset="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-11.47.57-198x300.png 198w, https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-11.47.57.png 426w" sizes="(max-width: 198px) 100vw, 198px" /></a></p>
+<p>Damit Sie die Zugriffsrechte über das Fenster Informationen ändern und reparieren können, klicken Sie mit der rechten Maustaste auf die entsprechende Datei und anschließend auf &#8218;Informationen&#8216;. Alternativ können Sie auch die Tastenkombination „CMD + I“ benutzen. </p>
+<p>Im unteren Bereich des Informationsfensters finden Sie den Punkt &#8218;Freigabe &#038; Zugriffsrechte&#8216;. In diesem Bereich sehen Sie, welche Benutzer und welche Benutzergruppen auf die Datei zugreifen dürfen und welche Rechte diese jeweils haben. Jede Datei gehört dabei der Gruppe „everyone“ an, meistens hat diese Gruppe nur Lese- bzw. keine Rechte. Alle Dateien in Ihrem „Home“ Ordner müssen zusätzlich noch einen Eintrag mit Ihrem Benutzernamen haben. Da Sie der Besitzer der Datei sind, besitzen Sie die Rechte für das Lesen und Schreiben (siehe Abbildung). Weichen die Zugriffsrechte ab, sollten Sie diese wieder auf „Lesen &#038; Schreiben“ zurücksetzen. Das machen Sie, indem Sie unten rechts das Schloss öffnen und anschließend hinter Ihrem Name auf die vorhandenen Zugriffsrechte klicken. Wählen Sie dann  und in der Liste „Lesen &#038; Schreiben“ aus.</p>
+<h2>Über das Terminal</h2>
+<p>Neben dem Informationsmenü können Sie die Zugriffsrechte auch über das Terminal ändern. Das Terminal ist im Ordner „Dienstprogramme“ zu finden. Im Terminal ist das Navigieren zu den einzelnen Dateien etwas aufwendiger. Zum einen müssen Sie den genauen Speicherort der Datei kennen, von der Sie die Zugriffsrechte ändern möchten, zum anderen erfolgt die Navigation über Befehle und nicht über die Maus. Die wichtigsten Befehle zum Ändern der Zugriffsrechte sind:</p>
+<table style="margin: 20px 0px 20px 0px;">
+<tbody>
+<tr>
+<th>cd</th>
+<td>change Directory</td>
+<td style="text-align: left;">Mit diesem Befehl gelangen Sie in einen anderen Unterordner. Mit <strong>cd ..</strong> wechseln Sie in den übergeordneten Ordner</td>
+</tr>
+<tr>
+<th>sudo</th>
+<td>Akronym für su [substitute user] „do“</td>
+<td style="text-align: left;">Der Befehl wird dazu genutzt, um bestimmte Aufgaben mit einem anderen Benutzer auszuführen. Zum Beispiel das Starten eines Programmes als root Benutzer.</td>
+</tr>
+<tr>
+<th>chmod</th>
+<td>change mode</td>
+<td style="text-align: left;">Dieser Befehl dient dazu, Dateirechte zu ändern.</td>
+</tr>
+<tr>
+<th>chown</th>
+<td>change ownership</td>
+<td style="text-align: left;">Führt man diesen Befehl aus, kann man die Benutzerrechte einer Datei ändern.</td>
+</tr>
+<tr>
+<th>ls</th>
+<td>list</td>
+<td style="text-align: left;">Die Eingabe dieses Befehls führt dazu, dass Sie den Inhalt des Ordners angezeigt bekommen, in dem Sie sich befinden. Mit <strong>ls -l (list long)</strong> zeigt Ihnen dieser Befehl neben dem Inhalt auch die Zugriffsrechte der Dateien im Ordner.</td>
+</tr>
+</tbody>
+</table>
+<p>Um das besser verständlich zu machen, nehmen wir an, Sie möchten die Benutzerrechte einer Datei auf Ihrem Schreibtisch ändern. Sobald Sie das Terminal starten, sind Sie standardmäßig in Ihrem Benutzerkonto. Das erkennt man daran, dass am Anfang der Zeile eine <a href="https://de.wikipedia.org/wiki/Tilde">Tilde (~)</a> steht. Geben Sie den Befehl<br />
+<code><br />
+cd Desktop/<br />
+</code><br />
+ein, um in Ihren Schreibtisch-Ordner zu gelangen. Lassen Sie sich nun die Dateien und Zugriffsrechte mit dem Befehl<br />
+<code><br />
+ls -l<br />
+</code></p>
+<p>anzeigen. Sie sehen anschließend eine Liste der Dateien mit den zugehörigen Zugriffsrechten, die auf Ihrem Schreibtisch liegen. In der Abbildung sehen Sie, wie das Ergebnis des Befehls aussehen könnte.</p>
+<p><a href="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-14.34.58.png" data-slb-active="1" data-slb-asset="38873499" data-slb-internal="0" data-slb-group="1545"><img loading="lazy" class="alignnone wp-image-1672 size-medium" style="margin-left: 33%; margin-top: 20px; margin-bottom: 20px;" src="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-14.34.58-300x190.png" alt="Zugriffsrechte Terminal Mac" width="300" height="190" srcset="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-14.34.58-300x190.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-14.34.58.png 603w" sizes="(max-width: 300px) 100vw, 300px" /></a><br />
+Schlüsseln wir das Ganze auf: In unserem Beispiel liegt nur eine Datei auf dem Desktop. Jede Zeile enthält die Informationen einer Datei. Die Zugriffsrechte der Datei befinden sich am Anfang der Zeile in der Form der Zeichenfolge (-rw-r–r–). Nach den Zugriffsrechten erfolgt die Information über den Besitzer der Datei &#8211; in diesem Fall ionas. Als nächstes folgt die Information zur Benutzergruppe &#8211; in unserem Beispiel <em>staff</em> ist. Der nachfolgende Zeitstempel hält den Zeitpunkt der letzten Bearbeitung fest. Erst ganz am Ende der Zeile befindet sich der Namen der Datei &#8211;  in unserem Beispiel test.txt. </p>
+<p>Fokus nun auf die Zugriffsrechte: Die Zeichenfolge für die Zugriffsrechte sind in die Blöcke &#8218;Directory&#8216; (Verzeichnis), &#8218;User&#8216; (Besitzer), &#8218;Group&#8216; (Gruppe) und &#8218;everyone&#8216; unterteilt (siehe Abbildung).</p>
+<p><img loading="lazy" class="alignnone wp-image-1902 size-medium" style="margin-left: 33%; margin-top: 20px; margin-bottom: 20px;" src="https://www.ionas.com/wissen/wp-content/uploads/2015/12/mac1-1-300x134.png" alt="Zugriffsrechte Aufschlüsselung" width="300" height="134" srcset="https://www.ionas.com/wissen/wp-content/uploads/2015/12/mac1-1-300x134.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2015/12/mac1-1.png 502w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p>Der Block „Directory“ kann entweder den Wert &#8218;-&#8218; (Gedankenstrich) oder den Wert &#8218;d&#8216; enthalten. Ein Gedankenstrich bedeutet, dass es sich bei dem betrachteten Objekt um eine Datei handelt. Ein &#8218;d&#8216; markiert ein Verzeichnis bzw. Ordner. </p>
+<p>Im zweiten Block sieht man die Rechte für den Besitzer der Datei &#8211; in diesem Fall den Nutzer ionas. Die erste Stelle des Blocks zeigt durch ein &#8218;r&#8216;, ob Leserechte vorliegen. Die zweite Stelle markiert mit einem &#8218;w&#8216; Schreibrechte. Ein &#8218;x&#8216; an Stelle drei signalisiert das Recht, die Datei auszuführen. Liegt ein oder mehrere Rechte nicht vor, dann wird dies mit einem Gedankenstrich an Stelle des jeweiligen Buchstabens markiert. Das rw- in unserem Beispiel bedeutet also, dass der Besitzer ionas zwar Lese- und Schreibrechte besitzt, aber keine solche, um die Datei auszuführen. </p>
+<p>Der dritte Block zeigt die Zugriffsrechte für die relevante Benutzergruppe an &#8211; in diesem Beispiel <em>staff</em>.  Die Interpretation der drei Stellen in diesem Block ist identisch mit der des Blocks für den Besitzer. </p>
+<p>Der vierte Block steht für die Zugriffsrechte der Benutzergruppe <em>everyone</em>. Auch hier gelten die gleichen Syntax-Regeln wie bei den beiden anderen Blöcken.</p>
+<p>Möchte man die Rechte nun ändern, so macht man das s über den Befehl <em>chmod</em>. Dessen Synatax ist<br />
+<code><br />
+chmod [Rechte Besitzer][Rechte Benutzergruppe][Rechte everyone] [Name der Datei]</code>. </p>
+<p>Die Rechte werden jeweils mit Zahlenwerten definiert. Für das Leserecht (r) steht der Wert 4, für das Schreibrecht (w) steht der Wert 2 und für das Recht, eine Datei auszuführen (x), steht der Wert 1. Der Wert 0 steht für keine Rechte. Möchte man mehr als nur ein Zugriffsrecht setzen, werden die Werte einfach addiert (z.B. kombinierte Lese- und Schreibrechte hat den Wert 6). Will man dem Besitzer und der Benutzergruppe alle Rechte geben, die Rechte für <em>everyone</em> jedoch auf Leseberechtigung belassen, dann lautet der Befehl:<br />
+<code><br />
+chmod 774 test.txt</code>.<br />
+Wenn Sie sich anschließend die Rechte ansehen, sehen Sie, das sich die Zugriffsrechte geändert haben und nun so aussehen.<br />
+<a href="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-14.37.09.png" data-slb-active="1" data-slb-asset="1975805947" data-slb-internal="0" data-slb-group="1545"><img loading="lazy" class="alignnone wp-image-1673 size-medium" style="margin-left: 33%; margin-top: 20px; margin-bottom: 20px;" src="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-14.37.09-300x191.png" alt="Zugriffsrechte chmod chown ls" width="300" height="191" srcset="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-14.37.09-300x191.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2015/11/Bildschirmfoto-2015-11-24-um-14.37.09.png 592w" sizes="(max-width: 300px) 100vw, 300px" /></a></p>
+<h4>Über das Festplattendienstprogramm</h4>
+<p>Eine Möglichkeit, die Zugriffsrechte automatisiert reparieren zu lassen, ist das Festplattendienstprogramm. Bis Mac OS X Yosemite war dies im Live Betrieb  möglich. Im Festplattendienstprogramm, welches im Ordner &#8218;Dienstprogramme&#8216; zu finden ist, kann man beim Anklicken des Volumes den Reiter &#8218;Erste Hilfe&#8216; auswählen. Im unteren linken Bereich finden Sie zwei Punkte. Zum einen &#8218;Zugriffsrechte des Volumes überprüfen&#8216; und zum anderen &#8218;Zugriffsrechte des Volumes reparieren&#8216;. Dabei findet ein Abgleich mit den Einträgen in dem Ordner /var/db/receipts/ statt. In diesem sind alle wichtigen Informationen für die zu überprüfenden Dateien enthalten. Seit Mac OS El Capitan werden die Rechte automatisch vorgehalten.</p>
+<h2>Über Passwörter zurücksetzen</h2>
+<p><img loading="lazy" class="alignnone wp-image-1551 size-medium" style="float: right; margin: 10px 10px 10px 20px;" src="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte-300x238.png" alt="Zugriffsrechte Recovery Wiederherstellung Mac Apple" width="300" height="238" srcset="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte-300x238.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte.png 874w" sizes="(max-width: 300px) 100vw, 300px" /><br />
+Zuletzt lassen sich die Zugriffsrechte eines Benutzers auch komplett zurücksetzen. Diese Funktion steht jedoch nur im Recovery Mode zur Verfügung. Starten Sie Ihren Mac mit „CMD + R“ in den Recovery Mode. Nachdem der Mac im Recovery Mode gestartet ist, wählen Sie als erstes Ihre Sprache aus und klicken Sie auf den kleinen Pfeil. Klicken Sie anschließend in der Menüleiste &#8218;Dienstprogramme&#8216; an und wählen Sie &#8218;Terminal&#8216;. Nachdem das Terminal-Fenster geöffnet ist geben Sie ein:<br />
+<code><br />
+resetpassword<br />
+</code></p>
+<p>Danach öffnet sich das Fenster für &#8218;Passwörter zurücksetzen&#8216;. Wählen Sie nun Ihre Festplatte und den Benutzeraccount aus. Im unteren Bereich wird die Option für &#8218;Zugriffsrechte und Zugriffsteuerungslisten für den Benutzerordner zurücksetzen&#8216; aktiv. Mit einem Klick auf &#8218;Zurücksetzen&#8216; werden eventuelle Probleme mit den Zugriffsrechten in Ihrem Benutzerordner zurückgesetzt.<br />
+<img loading="lazy" class="alignnone wp-image-1553 size-medium" style="margin-left: 33%; margin-top: 20px;" src="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte_3-300x190.png" alt="Zugriffsrechte resetpassword " width="300" height="190" srcset="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte_3-300x190.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte_3.png 665w" sizes="(max-width: 300px) 100vw, 300px" /></p>
+<p><img loading="lazy" class="alignnone wp-image-1552 size-medium" style="margin-left: 35%; margin-top: 20px;" src="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte_2-272x300.png" alt="Zugriffsrechte resetpassword Passwort zurücksetzen Mac Apple" width="272" height="300" srcset="https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte_2-272x300.png 272w, https://www.ionas.com/wissen/wp-content/uploads/2015/11/Zugriffsrechte_2.png 538w" sizes="(max-width: 272px) 100vw, 272px" /></p>
+<h2>Noch ist nicht aller Tage Abend</h2>
+<p>Zugriffsrechte bereiten bei Mac OS immer wieder Probleme. Sei es durch ein Update, welches fehlgeschlagen ist oder weil durch ein Versehen die Zugriffsrechte geändert wurden. Anders als bei Windows sind solche Probleme aber normalerweise recht einfach gelöst und eine Neuinstallation nur in den seltensten Fällen notwendig.</p>
+<p>Wenn man sich aber die Wege zum Ändern der Zugriffsrechte ansieht, dann kann man guten Mutes sein, dass man diese wiederherstellen kann. Wir möchten Sie nochmal daran erinnern, nur Zugriffsrechte von Dateien zu ändern, wenn Sie sich absolut sicher sind, dass Sie damit nicht noch zusätzliche Probleme schaffen. Gerne stehen wir Ihnenzur Seite, wenn Sie die Zugriffsrechte ändern oder reparieren müssen. Sie erreichen uns an 365 Tagen im Jahr unter +49 (0)6131 327070.</p>

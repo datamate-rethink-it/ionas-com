@@ -1,0 +1,25 @@
+{{ define "main" }}
+{{- /* Monatsarchiv, /wissen/<jahr>/<monat>/. Wie die Schlagwortseiten aus
+       dem Uebersichts-Template von WordPress abgeleitet. */ -}}
+<section class="content-10 blog">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-9">
+        <h1 class='nomarginbottom'>Archiv: {{ .Params.monat_titel }}</h1>
+{{- $monat := .Params.monat }}
+{{- $treffer := slice }}
+{{- range (where (where site.RegularPages "Section" "wissen") "Params.suche" "!=" true).ByDate.Reverse }}
+  {{- if eq (.Date.Format "2006-01") $monat }}{{ $treffer = $treffer | append . }}{{ end }}
+{{- end }}
+{{- partial "wissen-liste.html" $treffer }}
+      </div>
+
+      <div class="col-sm-3">
+{{- partial "wissen-sidebar.html" . }}
+      </div>
+
+    </div>
+  </div>
+</section>
+{{ end }}

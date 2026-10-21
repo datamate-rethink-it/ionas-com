@@ -1,0 +1,55 @@
+---
+title: "Fehlermeldung nach Elster Update – msvcr120.dll fehlt"
+date: 2015-02-12T21:22:32
+lastmod: 2015-09-30T16:47:53
+url: "/wissen/fehlermeldung-nach-elster-update-msvcr120-dll-fehlt/"
+wissen: true
+wp_id: 219
+autor: "Christoph Dyllick-Brenzinger"
+autor_id: "https://www.ionas.com/wissen/#/schema/person/7e06adb4cbcd47655bf6919c383fa89a"
+beschreibung: "Eine fehlende msvcr120.dll Datei verhindert den Start von Elster. Erfahren Sie hier, was Sie tun müssen um Elster wieder starten zu können."
+titel_seo: "Fehlermeldung nach Elster Update – msvcr120.dll fehlt | ionas"
+canonical_url: "https://www.ionas.com/wissen/fehlermeldung-nach-elster-update-msvcr120-dll-fehlt/"
+bild: "https://www.ionas.com/static/img/blog/elster_dll.png"
+lesezeit: "3 Minuten"
+wortanzahl: 587
+kategorie: "Uncategorized"
+bilder:
+  - loc: "https://www.ionas.com/static/img/blog/elster_dll.png"
+    text: "Microsoft Visual C++ Redistributable Download um Elster wieder starten zu können"
+tags:
+  - "elster"
+  - "fehler-beim-start"
+  - "msvcr120-dll"
+teaser: |-
+  <p>In den letzten Tagen häuften sich die Anrufe bei denen uns Kunden um Hilfe mit ihrer Elster Steuersoftware baten. Alle hatten das neueste Update von Elster installiert und konnten danach Ihre dringend benötigte Steuersoftware nicht mehr starten und Ihre Steuererklärung machen. Bei allen Kunden zeigte Windows nach dem Startversuch von Elster die folgende Fehlermeldung:</p>
+  <p><i>Das Programm kann nicht gestartet werden, da <strong>MSVCR120.dll</strong> auf dem Computer fehlt.<br />
+  Installieren Sie das Programm erneut, um das Problem zu beheben.</i></p>
+  <p>Glücklicherweise konnten wir allen unseren Kunden helfen, so dass alle Steuerklärungen rechtzeitig fertiggestellt werden konnten. Lesen Sie hier was zu tun ist um Elster wieder starten zu können.</p>
+  <p> <a href="https://www.ionas.com/wissen/fehlermeldung-nach-elster-update-msvcr120-dll-fehlt/#more-219" class="more-link"><span aria-label="Fehlermeldung nach Elster Update – msvcr120.dll fehlt weiterlesen">(mehr&#160;&hellip;)</span></a></p>
+---
+<p>In den letzten Tagen häuften sich die Anrufe bei denen uns Kunden um Hilfe mit ihrer Elster Steuersoftware baten. Alle hatten das neueste Update von Elster installiert und konnten danach Ihre dringend benötigte Steuersoftware nicht mehr starten und Ihre Steuererklärung machen. Bei allen Kunden zeigte Windows nach dem Startversuch von Elster die folgende Fehlermeldung:</p>
+<p><i>Das Programm kann nicht gestartet werden, da <strong>MSVCR120.dll</strong> auf dem Computer fehlt.<br />
+Installieren Sie das Programm erneut, um das Problem zu beheben.</i></p>
+<p>Glücklicherweise konnten wir allen unseren Kunden helfen, so dass alle Steuerklärungen rechtzeitig fertiggestellt werden konnten. Lesen Sie hier was zu tun ist um Elster wieder starten zu können.</p>
+<p><span id="more-219"></span></p>
+<h2>Warum startet Elster nicht mehr?</h2>
+<p>Elster beklagt nach dem Start, dass ihm wichtige Dateien – sogenannte <a href='http://de.wikipedia.org/wiki/Dynamic_Link_Library'>DLL-Dateien</a> fehlen. DLL steht für &#8222;dynamic-link library&#8220;, was übersetzt so viel wie dynamisch einbindbare Bibliothek bedeutet. Dies sind Programmroutinen, die immer wieder benötigt werden und deshalb in eigene Dateien ausgelagert wurden.</p>
+<p>Man unterscheidet üblicherweise zwei Arten von Bibliotheken: Die Ersten sind geteilte Systembibliotheken, die vom Betriebssystem bereitgestellt werden und typischerweise unter c:\windows oder c:\windows\system abgespeichert sind. Alle Programme, die auf dem Rechner installiert sind, greifen auf diese Bibliotheken zurück.<br />
+Alternativ kann ein Programm auch seine eigenen Bibliotheken mitbringen. In diesem Fall befinden sich die Bibliotheken dann im Programmverzeichnis und man spricht von eigenen Bibliotheken.</p>
+<p>Nach dem Update der Elster-Steuersoftware erwartet Elster geteilte Systembibliotheken, die nicht zwingend auf jedem Windows Rechner vorhanden sein müssen. Programmierer versuchen natürlich bei der Installation eines Updates sämtliche Vorraussetzungen abzuprüfen, aber in diesem Fall scheint man hier ein paar Dateien übersehen zu haben. Das Update von Elster funktioniert, aber das Programm kann danach nicht gestartet werden.</p>
+<h2>Lösungsweg um Elster wieder starten zu können</h2>
+<p>Hier wird der Lösungsweg für ein Windows 7 (64 Bit) System beschrieben. Die Schritte sollten aber bei Windows 8 oder Windows Vista exakt die gleichen sein:</p>
+<ol>
+<li>Laden Sie von der <a href="http://www.microsoft.com/de-DE/download/details.aspx?id=40784">folgenden Microsoft Seite</a> die Datei Namens &#8222;Visual C++ Redistributable Packages für Visual Studio 2013&#8220; herunter. Hierfür klicken Sie auf den großen roten Knopf &#8222;Herunterladen&#8220;.<br />
+<br /><div style="width: 1224px" class="wp-caption aligncenter"><a href="http://www.microsoft.com/de-DE/download/details.aspx?id=40784"><img src="https://www.ionas.com/static/img/blog/elster_dll.png" alt="Microsoft Visual C++ Redistributable Download um Elster wieder starten zu können" width="600" /></a><p class="wp-caption-text">Downloadseite für Microsoft Visual C++ Redistributable Package</p></div></p>
+</li>
+<li>Wählen Sie im sich öffnenen Fenster die Datei „vcredist_x86.exe“ oder &#8222;vcredist_x64.exe&#8220; aus und klicken Sie im Anschluss auf „Next“ unten rechts. Die x86-Datei wählen Sie, wenn Ihr Windows noch ein 32 Bit Betriebssystem ist. Die x64 Datei wählen Sie, wenn Ihr Windows bereits auf 64 Bit basiert.</li>
+<li>Nun werden Sie gefragt, ob Sie die Datei speichern möchten. Klicken Sie auf „Datei speichern“.</li>
+<li>Wenn der Download abgeschlossen ist, starten Sie die Datei und installieren Sie diese auf Ihrem Computer.<br />
+Wichtig: Alle Programme und Fenster sollten Sie vorher schließen!</li>
+<li>Nach Abschluß der Installation starten Sie den Computer neu. Danach lässt sich Elster wieder fehlerfrei starten und nutzen.</li>
+</ol>
+<p>Kleiner Tipp: Führen Sie zur Sicherheit noch ein Windows-Update durch. Ggf. sind noch weitere Updates für Windows oder notwendiger Dienste für Elster verfügbar.</p>
+<p>Wir hoffen, dass wir Ihnen mit dieser kleinen Anleitung helfen konnten, das Update-Problem von Elster aufgrund der fehlenden msvcr120.dll in den Griff zu bekommen. Wir freuen uns, wenn Sie uns als Dankeschön auf <a href="https://www.facebook.com/IhrOnlineAssistent">Facebook ein Like</a> schenken.<br />
+Falls es nicht den gewünschten Erfolg gebracht hat, rufen Sie uns einfach an und wir helfen Ihnen gerne mit Elster weiter. Unsere Rufnummer ist die +49 (0)6131 327070. Wir sind 7 Tage die Woche von 08:00-20:00 Uhr erreichbar.</p>

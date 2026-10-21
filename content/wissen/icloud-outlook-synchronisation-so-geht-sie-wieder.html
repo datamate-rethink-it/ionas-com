@@ -1,0 +1,73 @@
+---
+title: "iCloud-Outlook Synchronisation &#8211; so geht sie wieder"
+date: 2017-09-07T11:34:42
+lastmod: 2018-12-14T16:00:43
+url: "/wissen/icloud-outlook-synchronisation-so-geht-sie-wieder/"
+wissen: true
+wp_id: 4081
+autor: "Chris Schütz"
+autor_id: "https://www.ionas.com/wissen/#/schema/person/a4a9df5dc0288fb1743994e3bf44c640"
+beschreibung: "Die Synchronisation der iCloud mit Outlook machte zuletzt aufgrund einer Änderung der Outlook-Sicherheitspolicies Probleme. So fixen Sie das Problem!"
+titel_seo: "iCloud-Outlook Synchronisation - so geht sie wieder | ionas"
+canonical_url: "https://www.ionas.com/wissen/icloud-outlook-synchronisation-so-geht-sie-wieder/"
+bild: "https://www.ionas.com/wissen/wp-content/uploads/2017/09/Outlook_iCloud.jpg"
+lesezeit: "3 Minuten"
+wortanzahl: 631
+kategorie: "Uncategorized"
+bilder:
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2017/09/Outlook_iCloud-300x204.jpg"
+    text: "Synchronisation Outlook iCloud"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2017/09/installierte_Updates-1-300x147.png"
+    text: "installierte Updates"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2017/09/DWORD-300x195.png"
+    text: "DWORD"
+kommentare: 7
+teaser: |-
+  <p><img style="float: left; margin-right: 75px;margin-left:55px;" src="https://www.ionas.com/wissen/wp-content/uploads/2017/09/Outlook_iCloud-300x204.jpg" alt="Synchronisation Outlook iCloud" width="250" align="absmiddle" hspace="40" vspace="0" />Die Synchronisation des eigenen Kalenders zwischen iPhone/iPad und Outlook ist eine feine Sache &#8211; wenn Sie denn reibungslos funktioniert. Aktuell scheint dies jedoch aufgrund eines fehlerhaften Windows Updates nicht selbstverständlich. Wir erklären in diesem Artikel, was Sie machen müssen, damit Outlook und iCloud wieder miteinander &#8222;sprechen&#8220;.<br />
+   <a href="https://www.ionas.com/wissen/icloud-outlook-synchronisation-so-geht-sie-wieder/#more-4081" class="more-link"><span aria-label="iCloud-Outlook Synchronisation &#8211; so geht sie wieder weiterlesen">(mehr&#160;&hellip;)</span></a></p>
+---
+<p><img style="float: left; margin-right: 75px;margin-left:55px;" src="https://www.ionas.com/wissen/wp-content/uploads/2017/09/Outlook_iCloud-300x204.jpg" alt="Synchronisation Outlook iCloud" width="250" align="absmiddle" hspace="40" vspace="0" />Die Synchronisation des eigenen Kalenders zwischen iPhone/iPad und Outlook ist eine feine Sache &#8211; wenn Sie denn reibungslos funktioniert. Aktuell scheint dies jedoch aufgrund eines fehlerhaften Windows Updates nicht selbstverständlich. Wir erklären in diesem Artikel, was Sie machen müssen, damit Outlook und iCloud wieder miteinander &#8222;sprechen&#8220;.<br />
+<span id="more-4081"></span></p>
+<h2>Windows Update knippst iCloud-Outlook Synchronisation aus</h2>
+<p>Wird bei Ihnen seit kurzem weder unter den Kontakten noch unter dem Kalender Ihr iCloud-Konto aufgeführt? Obwohl das Outlook Add-in für iCloud aktiv ist? Dann sind Sie &#8222;Opfer&#8220; eines der letzten Sicherheitsupdate von Windows 10 geworden.</p>
+<p>Mit dem Windows Update <a href="https://support.microsoft.com/de-de/help/3191898/descriptionofthesecurityupdateforoutlook2007june13-2017">KB3191898</a> vom 13. Juni 2017 wurden unter anderem die Einstellungen von Outlook für MAPI-Dienste geändert. So wurde standardmäßig das Laden nicht registrierter MAPI-Dienste deaktiviert. (Was MAPI ist, ist für die Fehlerbehebung nicht relevant. Die Wissensdurstigen finden auf <a href="https://de.wikipedia.org/wiki/Messaging_Application_Programming_Interface">Wikipedia mehr Informationen zu MAPI</a>.) Diese Regeländerung führt dazu, dass die iCloud-Synchronisation nicht mehr so wie gewohnt funktioniert, weil die Software nicht mehr mit Outlook kommunizieren kann. Eine Entscheidung mit vergleichsweise großer Tragweite &#8211; inzumal unterschiedliche Outlook-Versionen betroffen scheinen. </p>
+<p>Wie es scheint, ist sich Microsoft der Tragweite des Updates durchaus bewusst. Aus den neuen Update-Paketen ist das Update anscheinend entfernt worden. Den Schaden haben aber die, bei denen das Update schon ausgeführt wurde.</p>
+<h2>Fehlerbehebung der Outlook-iCloud Synchronisation</h2>
+<p>Da das Synchronisationsproblem mit einem Windows Update begann, liegt es nur nahe, das Problem durch Deinstallation eben jenes Updates zu beseitigen. Leider funktioniert das aber nicht immer. Dann ist noch ein manueller Eingriff in die Registrierungsdatenbank von Nöten.</p>
+<h3>Deinstallation des fehlerhaften Windows Updates</h3>
+<p><img style="float: left; margin-right: 15px;" src="https://www.ionas.com/wissen/wp-content/uploads/2017/09/installierte_Updates-1-300x147.png" alt="installierte Updates" width="300" /></p>
+<p>Prüfen Sie zunächst einmal, ob das Update KB3191898 auf Ihrem Rechner vorhanden ist. Gehen Sie dazu über die Systemsteuerung in die Rubrik <strong>Programme und Features</strong>.</p>
+<p>In der linken Navigation finden Sie den Punkt <strong>Installierte Updates anzeigen</strong>. Klicken Sie darauf, um die Liste sämtlicher installierter Windows Updates anzuzeigen. Suchen Sie dort nach dem Update KB3191898. Finden Sie dieses, dann deinstallieren Sie es mit einem Rechtsklick. Nach einem Neustart ist das Update deinstalliert und die Synchronisation sollte wieder reibungslos funktionieren.</p>
+<p>Ist das nicht der Fall oder ist bei Ihnen das Update nicht auffindbar, dann führen Sie die manuelle Änderung der Registry durch, um die Outlook-iCloud Synchronisation zu reaktivieren.</p>
+<h2>MAPI-Regeländerung per Registry-Hack</h2>
+<p>Registry-Einträge sollten nur dann durchgeführt werden, wenn es keine andere Möglichkeit gibt und man genau weiß, was man tut. Dies ist hier der Fall. Uns ist kein alternativer Weg bekannt, um die defekte Outlook-iCloud Synchronisation wiederzubeleben.</p>
+<p>Öffnen Sie den Registrierungsdatenbankeditor über den Ausführen-Dialog mit der Tastenkombination <strong>Windows-Taste + R</strong>. Geben Sie dann <code>regedit</code> ein und bestätigen Sie die Eingabe. Die Abfrage der <a href="/wissen/windows-sicherheitskonzept-benutzerkonten-und-benutzerkontensteuerung/">Benutzerkontensteuerung</a> bestätigen Sie &#8222;Ja&#8220;.</p>
+<p>Bewegen Sie sich nun zum Schlüssel <code>HKEY_CURRENT_USER\Software\Microsoft\Office\12.0\Outlook\Security\</code>. Das 12.0 in dem Schlüssel steht dabei für Ihre Outlook Build Nummer. 12.0 ist die Build Nummer von Office 2007. Bei älteren oder neueren Office Versionen ist es eine andere Build-Nummer (siehe nachfolgende Tabelle). Da Office 2016, Office 2019 und Office 365 die gleiche Code-Basis verwenden, haben sie die gleiche Build-Nummer.</p>
+<table style="margin-left: 10%; margin-bottom: 10px;">
+<tbody>
+<tr>
+<td style="color: white; background: #BE1E2D;">Office 2003</td>
+<td style="color: white; background: #BE1E2D;">Office 2007</td>
+<td style="color: white; background: #BE1E2D;">Office 2010</td>
+<td style="color: white; background: #BE1E2D;">Office 2013</td>
+<td style="color: white; background: #BE1E2D;">Office 2016</td>
+<td style="color: white; background: #BE1E2D;">Office 2019</td>
+<td style="color: white; background: #BE1E2D;">Office 365</td>
+</tr>
+<tr>
+<td style="text-align:center;" >11.0</td>
+<td>12.0</td>
+<td>14.0</td>
+<td>15.0</td>
+<td>16.0</td>
+<td>16.0</td>
+<td>16.0</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p><img style="float: right; margin-left: 25px;" src="https://www.ionas.com/wissen/wp-content/uploads/2017/09/DWORD-300x195.png" alt="DWORD" width="300" /></p>
+<p>In diesem Schlüssel ist der REG_DWORD-Eintrag <code>AllowUnregisteredMapiServices</code> per Kontextmenü hinzuzufügen und auf den Wert 1 zu setzen. Der Wert 1 bedeutet konkret, dass unregistrierte MAPI-Dienste geladen werden. (Der Wert 0 hingegen weist Outlook an, unregistrierte MAPI-Dienste wie die iCloud zu blockieren.)</p>
+<p>Erstellen Sie einfach per Rechtsklick einen neuen Eintrag vom Typ DWORD-WERT (32-Bit). Mit einem Doppelklick auf den neuen Eintrag können Sie dessen Wert ändern. Schliessen Sie den Registrierungsdatenbankeditor und starten Sie Outlook neu. Outlook sollte wieder Ihren Kalender mit dem iCloud-Konto synchronisieren.</p>
+<h2>Hilfe bei Outlook-Problemen &#8211; ionas-Support-Hotline</h2>
+<p>Bei weiteren Fragen oder Hilfestellungen stehen wir gerne als persönlicher Ansprechpartner zur Verfügung. Das <a href="/pc-hilfe">PC-Hilfe</a> Team von ionas ist unter der Rufnummer +49 (0)6131 327070 an 7 Tagen die Woche erreichbar.</p>

@@ -1,0 +1,63 @@
+---
+title: "WLAN Passwort auslesen &#8211; so einfach geht&#8217;s!"
+date: 2018-05-27T12:43:24
+lastmod: 2018-05-27T14:53:33
+url: "/wissen/wlan-passwort-auslesen-so-einfach-gehts/"
+wissen: true
+wp_id: 4555
+autor: "Ralf Dyllick-Brenzinger"
+autor_id: "https://www.ionas.com/wissen/#/schema/person/4f6d598597b4cb184645f0851f8bdea7"
+beschreibung: "Das WLAN Passwort vergessen? Der notierte Schlüssel funktioniert nicht? Diese Anleitung erklärt, wie Sie aus einem anderen Windows Computer das WLAN Passwort auslesen können. Das Rücksetzen des Passworts ersparen Sie sich damit."
+titel_seo: "WLAN Passwort auslesen - so einfach geht's! | ionas"
+canonical_url: "https://www.ionas.com/wissen/wlan-passwort-auslesen-so-einfach-gehts/"
+bild: "https://www.ionas.com/wissen/wp-content/uploads/2018/05/Sicherheit_Drahtloseigenschaften_nummeriert.png"
+lesezeit: "4 Minuten"
+wortanzahl: 730
+kategorie: "Anleitungen"
+bilder:
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2018/05/Sicherheit_Drahtloseigenschaften_nummeriert.png"
+    text: "Darstellung des Vorgehens zur Anzeige des WLAN Passworts im Klartext über das Netzwerk- und Freigabecenter"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2018/05/Auslesen_WLAN_Passwort_Eingabeaufforderung_Kreise.png"
+    text: "Befehl zur Anzeige des WLAN Passworts im Klartext über die Eingabeaufforderung"
+tags:
+  - "kennwort"
+  - "passwort"
+  - "ssid"
+  - "wlan"
+teaser: |-
+  <p>Sie haben das Passwort Ihres WLANs vergessen, kommen nicht mehr ins eigene Wireless LAN und wollen aufgrund des Kollateralaufwands nicht das Passwort im Access Point bzw. Router zurücksetzen? Dann gibt es einen recht einfachen Weg, wieder an das Passwort Ihres WLANs zu kommen: das WLAN Passwort auslesen. Dazu benötigen sie nur einen Windows Computer mit einer funktionierenden Verbindung im fraglichen WLAN. Die weiteren Schritte erklären wir in diesem Beitrag.</p>
+  <p> <a href="https://www.ionas.com/wissen/wlan-passwort-auslesen-so-einfach-gehts/#more-4555" class="more-link"><span aria-label="WLAN Passwort auslesen &#8211; so einfach geht&#8217;s! weiterlesen">(mehr&#160;&hellip;)</span></a></p>
+---
+<p>Sie haben das Passwort Ihres WLANs vergessen, kommen nicht mehr ins eigene Wireless LAN und wollen aufgrund des Kollateralaufwands nicht das Passwort im Access Point bzw. Router zurücksetzen? Dann gibt es einen recht einfachen Weg, wieder an das Passwort Ihres WLANs zu kommen: das WLAN Passwort auslesen. Dazu benötigen sie nur einen Windows Computer mit einer funktionierenden Verbindung im fraglichen WLAN. Die weiteren Schritte erklären wir in diesem Beitrag.</p>
+<p><span id="more-4555"></span></p>
+<h2>WLAN Passwort auslesen &#8211; 2 Optionen</h2>
+<p>Wer hat sowas nicht schon erlebt: Windows hat das WLAN Passwort &#8222;vergessen&#8220;, verweigert drum die Verbindung zum Netzwerk und zu allem Überfluss funktioniert das notierte Passwort nicht, obwohl das auf jeden Fall funktionieren müsste. Das Zurücksetzen des Passworts im Access Point/Router würden die anderen Nutzer im Netzwerk wohl kaum danken. Müssten diese doch in all ihren Geräten das Passwort neu eintragen.</p>
+<p>Die Lösung für dieses Problem: Das WLAN Passwort auslesen. Windows speichert WLAN-Passwörter in sogenannten WLAN-Profilen im Klartext. Das bedeutet: Mit dem richtigen Vorgehen, kann man Wndows die WLAN Passwörter entlocken. Das ist beim dargestellten Problem tatsächlich praktisch, durchaus aber auch ein Sicherheitsproblem. Schließlich können damit auch andere an einem unbewachten Computer Passwörter auslesen.</p>
+<p>Es gibt zwei übliche Wege, um aus Windows Computern WLAN Kennwörter auszulesen:</p>
+<ul>
+<li><strong>WLAN-Adapterstatus:</strong> Dieses Vorgehen hat den Vorteil, dass man die graphische Benutzeroberfläche von Windows nicht verlassen muss, wohl aber den Nachteil, dass man nur das Passwort desjenigen WLANs auslesen kann, in das man gerade eingeloggt ist.</li>
+<li><strong>Network Shell:</strong> Über die Eingabeaufforderung lassen sich die WLAN-Schlüssel aller WLANs auslesen, mit denen der Computer mal verbunden war. Die Eingabeaufforderung ist aber nicht Jedermans Sache.</li>
+</ul>
+<p>In den meisten Fällen wird der Adapterstatus das Mittel der Wahl sein, wenn Sie das WLAN Kennwort auslesen wollen. Der Vollständigkeit halber stellen wir die zweite Methode auch vor.</p>
+<h2>Weg 1: WLAN Kennwort über den Adapterstatus auslesen</h2>
+<p>In den Adapterstatus kommt man über das Netzwerk- und Freigabecenter. Dieses wiederrum erreichen Sie am einfachsten, wenn Sie <code>control</code> in den Ausführen-Dialog (Windows-Taste + R) eingeben. In der sich öffnenden Systemsteuerung können Sie nun das Netzwerk- und Freigabecenter abbiegen.</p>
+<p>Der Adapterstatus selbst verbirgt sich hinter em Namen der WLAN-Verbindung auf der rechten Seite des Netzwerk- und Freigabecenters. Von hier sind es noch drei Klicks zum WLAN-Passwort (siehe Abbildung):</p>
+<ol>
+<li>Klick auf die Schaltfläche <b>Drahtloseigenschaften</b>: Das Eigenschaftenfenster öffnet sich.</li>
+<li>Klick auf den Tab <b>Sicherheit</b>: Sie wechseln in diesen Tab.</li>
+<li>Klick auf die Checkbox <b>Zeichen anzeigen</b>: Der WLAN-Schlüssel wird angezeigt.</li>
+</ol>
+<p><a href="https://www.ionas.com/wissen/wp-content/uploads/2018/05/Sicherheit_Drahtloseigenschaften_nummeriert.png" data-slb-active="1" data-slb-asset="2103513536" data-slb-internal="0" data-slb-group="4555"><img src="https://www.ionas.com/wissen/wp-content/uploads/2018/05/Sicherheit_Drahtloseigenschaften_nummeriert.png" alt="Darstellung des Vorgehens zur Anzeige des WLAN Passworts im Klartext über das Netzwerk- und Freigabecenter" width="776" /></a></p>
+<p>Das Passwort auf diesen Weg anzeigen zu lassen, ist sehr einfach. Die Einschränkung ist, dass Sie nur das WLAN-Passwort des eingeloggten Wireless LANs anzeigen lassen können. Wenn Sie das Passwort eines anderen WLANs auslesen wollen, dann lesen Sie einfach weiter.</p>
+<h2>Weg 2: Per Network Shell an den WLAN Kennwort-Speicher</h2>
+<p><a href="https://www.ionas.com/wissen/wp-content/uploads/2018/05/Auslesen_WLAN_Passwort_Eingabeaufforderung_Kreise.png" data-slb-active="1" data-slb-asset="687523536" data-slb-internal="0" data-slb-group="4555"><img src="https://www.ionas.com/wissen/wp-content/uploads/2018/05/Auslesen_WLAN_Passwort_Eingabeaufforderung_Kreise.png" alt="Befehl zur Anzeige des WLAN Passworts im Klartext über die Eingabeaufforderung" width="50%" style="float:right;margin-left: 15px;"/></a></p>
+<p>Die auszuführenden Befehle benötigen erhöhte Rechte. Starten Sie also zunächst die Eingabeaufforderung als Administrator und bestätigen Sie die Benutzerkontenabfrage. Es öffnet sich die Eingabeaufforderung mit dem Prompt <b>C:\WINDOWS\system32</b>.</p>
+<p>Der Befehl zum Aufrufen der Eigenschaften eines WLAN Profils ist:</p>
+<p><code>netsh wlan show profile #PROFIL#</code></p>
+<p>Mit diesem Befehl bleibt das Passwort des angegebenen WLAN Profils verborgen. Mit einer kleinen Anpassung des Befehls wird das Passwort im Klartext angezeigt (siehe Abbildung):</p>
+<p><code>netsh wlan show profile #PROFIL# key=clear</code></p>
+<p>Wichtig: #PROFIL# muss durch den Namen des Profils ersetzt werden (in der Abbildung ionas). Der Profilname ist normalerweise die <a href="https://de.wikipedia.org/wiki/Service_Set#Service_Set_Identifier">SSID</a> des WLANs. Das muss aber nicht sein. Gibt man den netsh-Befehl ohne einen Profilnamen ein, dann werden alle auf dem Computer abgespeicherten Profile angezeigt. In der Liste kann man nun nach dem Namen des eigenen Profils suchen. Nicht erschrecken: Hat man sich bereits in vielen gesicherten WLANs eingeloggt, dann kann diese Liste durchaus lang sein.</p>
+<h2>Sicherheitsschlüssel des WLANs auslesen ganz einfach, aber &#8230;</h2>
+<p>&#8230; wenn es sich nicht um das eigene WLAN handelt, dann sollte man sich zuvor das explizite OK des Netzwerkmanagers einholen. Ansonsten bewegt man sich rechtlich auf dünnem Eis.</p>
+<p>Weitere Artikel zum Thema WLAN finden Sie in unserem Blog. Ihr <a href="wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/">WLAN funktioniert nicht</a>? Sie haben zwar eine <a href="/wissen/kein-internet-trotz-wlan-verbindung/">WLAN-Verbindung, aber keinen Internetzugang</a>? Für diese und andere Probleme rund um das Thema WLAN finden Sie in unserem Blog.</p>
+<p>Hat Ihnen dieser Artikel weitergeholfen? Dann teilen Sie doch Ihre Freude mit einem Like in unserem <a href="https://www.facebook.com/IhrOnlineAssistent">Facebook-Profil</a>. Benötigen Sie weitere Hilfe? Wir stehen Ihnen an 7 Tagen die Woche für Fragen zur Verfügung: +49 (0)6131 327070.</p>

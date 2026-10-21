@@ -1,0 +1,57 @@
+---
+title: "Router – Schutzfunktion und Schwachstellen von FRITZ!Box und Co."
+date: 2015-03-13T00:12:30
+lastmod: 2015-03-15T16:24:49
+url: "/wissen/router-schutzfunktion-und-schwachstellen-von-fritzbox-und-co/"
+wissen: true
+wp_id: 270
+autor: "Christoph Dyllick-Brenzinger"
+autor_id: "https://www.ionas.com/wissen/#/schema/person/7e06adb4cbcd47655bf6919c383fa89a"
+beschreibung: "Router sind das zentrale Element zur Absicherung von lokalen Netzwerken. Arbeitsweise, Schutzfunktion und optimale Einstellungen werden hier erklärt."
+titel_seo: "Router – Schutzfunktion und Schwachstellen von FRITZ!Box und Co. | ionas"
+canonical_url: "https://www.ionas.com/wissen/router-schutzfunktion-und-schwachstellen-von-fritzbox-und-co/"
+bild: "/static/img/blog/router.png"
+lesezeit: "5 Minuten"
+wortanzahl: 1000
+kategorie: "Uncategorized"
+bilder:
+  - loc: "https://www.ionas.com/static/img/blog/router.png"
+    text: "der Router schützt das private Netzwerk"
+tags:
+  - "firewall"
+  - "fritzbox"
+  - "router"
+  - "speedport"
+teaser: |-
+  <p>Unscheinbar und doch essentiell für den sicheren Zugang zum Internet: Der Router. Er ist wohl das wichtigste Element eines privaten Heimnetzwerkes. Er bildet das Tor zwischen dem lokalen Netzwerk und dem Internet und ist damit die Schnittstelle zwischen den eigenen Geräten und den Unwegsamkeiten des Internets. Kurz gesprochen: Der Schutz des Heimnetzwerks steht und fällt mit dem Router als erster Schutzwall gegen Eindringlinge aus dem Internet.</p>
+  <p>Trotz dieser zentralen Funktion wird der Router typischerweise stiefmütterlich behandelt. Normalerweise rückt er höchstens dann in den Mittelpunkt, wenn er eine Fehlfunktion hat und &#8222;das Internet nicht mehr funktioniert&#8220;. Die Nachlässigkeit, mit der Router behandelt werden, lässt sich anhand eines jüngeren Beispiels gut verdeutlichen: Anfang 2014 wurde bekannt, dass Deutschlands populärste Internet-Router, die FRITZ!Boxen, eine große Sicherheitslücke aufwiesen. Diese Lücke ermöglichte Angreifern aus dem Internet die FRITZ!Boxen zu kapern, auch wenn die Fernwartung auf Ihnen deaktiviert war. (Quelle: <a href="http://www.heise.de/security/meldung/Jetzt-Fritzbox-aktualisieren-Hack-gegen-AVM-Router-auch-ohne-Fernzugang-2115745.html">Heise</a>) AVM, der Hersteller der FRITZ!Boxen, reagierte schnell und stellte einen Patch bereit. Mit Hilfe dieses Patches ließ sich die Lücke mit wenig Aufwand schließen. Angesichts der geringen Downloadzahlen der Patches kann man aber davon ausgehen, dass immer noch Hunderttausende FRITZ!Boxen oder baugleiche Geräten nicht ausreichend gegen Angriffe von außen geschützt sind.</p>
+  <p>Lesen Sie in diesem Artikel, wie Ihr Router Sie schützt, wie Sie Ihren Router optimal konfigurieren und bei welchen Aktivitäten Sie sich nicht auf Ihren Router verlassen können.</p>
+  <p> <a href="https://www.ionas.com/wissen/router-schutzfunktion-und-schwachstellen-von-fritzbox-und-co/#more-270" class="more-link"><span aria-label="Router – Schutzfunktion und Schwachstellen von FRITZ!Box und Co. weiterlesen">(mehr&#160;&hellip;)</span></a></p>
+---
+<p>Unscheinbar und doch essentiell für den sicheren Zugang zum Internet: Der Router. Er ist wohl das wichtigste Element eines privaten Heimnetzwerkes. Er bildet das Tor zwischen dem lokalen Netzwerk und dem Internet und ist damit die Schnittstelle zwischen den eigenen Geräten und den Unwegsamkeiten des Internets. Kurz gesprochen: Der Schutz des Heimnetzwerks steht und fällt mit dem Router als erster Schutzwall gegen Eindringlinge aus dem Internet.</p>
+<p>Trotz dieser zentralen Funktion wird der Router typischerweise stiefmütterlich behandelt. Normalerweise rückt er höchstens dann in den Mittelpunkt, wenn er eine Fehlfunktion hat und &#8222;das Internet nicht mehr funktioniert&#8220;. Die Nachlässigkeit, mit der Router behandelt werden, lässt sich anhand eines jüngeren Beispiels gut verdeutlichen: Anfang 2014 wurde bekannt, dass Deutschlands populärste Internet-Router, die FRITZ!Boxen, eine große Sicherheitslücke aufwiesen. Diese Lücke ermöglichte Angreifern aus dem Internet die FRITZ!Boxen zu kapern, auch wenn die Fernwartung auf Ihnen deaktiviert war. (Quelle: <a href="http://www.heise.de/security/meldung/Jetzt-Fritzbox-aktualisieren-Hack-gegen-AVM-Router-auch-ohne-Fernzugang-2115745.html">Heise</a>) AVM, der Hersteller der FRITZ!Boxen, reagierte schnell und stellte einen Patch bereit. Mit Hilfe dieses Patches ließ sich die Lücke mit wenig Aufwand schließen. Angesichts der geringen Downloadzahlen der Patches kann man aber davon ausgehen, dass immer noch Hunderttausende FRITZ!Boxen oder baugleiche Geräten nicht ausreichend gegen Angriffe von außen geschützt sind.</p>
+<p>Lesen Sie in diesem Artikel, wie Ihr Router Sie schützt, wie Sie Ihren Router optimal konfigurieren und bei welchen Aktivitäten Sie sich nicht auf Ihren Router verlassen können.</p>
+<p><span id="more-270"></span></p>
+<h2>Router – die unbekannten Wesen im eigenen Haus</h2>
+<p><img style="float: left; padding: 20px;" src="/static/img/blog/router.png" alt="der Router schützt das private Netzwerk" width="350" /><br />
+Wie schon gesagt, <strong>Router</strong> verbinden Netzwerke. Konkret verbindet er bei Ihnen daheim oder bei Ihnen im Büro die dortigen Computer, Laptops und anderen internetfähigen Geräte mit dem Internet und den dortigen Dienstanbietern wie Google, Facebook und eBay. Dies macht er, indem er an alle Geräten im lokalen Netz eine eindeutige Adresse vergibt und so dafür sorgt, dass aus dem Internet kommende Datenpakete an das richtige Gerät weitergeleitet (neudeutsch: &#8222;geroutet&#8220;) werden können. Er registriert jede Anfrage, die aus dem lokalen Netzwerk rausgeht (z.B. der Aufruf der Webseite www.spiegel.de) und leitet die zurückgelieferten Daten zum Aufbau der Webseite dann ausschließlich an dieses Gerät zurück. Für einen Router ist es dabei egal, ob ein Smart Phone, ein Tablet oder ein Computer die Anfragen stellt. Auch läuft das Verfahren identisch für Geräte, die per Kabel angebunden sind, wie für solche, die kabellos, also WLAN oder wireless LAN, mit ihm kommunizieren.</p>
+<h2>Fähigkeiten und Schutzfunktionen von Routen</h2>
+<p>Um sich die Schutzfunktion eines Routers einfach vorstellen zu können, bietet sich eine Analogie an. Stellen Sie sich einen Router als einen Türsteher und einen Platzanweiser bei der Berlinale vor. Der Türsteher sorgt dafür, dass nur Personen mit Einladung passieren dürfen. Schaulustige und Möchtegerne haben keine Chance. Gleichzeitig stellt der Platzanweiser sicher, dass Sie mit den richtigen Personen am Tisch sitzen und nicht aus der Reihe tanzen.</p>
+<p>Auf die IT-Welt übertragen heißt das, dass nur Informationen, die vorher aus dem lokalen Netzwerk angefordert wurden, die Firewall Ihres Routers passieren dürfen. Zurück zum Beispiel von oben: Wenn Sie auf Ihrem Computer www.spiegel.de aufrufen, dann sehen Sie die Nachrichtenseite nur, weil vorher eine Anfrage an www.spiegel.de von ihrem Browser verschickt wurde und der Router diese Informationen auch ins lokale Netzwerk durchgelassen hat. Dadurch dass sich der Router gemerkt hat, woher die Anfrage aus dem Heimnetzwerk kam, kann er sie auch zielgenau an Ihren Computer zurückleiten. Auf diese Weise wird sichergestellt, dass Ihre Anfrage nicht auch auf Ihrem Handy ankommt, mit dem Sie zeitgleich die Bundesligatabelle studieren.</p>
+<h2>Empfehlungen zum Absichern des eigenen Netzwerkes</h2>
+<p>Die oben beschriebene Mechanik von Routern bietet per se schon mal ein gutes Schutzniveau. Solle ein Angreifer versuchen, auf ein Gerät hinter dem Router zuzugreifen oder diesem Malware unterzuschieben, dann sagt der Türsteher-Router &#8222;njet&#8220;!</p>
+<p>Angreifer wissen aber natürlich um diese Mechanik und versuchen, diese gezielt zu umgehen. Daher sollte man darauf achten, dass Ihr Router optimal eingestellt ist. Wir von ionas empfehlen Ihnen die folgenden Einstellungen, um Ihr lokales Netzwerk optimal zu schützen:</p>
+<ol>
+<li>Prüfen Sie regelmäßig, ob es ein Firmware-Update für Ihren Router gibt</li>
+<li>Deaktivieren Sie eine möglicherweise vorhandene Fernkonfiguration des Gerätes über das Internet</li>
+<li>Richten Sie keine Portfreigaben ein, wenn Sie nicht genau wissen, was Sie tun</li>
+<li>Verbieten Sie eine automatisch Erzeugung von Firewallregeln durch das Medienprotokoll UPnP</li>
+<li>Setzen Sie ein sicheres Passwort für Ihr WLAN</li>
+<li>Für Paranoide: nutzen Sie den MAC-Adressenfilter des Routers, so dass fremde Geräte es schwerer haben sich in Ihrem Netzwerk zurechtzufinden.</li>
+</ol>
+<p>Uns ist bewusst, dass diese Vorschläge für wenig versierte Computernutzer wohl wie spanisch klingen. Wenn das bei Ihnen so ist, dann helfen wir Ihnen gerne per Telefon und Fernwartung weiter.</p>
+<h2>Schwachstellen des Router-Schutzes</h2>
+<p>Vor ungefragten Zugriffen aus dem Internet kann Ihr Router Sie zuverlässig schützen, wenn Sie darauf achten immer die aktuellste Firmware zu installieren und Sie die (oben geschilderten) typischen Schwachstellen abdichten. Ein Eindringling, der nicht bis in Ihr lokales Netzwerk vordringt, kann dort keinen Schaden eindringt. Das ist wie ein Bankräuber, der es nicht bis in den Tresorraum schafft.</p>
+<p>Andererseits ist es so, dass auch der beste Router nichts gegen Schädlinge tun kann, die sich bereits im lokalen Netzwerk befinden. Viren in E-Mail-Anhängen oder Schadsoftware von aufgerufenen Webseiten gehören dazu. E-Mails werden von Ihnen angefordert und angesurfte Webseiten wurden von Ihnen angefordert, ergo, der Router lässt diese ungehindert passieren.</p>
+<p>Der Schutz von Routern muss somit durch einen Virenscanner auf einem Windows-PC ergänzt werden. Welches Antivirenprogramm Sie bedenkenlos nutzen können, erfahren Sie in folgendem Artikel: <a href="/wissen/virenscanner-unsere-empfehlung/">Virenscanner – unsere Empfehlung</a>. Außerdem ist absolut empfehlenswert, Ihr Betriebssystem und Ihre Anwendungssoftware regelmäßig zu aktualisieren.</p>
+<p>Sollten Sie Fragen zu Routern oder Ihrer Internet-Sicherheit haben, erreichen Sie uns 365 Tage im Jahr unter der +49 (0)6131 327070.</p>

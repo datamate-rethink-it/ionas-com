@@ -1,0 +1,48 @@
+/* Bildvergroesserung der Wissensartikel - ersetzt simple-lightbox. */
+dialog.ionas-lightbox {
+    max-width: 94vw;
+    max-height: 94vh;
+    padding: 0;
+    border: 0;
+    background: #fff;
+    box-shadow: 0 2px 24px rgba(0, 0, 0, .45);
+}
+
+dialog.ionas-lightbox::backdrop {
+    background: rgba(0, 0, 0, .8);
+}
+
+dialog.ionas-lightbox img {
+    display: block;
+    max-width: 92vw;
+    max-height: 84vh;
+    width: auto;
+    height: auto;
+    margin: 0 auto;
+}
+
+dialog.ionas-lightbox .ionas-lightbox-text {
+    margin: 0;
+    padding: 8px 14px;
+    font-size: 13px;
+    color: #767676;
+    text-align: center;
+}
+
+dialog.ionas-lightbox .ionas-lightbox-zu {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40px;
+    height: 40px;
+    border: 0;
+    background: rgba(255, 255, 255, .85);
+    color: #be1e2d;
+    font-size: 26px;
+    line-height: 38px;
+    cursor: pointer;
+}
+
+dialog.ionas-lightbox .ionas-lightbox-zu:hover {
+    background: #fff;
+}

@@ -1,0 +1,98 @@
+---
+title: "WLAN funktioniert nicht &#8211; Schritt-für-Schritt zum Ziel"
+date: 2018-03-11T18:22:52
+lastmod: 2019-11-05T12:53:25
+url: "/wissen/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/"
+wissen: true
+wp_id: 4153
+autor: "Ralf Dyllick-Brenzinger"
+autor_id: "https://www.ionas.com/wissen/#/schema/person/4f6d598597b4cb184645f0851f8bdea7"
+beschreibung: "Es sind keine WLAN-Verbindungen verfügbar? Es werden keine WLANs angezeigt? WLAN verbunden, aber kein Internet? Diese Schritt-für-Schritt Anleitung hilft bei typischen WLAN-Problemen auf Windows PCs, um den Internetzugang wiederherzustellen. Das WLAN funktioniert nicht – noch nicht!"
+titel_seo: "WLAN funktioniert nicht - Schritt-für-Schritt zum Ziel | ionas"
+canonical_url: "https://www.ionas.com/wissen/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/"
+bild: "https://www.ionas.com/wissen/wp-content/uploads/2018/03/Windows_Problembehandlung.png"
+lesezeit: "9 Minuten"
+wortanzahl: 1828
+kategorie: "Uncategorized"
+bilder:
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2018/03/Windows_Problembehandlung.png"
+    text: "Die Konsultation der Windows Problembehandlung sollte eine der ersten Maßnahmen sein, wenn das WLAN nicht funktioniert."
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2018/03/WLAN_Adapter_deaktiviert.png"
+    text: "Deaktivierter Wifi-Adapter im Netzwerk- und Freigabecenter"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2018/03/Befehl-NETSH-INT-IPv4-RESET.png"
+    text: "Wiedergabe der Ausführung des Befehl netsh int ipv4 reset"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2018/03/WLAN_Treiber_deinstallieren.png"
+    text: "WLAN funktioniert nicht? Neuinstallation des WLAN Adapters kann helfen"
+  - loc: "https://www.ionas.com/wissen/wp-content/uploads/2019/11/banner-buddy.png"
+    text: "Buddy-PC, spezielles Angebot für alle ionas Leser"
+kommentare: 11
+tags:
+  - "antivirenprogramm"
+  - "firewall"
+  - "netzwerk"
+  - "router"
+  - "treiber"
+  - "wifi"
+  - "windows-update"
+  - "wlan"
+teaser: |-
+  <p>Gestern hat das WLAN noch problemlos funktioniert, heute aber meldet Windows fortlaufend &#8222;kein Internet&#8220; und das obwohl alle anderen Computer, Handys und Tabletts im WLAN surfen können? Nervtötend, meist jedoch mit einem strukturierten Vorgehen recht schnell gelöst. Das in diesem Artikel geschilderte Vorgehen hat sich hundertfach an der ionas-<a href="/computer-hotline">Computer-Hotline</a> bewährt. Schritt-für-Schritt abgearbeitet, ist das Problem &#8222;WLAN funktioniert nicht&#8220; in kurzer Zeit ein Ding der Vergangenheit.</p>
+  <p> <a href="https://www.ionas.com/wissen/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/#more-4153" class="more-link"><span aria-label="WLAN funktioniert nicht &#8211; Schritt-für-Schritt zum Ziel weiterlesen">(mehr&#160;&hellip;)</span></a></p>
+---
+<p>Gestern hat das WLAN noch problemlos funktioniert, heute aber meldet Windows fortlaufend &#8222;kein Internet&#8220; und das obwohl alle anderen Computer, Handys und Tabletts im WLAN surfen können? Nervtötend, meist jedoch mit einem strukturierten Vorgehen recht schnell gelöst. Das in diesem Artikel geschilderte Vorgehen hat sich hundertfach an der ionas-<a href="/computer-hotline">Computer-Hotline</a> bewährt. Schritt-für-Schritt abgearbeitet, ist das Problem &#8222;WLAN funktioniert nicht&#8220; in kurzer Zeit ein Ding der Vergangenheit.</p>
+<p><span id="more-4153"></span></p>
+<h2>Wifi funktioniert nicht? Vorbereitung</h2>
+<p>Der Computer läuft normal, aber in Windows sind keine WLAN-Verbindungen verfügbar (roter Kreis auf WLAN-Icon) bzw. es werden keine WLANs angezeigt (im Wifi-Menü stehen keine WLANs zur Auswahl)? Wenn das der Fall ist, dann stehen die Chancen gut, dass Sie mit dieser Anleitung ein nicht funktionierendes WLAN wieder in Gang setzen können. (In diesem <a href="/wissen/kein-internet-trotz-wlan-verbindung">Blog Artikel</a> beschäftigen wir uns mit der Frage, was man tun kann, wenn trotz WLAN-Verbindung kein Internetzugriff besteht.)</p>
+<p>Bevor man sich der Ursachenforschung am eigenen PC widmet, sollten andere Ursachen ausgeschlossen werden: Läuft der Router? Ist die Wifi-Funktion an Fritz!Box und Co. aktiv? Ist der PC in Reichweite des Access Points? Unterstützt der Drahtlosadapter im Rechner den verwendeten Wifi-Standard, dessen Verschlüsselung und die Frequenz? Wenn das WLAN am Problem-Computer in der Vergangenheit schon funktioniert hat, dann kann man bei letzter Frage davon ausgehen, dass alle Voraussetzungen erfüllt sind. Wenn das Wifi jedoch zum ersten Mal am fraglichen Rechner eingerichtet werden soll, dann sollten die Fragen sorgfältig geprüft werden.</p>
+<p>Eine gute Indikation für ein lokales Problem auf dem Computer liegt dann vor, wenn andere Geräte im WLAN ohne Einschränkungen surfen können. Dann hat der Router Internetzugang, der Router funktioniert und die Kommunikation zwischen Access Point und Client funktionieren.</p>
+<p>Alles abgeklärt? Das WLAN funktioniert nicht &#8211; gleich sollte es wieder gehen!</p>
+<h2>Schritt 1: Windows Neustart</h2>
+<p>Trivial, aber wirksam! Insbesondere Windows Update spielen gerne mal mit den Netzwerkeinstellungen rum. Dies führt dazu, dass das WLAN nicht funktioniert (und vermutlich auch das LAN nicht). Nach einem Neustart und dem Abschluss der Windows Updates beim Runter- bzw. Hochfahren sollten die Update-bedingten Änderungen wieder zurückgenommen sein. Das WLAN sollte dann wieder funktionieren. </p>
+<p>Das WLAN funktioniert nicht? Wäre auch zu einfach gewesen! Und viele gute Tipps kommen noch.</p>
+<h2>Schritt 2: Windows-Problembehandlung</h2>
+<p>Der erste Schritt war einfach, der zweite ist kaum komplizierter: Die Windows Problembehandlung kann manchen einfachen WLAN Fehler schnell und ohne großen Aufwand beseitigen. Einfach einen Rechtsklick auf das Netzwerk-Icon im Infobereich und aus dem erscheinenden Menü das erste Element <b>Problembehandlung</b> auswählen.</p>
+<p><a href="https://www.ionas.com/wissen/wp-content/uploads/2018/03/Windows_Problembehandlung.png" data-slb-active="1" data-slb-asset="196983691" data-slb-internal="0" data-slb-group="4153"><img src="https://www.ionas.com/wissen/wp-content/uploads/2018/03/Windows_Problembehandlung.png" style="float:left; margin-right: 2%" alt="Die Konsultation der Windows Problembehandlung sollte eine der ersten Maßnahmen sein, wenn das WLAN nicht funktioniert." width="50%" /></a></p>
+<p>Ist z.B. der WLAN-Adapter deaktiviert, dann kann (muss aber nicht) die Problembehandlung drauf hinweisen. Auch andere Fehler in der WLAN-Konfiguration kann die Problembehandlung finden und beseitigen. </p>
+<p>Manchmal hilft auch das Lesen zwischen den Zeilen. Wenn die Problembehandlung beispielsweise gar kein Wort über das Wifi verliert, dann ist der Drahtlosadapter vermutlich aus einem anderen Grund &#8222;arbeitsunfähig&#8220;. Eventuell wurde der Adapter deinstalliert und kein neuer Treiber installiert oder der Rechner befindet sich im Flugmodus. Dazu mehr im nächsten Schritt. </p>
+<h2>Schritt 3: Aktivierung des WLAN-Adapters</h2>
+<p>Ungeachtet des Resultats bei Schritt 2 kann eine Überprüfung des Aktivitätsstatus des WLAN-Adapters nicht schaden, wenn es heißt: &#8222;Das WLAN funktioniert nicht!&#8220;</p>
+<p>Zuallererst sollte geprüft werden, ob der oder vielmehr ein Flugmodus aktiviert ist. Flugmodus ist nämlich nicht gleich Flugmodus. Vereinfacht lässt sich sagen, dass sich der Wireless-Adapter auf drei Arten in einen Flugmodus versetzen lässt. Der offensichtlichste Weg dafür ist der Flugmodus, den man im Benachrichtigungsbereich des Windows Desktops findet. Ein Klick auf das Benachrichtigungen-Icon im unteren rechten Eck des Desktops öffnet die Einstellungen, in den man über die Schaltfläche <b>Flugmodus</b> diesen aktivieren und deaktivieren kann.</p>
+<p>An einigen Laptops läßt sich der Flugmodus über einen Schalter im Gehäuse deaktivieren. Und an denen ohne Schalter lässt sich der Flugmodus über eine Tastenkombination an- und ausschalten. Diese variiert von Hersteller zu Hersteller und Modell zu Modell. Normalerweise ist es aber eine Kombination aus Fn-Taste und einer der F-Tasten. Die richtige F-Taste zeigt meist einen iconisierten Radiomasten oder ein Flugzeug. Diese Schalter auf &#8222;An&#8220; zu stellen ist besonders wichtig, denn diese greifen vor dem Flugmodus-Schalter in Windows. Wenn einer dieser Schalter auf &#8222;Aus&#8220; steht, kann man den Windows-Flugmodus 10x ausstellen, der WLAN-Adapter wird nicht zum Leben erweckt werden.</p>
+<p>WLAN funktioniert nicht &#8211; kein Wunder wenn der eine oder andere Flugmodus an ist. Der Lösung ist in diesem Fall naheliegend: Einfach ausprobieren, ob eine Änderung Besserung bringt!</p>
+<p><a href="https://www.ionas.com/wissen/wp-content/uploads/2018/03/WLAN_Adapter_deaktiviert.png" data-slb-active="1" data-slb-asset="1361807032" data-slb-internal="0" data-slb-group="4153"><img src="https://www.ionas.com/wissen/wp-content/uploads/2018/03/WLAN_Adapter_deaktiviert.png" style="float:right; margin-left: 2%;" alt="Deaktivierter Wifi-Adapter im Netzwerk- und Freigabecenter" width="60%" /></a></p>
+<p>Neben den unterschiedlichen Flugmodi lässt sich der WLAN-Adapter auch über das Freigabecenter deaktivieren (siehe Abbildung). In diesem Fall wird der Adapter grau dargestellt und der Adapterstatus ist <b>Deaktiviert</b>. Wieder in Betriebsmodus versetzen lässt sich dieser per Rechtsklick und Wahl von <b>Aktivieren</b> im sich öffnenden Menü. Wichtig: Diese wie die meisten nachfolgenden Maßnahmen funktionieren nur, wenn man als Benutzer mit einem Administratorkonto angemeldet ist.</p>
+<h2>Schritt 4: Aktivierung der Windows-WLAN-Dienste</h2>
+<p>Sehr selten kommt es vor, dass sich einer der Windows-Dienste, die für den korrekten Betrieb des WLANs erforderlich sind, abschaltet oder nicht korrekt funktioniert. Dann bringt ein Start bzw. ein Neustart des Dienstes in der Diensteverwaltung Abhilfe, wenn das WLAN nicht funktioniert.</p>
+<p>Unter den wohl ein Dutzend Wegen in die Diensteverwaltung ist der vermutlich einfachste der Ausführen-Dialog. Mit der Tastenkombination Windows-Taste + R ruft man den Dialog auf und durch Eingabe von <code>services.msc</code> startet die Diensteverwaltung. Auch hier gilt wieder: Die erhöhten Rechte eines Administrators sind notwendig.</p>
+<p>Zentral für die Nutzung von WLAN auf einem Windows 10 Rechner sind die folgenden Dienste:</p>
+<ul>
+<li>Automatische WLAN-Konfiguration</li>
+<li>Netzwerkverbindungen</li>
+<li>Netzwerkverbindungsbroker</li>
+<li>NLA (Network Location Awareness)</li>
+</ul>
+<p>Ist einer dieser Dienste nicht gestartet, dann ist der Grund wohl gefunden, warum das WLAN nicht geht. Diese Dienste sind sowas wie der Sprit im Tank eines Autos: Sind diese nicht aktiv, dann kann das WLAN auch nicht richtig funktionieren. Mit einem Rechtsklick auf den jeweiligen Dienst startet man diesen. </p>
+<p>WLAN funktioniert nicht? Immer noch nicht? Dann hilft vielleicht der nächste Tipp &#8211; insbesondere bei Windows 10 Rechnern.</p>
+<h2>Schritt 5: Reset der TCP/IP-Einstellungen</h2>
+<p>Das TCP- und IP-Protokoll sind sowas wie das Rückgrat des Internets und moderner Netzwerke. Das IP-Protokoll ist &#8211; unter anderem &#8211; dafür verantwortlich, dass die Datenpakete zwischen Netzwerken korrekt geroutet werden und innerhalb eines Netzwerks den richtigen Empfänger erreichen. Das TCP-Protokoll sorgt dafür, dass Verbindungen zwischen Netzwerkteilnehmern zum zuverlässigen Austausch von Datenströmen herstellt und aufrecht erhalten werden.</p>
+<p>Um die Einstellungen für die beiden Protokolle auf einem Rechner zurück zu setzen, ist folgender Befehl in einer Administrator-Eingabeaufforderung nötig: <code>netsh int ipv4 reset</code></p>
+<p><a href="https://www.ionas.com/wissen/wp-content/uploads/2018/03/Befehl-NETSH-INT-IPv4-RESET.png" data-slb-active="1" data-slb-asset="684045072" data-slb-internal="0" data-slb-group="4153"><img src="https://www.ionas.com/wissen/wp-content/uploads/2018/03/Befehl-NETSH-INT-IPv4-RESET.png" style="float:left; margin-right: 2%" alt="Wiedergabe der Ausführung des Befehl netsh int ipv4 reset" width="60%" /></a> </p>
+<p>Der Befehl ist für alle aktuellen Windows Versionen identisch &#8211; Windows 7, Windows 8, Windows 8.1. und Windows 10. Nach der Ausführung des Befehls, dessen Rückgabe in der Abbildung dargestellt ist, muss der Rechner neu gestartet werden. Erst dann werden die <a href="https://support.microsoft.com/de-de/help/299357/how-to-reset-tcp-ip-by-using-the-netshell-utility">zwei Einträge in der Registrierungsdatenbank, die durch den Befehl neu geschrieben werden, geladen. Das Vorgehen ist gemäß Microsoft gleichbedeutend mit der Neuinstallation der Protokolle auf dem Client.</a> </p>
+<p>Wenn bei der Ausführung des Befehls wie in der Abbildung ein Fehler auftaucht, dann ist das nicht gleichbedeutend mit einem Scheitern der Aktion. Wenn aber mehrere Probleme auftreten, dann scheint ein größeres Problem mit der TCP/IP-Implementierung auf dem Rechner vorzuliegen. In diesem Fall funktioniert vermutlich auch eine kabelgebundene Netzwerkverbindung nicht korrekt.</p>
+<h2>Schritt 6: Neuinstallation des Treibers des WLAN-Adapters</h2>
+<p><a href="https://www.ionas.com/wissen/wp-content/uploads/2018/03/WLAN_Treiber_deinstallieren.png" data-slb-active="1" data-slb-asset="331425834" data-slb-internal="0" data-slb-group="4153"><img src="https://www.ionas.com/wissen/wp-content/uploads/2018/03/WLAN_Treiber_deinstallieren.png" style="float: right; margin-left: 2%" alt="WLAN funktioniert nicht? Neuinstallation des WLAN Adapters kann helfen" width="50%"  /></a></p>
+<p>Der WLAN Adapter ist eingeschaltet, die Wifi-Komponenten des Betriebssystems sind aktiv, die TCP/IP-Konfiguration des PCs runderneuert und es gibt weiterhin kein Internet? Dann ist die Erneuerung des WLAN-Treibers ein aussichtsreicher Schritt. Glücklicherweise ist das einfacher als es klingt.</p>
+<p>Je nachdem welcher WLAN-Adapter verbaut ist, kann dieser unterschiedlich heißen. Auf dem Rechner des Artikelautors heißt er Intel Centrino Advanced-N6205 (siehe Abbildung). Andere verbreitete Wifi-Netzwerkchips, sogenannte Network Interface Controller, stammen von Broadcom und Realtek.</p>
+<p>Die Deinstallation und Reinstallation ist ganz einfach: Über Rechtsklick auf den Adapter ist der Treiber mit einem Klick deinstalliert. Beim nächsten Systemstart wird der Treiber automatisch neu installiert. (Falls nicht, muss man sich den Treiber von der Webseite des Laptop- bzw. Chipherstellers runter laden.) Mit der Neuinstallation des Treibers wird auch eine möglicherweise falsche statische IP-Konfiguration des Netzwerkadapters zurückgesetzt.</p>
+<p>Haben alle Schritte bisher keinen Erfolg gebracht? Das Wifi funktioniert nicht &#8211; immer noch nicht? Dann liegt der Grund vermutlich nicht am Wifi-Adapter und dessen direkter und mittelbarer Konfiguration, sondern vielmehr an anderen Programmen, die den Zugang zum Internet blockieren.</p>
+<h2>Schritt 7: Abschaltung von Netzzugangsbarrieren</h2>
+<p>Die zwei üblichen Verdächtigen für Konflikte mit Netzwerkverkehr sind die Firewall und das Antivirenprogramm. Um deren Rolle bei den Wifi-Problemen zu identifizieren, sollten beide kurzfristig deaktiviert werden. Ist dann wieder Internetzugriff möglich, dann ist eines der beiden Programm entweder &#8222;zu scharf&#8220; eingestellt oder &#8211; wahrscheinlicher &#8211; hat eine Fehlfunktion. </p>
+<p>Beim Antivirenprogramm ist die temporäre Deaktivierung mit wenigen Klicks über das Icon im Infobereich machbar. Gleiches gilt, wenn das Antivirenprogramm eine Firewall mitbringt. Ist die Standard Windows Firewall im Einsatz, dann erfolgt die Deaktivierung über die Windows Systemsteuerung.</p>
+<p>Ist das AV-Programm der Grund für &#8222;kein Internet&#8220;, dann liegt die Lösung auf der Hand: Eine De- und Neuinstallation des Virenscanners oder, besser noch, die Installation eines anderen Sicherheitsprogramms. Mit den kostenlosen Angeboten von Avira, Avast, AVG, Bitdefender und Kaspersky gibt es einige Auswahl, um deren Konfliktpotential mit der Internetverbindung zu testen. Bei Windows 10 kann man auch einfach den Windows Defender aktivieren und auf einen weiteren Virenscanner verzichten. Die <a href="https://www.datamate.org/antivirenprogramme-im-test-bei-stiftung-warentest/">Stiftung Warentest hat in ihrem Test von Antivirenprogrammen im April 2018</a> gezeigt, dass der Defender über einen guten Echtzeitwächter verfügt.</p>
+<h2>Schritt 8: Wifi-Einstellungen am Router</h2>
+<p>Waren alle Maßnahmen soweit erfolglos und das WLAN ist verbunden, aber &#8222;kein Internet&#8220; ist die weitere Symptomatik? Dann ist der Router der wahrscheinliche Verursacher! Mögliche Probleme können sein, dass die DHCP-Einstellungen falsch sind, ein IP-Adresskonflikt vorliegt oder ein MAC-Adressen-Filter aktiv ist, der den Internetzugang blockiert.</p>
+<p>Konkrete Handlungsempfehlungen sind schwierig, da die Benutzeroberflächen der verschiedenen Router unterschiedlich aussehen und teilweise auch unterschiedliche Begrifflichkeiten verwenden. In diesem Fall macht es Sinn, das Handbuch des Routers bzw. die Webseite des Herstellers zu konsultieren. Gerade die Firma AVM, die die populären Fritz!Boxen herstellt, bietet sehr guten <a href="https://avm.de/service/">Online Support</a>.</p>
+<h2>WLAN funktioniert nicht &#8211; jetzt nicht mehr</h2>
+<p>Mit dem in diesem Artikel vorgestellten Vorgehen werden Schritt-für-Schritt die möglichen Ursachen für WLAN-Probleme abgeklappert: ein verklemmtes Windows Update, ein deaktivierter Wireless-Adapter, nicht funktionierende Dienste, Fehler in der TCP/IP-Konfiguration des Systems und solche des Drahtlosadapters ebenso wie andere Internetzugangshindernisse. Nach unserer Erfahrung können mit diesem Vorgehen die allermeisten WLAN-Probleme behoben werden. Wifi geht nicht gibt&#8217;s damit nicht!</p>
+<p><a href="https://buddy-pc.de" target="_blank" rel="noopener noreferrer"><img loading="lazy" width="800" height="200" src="https://www.ionas.com/wissen/wp-content/uploads/2019/11/banner-buddy.png" alt="Buddy-PC, spezielles Angebot für alle ionas Leser" class="alignleft size-full wp-image-4998" style="padding-bottom:20px;" srcset="https://www.ionas.com/wissen/wp-content/uploads/2019/11/banner-buddy.png 800w, https://www.ionas.com/wissen/wp-content/uploads/2019/11/banner-buddy-300x75.png 300w, https://www.ionas.com/wissen/wp-content/uploads/2019/11/banner-buddy-768x192.png 768w" sizes="(max-width: 800px) 100vw, 800px" /></a></p>
+<p>Dieser Artikel ist Teil einer wachsenden Kollektion von Schritt-für-Schritt Anleitung zur Lösung von bekannten Computerproblemen im ionas-Blog. Neben &#8222;WLAN funktioniert nicht &#8211; Schritt-für-Schritt zum Ziel&#8220; gibt es hier im Blog z.B. auch Anleitung zur Beseitigung von <a href="/wissen/drucker-druckt-nicht/">Druckerproblemen</a> und solchen mit <a href="/wissen/skype-webcam-probleme/">Webcams</a>. Wir bei ionas hoffen, dass diese Schritt für Schritt Anleitungen hilfreich bei der Selbsthilfe sind und freuen uns über ein <a href="https://www.facebook.com/IhrOnlineAssistent" rel="no_follow">Facebook-Like</a>, wenn dem so ist!</p>

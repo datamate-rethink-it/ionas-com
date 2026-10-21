@@ -1,0 +1,21 @@
+{{- /*
+  Die uebernommenen WordPress-Kommentare, Markup wie bisher aus
+  comments.php. Rein zum Lesen: das Kommentarformular ist entfallen, weil
+  seit 2019 kein Kommentar mehr eingegangen ist und eine statische Seite
+  keine Eingaben annehmen kann. Die Daten stehen in data/kommentare.yaml.
+*/ -}}
+{{- $k := index (index hugo.Data "kommentare") .File.BaseFileName -}}
+{{- with $k }}
+<div id="kommentare">
+{{- range . }}
+      <div class="comment" id="comment-{{ .id }}">
+
+         <small class="commentmetadata"><strong>{{ .autor }}</strong> sagt:<br/>
+         <i class="fa fa-clock-o"></i> {{ .datum }}</small>
+
+         {{ .html | safeHTML }}
+
+      </div>
+{{- end }}
+   </div><!-- kommentare -->
+{{- end }}

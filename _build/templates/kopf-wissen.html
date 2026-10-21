@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="de-DE">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+{{- if .Params.noindex }}
+    <meta name='robots' content='noindex, follow' />
+{{- else }}
+    <meta name='robots' content='index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' />
+{{- end }}
+    {{- /* Go maskiert im <title> auch "+" zu &#43; und laesst sich davon
+         nicht abbringen (RCDATA-Kontext, safeHTML greift dort nicht).
+         Gleiche Bedeutung, gleiche Darstellung - das bleibt so. */ -}}
+    <title>{{ .Params.titel_seo | default .Title }}</title>
+{{- with .Params.beschreibung }}
+    <meta name="description" content="{{ . }}" />
+{{- end }}
+{{- with .Params.canonical_url }}
+    <link rel="canonical" href="{{ . }}" />
+{{- end }}
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:type" content="{{ if .Params.wp_id }}article{{ else }}website{{ end }}" />
+    <meta property="og:title" content="{{ .Params.titel_seo | default .Title }}" />
+{{- with .Params.beschreibung }}
+    <meta property="og:description" content="{{ . }}" />
+{{- end }}
+    <meta property="og:url" content="{{ .Params.canonical_url | default .Permalink }}" />
+    <meta property="og:site_name" content="ionas Wissen" />
+    <meta property="article:publisher" content="https://www.facebook.com/IhrOnlineAssistent" />
+{{- if .Params.wp_id }}
+    <meta property="article:published_time" content="{{ .Date.UTC.Format "2006-01-02T15:04:05+00:00" }}" />
+    <meta property="article:modified_time" content="{{ .Lastmod.UTC.Format "2006-01-02T15:04:05+00:00" }}" />
+{{- end }}
+{{- with .Params.bild }}
+    <meta property="og:image" content="{{ . }}" />
+{{- end }}
+{{- with .Params.autor }}
+    <meta name="twitter:label1" content="Verfasst von" />
+    <meta name="twitter:data1" content="{{ . }}" />
+{{- end }}
+{{- with .Params.lesezeit }}
+    <meta name="twitter:label2" content="Geschätzte Lesezeit" />
+    <meta name="twitter:data2" content="{{ . }}" />
+{{- end }}
+    <script type="application/ld+json" class="yoast-schema-graph">{{ partial "wissen-schema.html" . }}</script>
+
+    <link rel="alternate" type="application/rss+xml" title="ionas Wissen &raquo; Feed" href="https://www.ionas.com/wissen/feed/" />
+
+    <!-- Theme- und TablePress-CSS bleiben unter ihren alten Adressen, damit
+         nichts an den Artikeln umgeschrieben werden muss. wp-block-library
+         und global-styles sind nicht mitgekommen: der Bestand enthaelt keine
+         Gutenberg-Bloecke. -->
+    <link rel="stylesheet" href="/wissen/wp-content/plugins/tablepress/css/default.min.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="/wissen/wp-content/themes/ionas-wp/style.css" type="text/css" media="screen" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <!-- Das WordPress gab hier viermal viewport aus, zuletzt mit
+         maximum-scale=1.0,user-scalable=no. Das verhindert Zoomen auf dem
+         Handy; hier steht nur noch die zoombare Variante wie im uebrigen
+         Teil der Seite. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/images/favicon.ico">
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/startupframework.css">
+    <link rel="stylesheet" href="/static/font-awesome/font-awesome.min.css">
+    <link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/static/css/ionas.css">
+    <link rel="stylesheet" href="/static/css/lightbox.css">
+{{- if .Params.suche }}
+    <link rel="stylesheet" href="/pagefind/pagefind-ui.css">
+{{- end }}
+</head>
+
+<body>
+
+<div class="page-wrapper">

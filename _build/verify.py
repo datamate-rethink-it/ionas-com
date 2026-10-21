@@ -48,7 +48,10 @@ def page_urls():
         with open(path, encoding='utf-8') as fh:
             head = fh.read(2000)
         match = re.search(r'^url: "(.*?)"$', head, re.M)
-        urls.append(match.group(1) if match else '/')
+        u = match.group(1) if match else "/"
+        if u.startswith("/wissen"):
+            continue
+        urls.append(u)
     return urls
 
 

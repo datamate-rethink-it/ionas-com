@@ -1,6 +1,8 @@
 # ionas.com - statisch aus Hugo, /wissen weiterhin WordPress.
 #
-# Deploy:  hugo --gc  &&  rsync -a --delete public/ server:/var/www/ionas/
+# Deploy:  hugo --gc
+#          npx pagefind --site public        (Suchindex fuer /wissen/suche/)
+#          rsync -a --delete public/ server:/var/www/ionas/
 # Pruefen: caddy validate --config /etc/caddy/Caddyfile
 
 # Die Seite lief bisher ohne Host-Weiterleitung auf ionas.com UND
@@ -14,11 +16,13 @@ www.ionas.com {
 	root * /var/www/ionas
 	encode zstd gzip
 
-	# --- WordPress bleibt, wo es ist ---------------------------------
-	# Alles unter /wissen geht unveraendert an das bestehende WordPress.
-	# Adresse an die eigene Installation anpassen.
-	handle /wissen* {
-		reverse_proxy 127.0.0.1:8080
+	# --- /wissen/feed/ ----------------------------------------------
+	# Hugo legt den Feed als /wissen/feed.xml ab; ausgeliefert wird er
+	# unter der bisherigen Adresse, die im Footer jeder Seite steht.
+	handle /wissen/feed* {
+		header Content-Type "application/rss+xml; charset=utf-8"
+		rewrite * /wissen/feed.xml
+		file_server
 	}
 
 	# --- /agb liefert die AGB als PDF -------------------------------
@@ -34,6 +38,13 @@ www.ionas.com {
 	# --- Weiterleitungen --------------------------------------------
 	# In der Datenschutzerklaerung ist die URL mit grossem D abgedruckt.
 	redir /Datenschutz /datenschutz permanent
+
+	# Drei Wissensartikel verlinken aufeinander ohne das /wissen-Praefix.
+	# Diese Adressen liefern auch im WordPress 404; die Weiterleitung
+	# repariert sie, ohne die Artikeltexte anzufassen.
+	redir /drucker-druckt-nicht/ /wissen/drucker-druckt-nicht/ permanent
+	redir /datensicherung-mit-windows-bordmitteln/ /wissen/datensicherung-mit-windows-bordmitteln/ permanent
+	redir /malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ /wissen/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ permanent
 
 	# ASCII-Schreibweisen der Umlaut-Landingpages. Hugo legt dafuer
 	# zusaetzlich meta-refresh-Seiten ab; diese 301 ist das Saubere und
@@ -64,7 +75,7 @@ www.ionas.com {
 	}
 
 	# Lange Cache-Zeiten fuer Assets, keine fuer HTML.
-	@assets path /static/* /images/* /ionas-neu/* /senderlogos/*
+	@assets path /static/* /images/* /ionas-neu/* /senderlogos/* /wissen/wp-content/* /pagefind/*
 	header @assets Cache-Control "public, max-age=2592000"
 	header /*.html Cache-Control "public, max-age=300"
 }

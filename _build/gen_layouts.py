@@ -15,11 +15,12 @@ defaultContentLanguage = 'de'
 # Die Seite ist ein Archiv: keine Taxonomien, kein RSS. Die sitemap.xml
 # ist ein Index, der auch auf das WordPress unter /wissen zeigt, und liegt
 # deshalb als statische Datei in static/ - erzeugt wird nur sitemap/main.xml.
-disableKinds = ['taxonomy', 'term', 'rss', 'sitemap']
+disableKinds = ['taxonomy', 'rss', 'sitemap']
 
 # Umlaut-URLs wie /pc-hilfe/muenchen -> /pc-hilfe/münchen muessen erhalten
 # bleiben, sonst brechen indexierte Landingpages weg.
 removePathAccents = false
+titleCaseStyle = 'none'
 disablePathToLower = true
 
 disableHugoGeneratorInject = true  # kein <meta name="generator">
@@ -32,6 +33,46 @@ staticDir = 'webroot'
 
 [outputs]
 home = ['html', 'mainsitemap']
+
+# Schlagwoerter der Wissensartikel. Die Begriffsseiten lagen im WordPress
+# unter /wissen/tag/<slug>/ und sind aus jedem Artikel verlinkt; die
+# Uebersicht aller Begriffe (/tags/) gab es nie -> Kind 'taxonomy' aus.
+[taxonomies]
+tag = 'tags'
+
+[permalinks.term]
+tags = '/wissen/tag/:slug/'
+
+# RSS-Feed der Wissensartikel. Die URL /wissen/feed/ ist im Footer jeder
+# Seite verlinkt, deshalb landet die Datei als index.xml in diesem Ordner.
+# Die Datei landet als /wissen/feed.xml; der Webserver liefert sie unter
+# der bisherigen Adresse /wissen/feed/ aus (siehe deploy/Caddyfile).
+[outputFormats.wissenfeed]
+mediaType = 'application/rss+xml'
+baseName = 'feed'
+isPlainText = true
+notAlternative = true
+
+# Die drei Sitemaps, die bisher Yoast SEO erzeugt hat. Der Index
+# /wissen/sitemap_index.xml ist in der Search Console eingetragen und
+# bleibt deshalb unter derselben Adresse erreichbar.
+[outputFormats.wissenpostsitemap]
+mediaType = 'application/xml'
+baseName = 'post-sitemap'
+isPlainText = true
+notAlternative = true
+
+[outputFormats.wissenpagesitemap]
+mediaType = 'application/xml'
+baseName = 'page-sitemap'
+isPlainText = true
+notAlternative = true
+
+[outputFormats.wissensitemapindex]
+mediaType = 'application/xml'
+baseName = 'sitemap_index'
+isPlainText = true
+notAlternative = true
 
 # sitemap/main.xml - gleicher Pfad wie bisher, damit sitemap.xml weiter stimmt
 [outputFormats.mainsitemap]
@@ -84,6 +125,9 @@ head = head.replace(canon,
 hi = head.index('<header class="header-10">')
 site_head, header_html = head[:hi], head[hi:]
 write('layouts/_partials/site-header.html', header_html)
+# Der <head> des alten PHP-Teils. Die Wissensartikel haben einen eigenen
+# (Yoast-Metadaten, Theme-Stylesheet) - siehe kopf-wissen.html.
+write('layouts/_partials/kopf-ionas.html', site_head)
 
 # Fuss: footer.php + Skriptblock. Der Startseiten-Zusatzblock steckt
 # zwischen </footer> und dem naechsten <script> und wandert ins Partial.
@@ -109,14 +153,22 @@ write('layouts/_partials/home-seo.html', home_extra)
 # site_head und der Skriptblock enthalten unpaarige Tags (<html>, <body>,
 # <div class="page-wrapper">) und koennen deshalb nicht in Partials liegen -
 # html/template verlangt dort balancierten Code. Sie stehen direkt im baseof.
+# Schlagwort- und Archivseiten tragen kein eigenes Frontmatter, deshalb
+# wird die Zugehoerigkeit zum Wissensbereich hier aus Sektion und Typ
+# mitbestimmt.
 write('layouts/baseof.html',
-      site_head
+      '{{ $wissen := or .Params.wissen (eq .Section "wissen") '
+      '(eq .Section "wissen-archiv") (eq .Type "tags") }}'
+      '{{ if $wissen }}{{ partial "kopf-wissen.html" . }}'
+      '{{ else }}{{ partial "kopf-ionas.html" . }}{{ end }}'
       + '{{ partial "site-header.html" . }}'
       + '{{ block "main" . }}{{ end }}'
       + '{{ partial "site-footer.html" . }}'
       + mid
       + '{{ if .IsHome }}{{ partial "home-seo.html" . }}{{ end }}'
-      + foot_rest)
+      + foot_rest.replace('</body>',
+          '{{ if $wissen }}<script src="/static/js/lightbox.js" defer></script>\n{{ end }}'
+          '{{ if .Params.suche }}<script src="/static/js/suche.js" type="module"></script>\n{{ end }}</body>'))
 
 # ---------------------------------------------------------------- einfache Layouts
 write('layouts/page.html', '{{ define "main" }}{{ .Content }}{{ end }}\n')

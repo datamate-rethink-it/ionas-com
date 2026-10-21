@@ -1,0 +1,22 @@
+{{ define "main" }}
+{{- /* Schlagwortseite, /wissen/tag/<slug>/. WordPress nutzte dafuer
+       dasselbe Template wie die Uebersicht (das Theme hat kein tag.php),
+       deshalb hier dieselbe Trefferliste. Kein Beitrag hat mehr als sieben
+       Schlagwort-Geschwister, Blaetterwerk ist also nicht noetig. */ -}}
+<section class="content-10 blog">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-sm-9">
+        <h1 class='nomarginbottom'>Schlagwort: {{ with index (index hugo.Data "tagnamen") .Page.Data.Term }}{{ .name }}{{ else }}{{ .Title }}{{ end }}</h1>
+{{- partial "wissen-liste.html" .Pages.ByDate.Reverse }}
+      </div>
+
+      <div class="col-sm-3">
+{{- partial "wissen-sidebar.html" . }}
+      </div>
+
+    </div>
+  </div>
+</section>
+{{ end }}
