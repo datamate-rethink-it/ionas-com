@@ -189,6 +189,18 @@ assert home_rest == foot_rest, 'Skriptblock weicht zwischen Startseite und Unter
 assert mid.strip() == '', 'Unterseite hat unerwarteten Block hinter </footer>'
 assert home_extra.strip().startswith('<section'), 'Startseiten-Zusatzblock nicht erkannt'
 
+# Das Google+-Symbol in der Fussleiste: Google+ ist seit April 2019
+# abgeschaltet, der Verweis landet heute auf einem Google-Blogbeitrag ueber
+# die Einstellung von Currents. Anders als die rel=author-Zeilen im Kopf war
+# das ein sichtbares Symbol - es verschwindet aus der Reihe, die uebrigen
+# vier Social-Symbole bleiben.
+gplus = re.search(
+    r'\n\s*<a href="https://plus\.google\.com/[^"]*"[^>]*>\s*'
+    r'(?:<i class="fa fa-google-plus-square"></i>\s*)+</a>',
+    foot_common)
+assert gplus, 'Google+-Block in der Fussleiste nicht gefunden'
+foot_common = foot_common.replace(gplus.group(0), '')
+
 write('layouts/_partials/site-footer.html', foot_common)
 write('layouts/_partials/home-seo.html', home_extra)
 

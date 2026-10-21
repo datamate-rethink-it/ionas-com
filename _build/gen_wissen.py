@@ -72,15 +72,32 @@ def ref_body(slug):
     return html[i:j]
 
 
+def eigene_https(url):
+    """http:// auf die eigene Domain zu https:// anheben.
+
+    Fremde Adressen bleiben unangetastet - dort weiss man nicht, ob https
+    ueberhaupt antwortet.
+    """
+    if url.startswith('http://www.ionas.com') or url.startswith('http://ionas.com'):
+        return 'https://' + url[len('http://'):]
+    return url
+
+
 def artikel_html(slug):
-    """Artikeltext unveraendert aus der gerenderten Seite."""
+    """Artikeltext aus der gerenderten Seite.
+
+    Einzige Aenderung: Verweise auf die eigene Domain werden von http auf
+    https gehoben. Ein Artikel von 2015 band seine Bilder noch ueber http
+    ein - auf einer https-Seite gemischter Inhalt, den aktuelle Browser
+    zwar stillschweigend anheben, Vorschau-Crawler aber nicht.
+    """
     body = ref_body(slug)
     i = body.index(ENTRY_OPEN) + len(ENTRY_OPEN)
     j = body.index(ENTRY_CLOSE, i)
     text = body[i:j]
     if not re.search(r'<span id="more-\d+"></span>', text):
         raise ValueError('keine more-Marke in %s' % slug)
-    return text
+    return text.replace('http://www.ionas.com', 'https://www.ionas.com')
 
 
 def inhaltsbilder(html):
@@ -116,7 +133,12 @@ def schreibe_artikel(posts, tags_by_id, kommentar_zahl, teaser):
         y = p['yoast_head_json']
         graph = {n['@type']: n for n in y['schema']['@graph']}
         person = graph.get('Person', {})
-        bild = graph.get('ImageObject', {}).get('url') or ''
+        bild = eigene_https(graph.get('ImageObject', {}).get('url') or '')
+        # Ein Artikel trug sein Vorschaubild noch mit http:// in den
+        # Yoast-Daten. Auf einer https-Seite ist das unsauber, und anders
+        # als Browser heben Vorschau-Crawler das nicht selbst an.
+        if bild.startswith('http://www.ionas.com'):
+            bild = 'https://' + bild[len('http://'):]
         lesezeit = ''
         for item in (y.get('twitter_misc') or {}).items():
             if 'Lesezeit' in item[0]:

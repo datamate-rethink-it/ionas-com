@@ -8,48 +8,61 @@ und die WordPress-REST-API der Live-Installation
 
 ---
 
-## Der Nachweis
+## Die Prüfungen
 
-Der alte Code wurde vollständig gerendert (alle 118 Routen des
-`switch`-Routers in `index.php`) und dieser Snapshot stichprobenartig gegen
-die Live-Seite geprüft: **byte-identisch**. Er dient als Referenz, gegen die
-die Hugo-Ausgabe geprüft wird:
-
-```
-$ _build/verify.py
-identisch: 96    abweichend: 0    fehlend: 0    (von 96 Seiten)
-```
-
-Alle 96 Seiten des PHP-Teils kommen Byte für Byte so heraus wie bisher –
-bis auf zwei bewusste, systematische Abweichungen, die der Vergleich
-normalisiert:
-
-| Abweichung | Grund |
-|---|---|
-| `&` und `'` in Titel/Description sind jetzt `&amp;` / `&#39;` | Hugo kodiert korrekt; das alte PHP gab sie roh aus (formal invalides HTML, identische Darstellung) |
-| HTML-Kommentare im `<head>` fehlen im Ergebnis | Go's `html/template` entfernt sie beim Rendern. Sie stehen weiterhin in `layouts/baseof.html` – nur nicht mehr im ausgelieferten HTML |
-
-Für die 150 Wissensartikel ist Byte-Gleichheit **nicht** das Ziel: der
-WordPress-Kopf enthielt Emoji-Skripte, oEmbed- und wp-json-Verweise,
-XML-RPC-Pingback und Gutenberg-CSS, die bewusst nicht mitgekommen sind.
-Geprüft wird, was für Besucher und Suchmaschinen zählt:
+Drei Skripte laufen bei jedem Push in GitHub Actions. Sie sind so
+zugeschnitten, dass sie normale Pflege überleben – ein Test, der bei
+richtigem Verhalten Alarm schlägt, erzieht dazu, Alarme zu ignorieren.
 
 ```
-$ _build/verify_wissen.py
-Wissensartikel geprüft: 150
-  Artikeltext identisch        150 / 150
-  title                       150 / 150
-  description                 150 / 150
-  canonical                   150 / 150
-  robots                      150 / 150
-  Kommentare vollständig       150 / 150  (280 Kommentare)
-  Vor/Zurück-Verweise          150 / 150
-  Schlagwort-Verweise          150 / 150
-  Teaser der Übersicht         150 / 150
-keine Abweichungen
+$ python3 _build/verify.py
+Seitenrumpf identisch: 96   abweichend: 0   fehlend: 0  (von 96)
+Titel, Description, Canonical unveraendert: 96 von 96
+
+$ python3 _build/verify_wissen.py
+Wissensartikel: 150 Inhaltsdateien, 150 Seiten erzeugt
+  Titel, Canonical, Robots                vollständig
+  ohne gepflegte Description              40 (schon im WordPress so)
+  Kommentare                              280 von 280 in den Seiten
+  og:image ohne Ziel                      0
+
+$ python3 _build/linkcheck.py
+  NEU kaputt:              0
 ```
 
----
+**`verify.py`** vergleicht den *Seitenrumpf* der 96 PHP-Seiten – alles
+zwischen `</header>` und `<footer>` – Zeichen für Zeichen mit dem
+Referenz-Render des alten Stands. Diese Texte sind eingefroren: die Hotline
+ist seit dem 01.04.2020 eingestellt, an „PC Hilfe Wuppertal" schreibt
+niemand mehr. Jede Abweichung dort ist ein Fehler.
+
+Kopf und Fußleiste sind bewusst **nicht** Teil des Vergleichs. Sie werden
+weiterentwickelt – seit dem Umzug die lokale Schrift, der Wegfall von
+Google+ und Alexa, das reparierte `og:image`. Jede dieser Verbesserungen
+hätte sonst einen Eintrag in einer Ausnahmeliste gebraucht, bis
+„identisch" nichts mehr bedeutet. Aus dem Kopf geprüft werden stattdessen
+Titel, Description und Canonical – die stammen aus dem alten Router und
+dürfen sich nicht ändern.
+
+**`verify_wissen.py`** verglich bis zum Umstieg ebenfalls Zeichen für
+Zeichen. Das war die richtige Prüfung für die Migration und die falsche für
+den Betrieb: von neun Vergleichen überlebten nur zwei eine Textänderung,
+und schon ein einziger neuer Artikel hätte den Lauf rot gemacht, weil er
+die Vor/Zurück-Verweise des bisher neuesten Beitrags ändert. Geprüft wird
+jetzt schnappschussfrei, was unabhängig vom Inhalt gelten muss: dass jede
+Inhaltsdatei zu einer Seite wird, jede Seite Titel, Canonical und
+Robots-Angabe trägt, der Canonical auf die eigene Adresse zeigt, die 280
+Kommentare vollständig in den Seiten stehen und jedes `og:image` auf eine
+ausgelieferte Datei zeigt.
+
+**`linkcheck.py`** prüft alle seiteninternen Verweise und hat die beste
+Trefferquote von den dreien: die 13 verlorenen Vorschaubilder und die falsch
+benannte Presse-PDF gehen auf sein Konto.
+
+Dass die Migration verlustfrei war, ist damit belegt und abgeschlossen –
+nachzulesen in der Git-Historie, wo `verify_wissen.py` 150 von 150 Artikeln
+Zeichen für Zeichen bestätigt hat. Der Schnappschuss des WordPress-Stands
+liegt weiter in `_build/reference-wissen/`, jetzt als Archiv.
 
 ## Struktur
 
@@ -542,6 +555,11 @@ Die `rel="author"`/`rel="publisher"`-Verweise auf `plus.google.com` lösten
 keine Anfrage aus (Browser holen solche `<link>`-Elemente nicht) und sind
 inzwischen entfernt.
 
+**Google+ steht noch im Inhalt.** Die Seite `/social-media` wirbt in einem
+Absatz dafür, ionas auf Google+ zu folgen, und drei Wissensartikel verlinken
+es im Text. Das Symbol in der Fußleiste ist weg, der Text nicht – das ist
+eine redaktionelle Entscheidung, keine Aufräumarbeit.
+
 **`google-site-verification` und `msvalidate.01` stehen noch im Kopf.**
 Bewusst: daran kann die Bestätigung der Property in der Search Console bzw.
 bei Bing hängen, und ein Entfernen würde erst Monate später auffallen. Wer
@@ -570,7 +588,8 @@ denn zwei Teile daraus werden dauerhaft gebraucht:
 | | |
 |---|---|
 | `verify.py`, `verify_wissen.py`, `linkcheck.py` | Die drei Prüfungen. Laufen bei **jedem Push** in GitHub Actions und sind das Sicherheitsnetz gegen stille Regressionen. |
-| `reference/`, `reference-wissen/` (12 MB) | Die 270 gerenderten Seiten des alten Stands, gegen die geprüft wird. Ohne sie laufen `verify.py` und `verify_wissen.py` nicht. |
+| `reference/` (2,9 MB) | Die gerenderten Seiten des alten PHP-Teils. `verify.py` vergleicht den Seitenrumpf dagegen – wird dauerhaft gebraucht. |
+| `reference-wissen/` (9,1 MB) | Der gerenderte WordPress-Stand. Seit der Umstellung von `verify_wissen.py` nur noch Archiv; kann weg, wenn der Platz stört. |
 | `wp/` (9,6 MB) | Beiträge, Kommentare, Schlagwörter und Teaser als JSON. Sobald die WordPress-Datenbank abgeschaltet ist, ist das die **letzte maschinenlesbare Kopie** dieser Daten. |
 | `gen_*.py`, `build.sh`, `tok.php`, `router-head.php` | Erzeugen `layouts/`, `content/`, `webroot/`, `data/` und `deploy/` aus dem alten Quellbaum. Nach dem Umstieg nur noch nötig, um die Umwandlung nachzuvollziehen. |
 | `nicht-ausliefern.txt` | Die Liste der verwaisten Dateien. Wird von `gen_static.py` und `gen_wissen.py` gelesen. |

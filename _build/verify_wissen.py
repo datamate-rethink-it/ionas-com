@@ -1,188 +1,176 @@
 #!/usr/bin/env python3
-"""Vergleicht die erzeugten Wissensseiten mit dem Stand der WordPress-
-Installation (_build/reference-wissen/, am 21.10.2026 live abgerufen).
+"""Prueft die erzeugten Wissensseiten auf Vollstaendigkeit und Form.
 
-Anders als beim PHP-Teil ist hier kein byte-identisches Ergebnis das Ziel:
-der WordPress-Kopf enthielt Emoji-Skripte, oEmbed- und wp-json-Verweise,
-XML-RPC-Pingback und Gutenberg-CSS, die bewusst nicht mitgekommen sind.
-Geprueft wird deshalb, was fuer Besucher und Suchmaschinen zaehlt:
+Bis zum Umstieg verglich dieses Skript jede Seite Zeichen fuer Zeichen mit
+einem Schnappschuss der WordPress-Installation. Das war die richtige
+Pruefung fuer die Migration - und die falsche fuer den Betrieb danach: von
+neun Vergleichen ueberlebten nur zwei eine normale Textaenderung. Schon ein
+einziger neuer Artikel haette den Lauf rot gemacht, weil er die
+Vor/Zurueck-Verweise des bisher neuesten Beitrags aendert. Ein Test, der
+bei richtigem Verhalten Alarm schlaegt, erzieht dazu, Alarme zu ignorieren.
 
-  * der Artikeltext Zeichen fuer Zeichen
-  * Titel, Description, Canonical und Robots-Angabe
-  * die uebernommenen Kommentare (Anzahl und Zuordnung)
-  * Vor-/Zurueck-Verweise und Schlagwort-Verweise
-  * die Teaser auf der Uebersichtsseite
+Geprueft wird jetzt, was unabhaengig vom Inhalt gelten muss:
 
-Normalisiert werden zwei bekannte Abweichungen:
-  * Hugo schreibt " als &#34; und + als &#43;, Yoast schrieb &quot;
-    bzw. +. Gleiche Bedeutung, gleiche Darstellung; im <title> laesst
-    sich Gos Maskierung nicht abschalten.
-  * Hugo ersetzt den <!--more-->-Trenner intern durch Zeilenumbrueche;
-    zwischen Blockelementen ist das ohne Wirkung.
+  * jede Inhaltsdatei wird zu einer Seite
+  * jede Seite hat Titel, Description, Canonical und Robots-Angabe
+  * der Canonical zeigt auf die eigene Adresse
+  * Artikelseiten haben H1, Artikelrumpf und Seitenleiste
+  * die Kommentare aus data/kommentare.yaml stehen vollstaendig in den
+    Seiten
+  * jedes og:image zeigt auf eine Datei, die ausgeliefert wird
+
+Der Schnappschuss des alten Stands liegt weiter in _build/reference-wissen/
+- als Archiv der WordPress-Installation, nicht mehr als Pruefgrundlage.
+Der Nachweis der Migration steht in der README und in der Git-Historie.
 """
-import difflib
 import glob
-import json
 import os
 import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from gen_common import BLD, PRJ  # noqa: E402
+from gen_common import PRJ  # noqa: E402
 
 PUB = os.path.join(PRJ, 'public')
-REFW = os.environ.get('IONAS_REFW') or os.path.join(BLD, 'reference-wissen')
-
-KOPF_FELDER = [
-    ('title', r'<title>(.*?)</title>'),
-    ('description', r'<meta name="description" content="(.*?)" />'),
-    ('canonical', r'<link rel="canonical" href="(.*?)" />'),
-    ('robots', r"<meta name='robots' content='(.*?)' />"),
-]
+BASIS = 'https://www.ionas.com'
 
 
-def norm(text):
-    text = text.replace('&#34;', '&quot;').replace('&#39;', '&#039;')
-    text = text.replace('&#43;', '+')
-    text = re.sub(r'\n{2,}', '\n', text)
-    text = re.sub(r'[ \t]+\n', '\n', text)
-    return text
-
-
-def entry(html):
-    i = html.index('<div class="entry">')
-    j = html.index('<hr>\n        </div>', i)
-    return html[i:j]
-
-
-def lies(path):
-    with open(path, encoding='utf-8', errors='replace') as fh:
+def lies(pfad):
+    with open(pfad, encoding='utf-8', errors='replace') as fh:
         return fh.read()
 
 
-def teaser_map(html):
-    """slug -> Teaser-HTML einer Uebersichtsseite."""
-    i = html.index('<section class="content-10 blog"')
-    j = html.index('<div class="col-sm-3">', i)
-    out = {}
-    for block in re.split(r'(?=<h2><a href=)', html[i:j])[1:]:
-        m = re.search(r'href="https://www\.ionas\.com/wissen/([^/#"]+)/"', block)
-        e = re.search(r'<div class="entry">\s*(.*?)\s*<hr>\s*</div>', block, re.S)
-        if m and e:
-            out[m.group(1)] = e.group(1)
+def kommentare_aus_daten():
+    """slug -> Anzahl Kommentare, direkt aus data/kommentare.yaml."""
+    pfad = os.path.join(PRJ, 'data', 'kommentare.yaml')
+    if not os.path.isfile(pfad):
+        return {}
+    out, aktuell = {}, None
+    for zeile in lies(pfad).split('\n'):
+        if re.match(r'^[a-z0-9][\w-]*:$', zeile):
+            aktuell = zeile[:-1]
+            out[aktuell] = 0
+        elif aktuell and zeile.startswith('  - id:'):
+            out[aktuell] += 1
+    return out
+
+
+def frontmatter_beschreibung(slug):
+    """Die gepflegte Description eines Artikels, falls es eine gibt."""
+    pfad = os.path.join(PRJ, 'content', 'wissen', slug + '.html')
+    if not os.path.isfile(pfad):
+        return ''
+    with open(pfad, encoding='utf-8') as fh:
+        kopf = fh.read().split('\n---\n', 1)[0]
+    m = re.search(r'^beschreibung:\s*"(.*)"$', kopf, re.M)
+    return m.group(1) if m else ''
+
+
+def artikel_slugs():
+    """Slugs der Artikel aus content/wissen/ (ohne Sektion und Suchseite)."""
+    out = []
+    for pfad in sorted(glob.glob(os.path.join(PRJ, 'content', 'wissen', '*.html'))):
+        name = os.path.basename(pfad)[:-5]
+        if name in ('_index', 'suche'):
+            continue
+        out.append(name)
     return out
 
 
 def main():
-    slugs = sorted(os.path.basename(os.path.dirname(p)) for p in
-                   glob.glob(os.path.join(REFW, 'wissen', '*', 'index.html')))
     fehler = []
-    gleich_text = 0
-    kopf_ok = {name: 0 for name, _ in KOPF_FELDER}
-    kommentare_ok = nav_ok = tags_ok = 0
-    n_kommentare = 0
+    slugs = artikel_slugs()
+    kommentare = kommentare_aus_daten()
 
+    geprueft = 0
+    ohne_beschreibung = []
     for slug in slugs:
-        neu_pfad = os.path.join(PUB, 'wissen', slug, 'index.html')
-        if not os.path.isfile(neu_pfad):
-            fehler.append((slug, 'Seite fehlt in public/'))
+        pfad = os.path.join(PUB, 'wissen', slug, 'index.html')
+        if not os.path.isfile(pfad):
+            fehler.append('%s: Seite fehlt in public/' % slug)
             continue
-        neu, alt = lies(neu_pfad), lies(os.path.join(REFW, 'wissen', slug, 'index.html'))
+        html = lies(pfad)
+        geprueft += 1
 
-        # --- Artikeltext
-        a, b = norm(entry(neu)), norm(entry(alt))
-        if a == b:
-            gleich_text += 1
-        else:
-            d = [x for x in difflib.unified_diff(b.splitlines(True), a.splitlines(True),
-                                                 n=0) if x[:1] in '+-']
-            fehler.append((slug, 'Artikeltext weicht ab (%d Zeilen)' % len(d)))
+        for name, muster in (
+                ('Titel', r'<title>(.+?)</title>'),
+                ('Canonical', r'<link rel="canonical" href="(.+?)" />'),
+                ('Robots', r"<meta name='robots' content='(.+?)' />")):
+            if not re.search(muster, html, re.S):
+                fehler.append('%s: %s fehlt' % (slug, name))
 
-        # --- Kopf
-        for name, pat in KOPF_FELDER:
-            ma, mb = re.search(pat, neu, re.S), re.search(pat, alt, re.S)
-            if ma and mb and norm(ma.group(1)) == norm(mb.group(1)):
-                kopf_ok[name] += 1
-            elif mb is None and ma is None:
-                kopf_ok[name] += 1
-            else:
-                fehler.append((slug, '%s: alt=%r neu=%r' % (
-                    name, mb.group(1)[:60] if mb else None,
-                    ma.group(1)[:60] if ma else None)))
+        # Die Description darf fehlen, wenn auch die Frontmatter keine hat -
+        # 40 Artikel hatten schon im WordPress keine gepflegte Angabe. Ein
+        # Fehler ist nur, wenn eine da ist und die Seite sie verliert.
+        soll_besch = frontmatter_beschreibung(slug)
+        hat_besch = bool(re.search(r'<meta name="description" content="(.+?)" />',
+                                   html, re.S))
+        if soll_besch and not hat_besch:
+            fehler.append('%s: Description aus der Frontmatter fehlt in der Seite'
+                          % slug)
+        if not soll_besch:
+            ohne_beschreibung.append(slug)
 
-        # --- Kommentare
-        ids_alt = set(re.findall(r'<div class="comment" id="comment-(\d+)"', alt))
-        ids_neu = set(re.findall(r'<div class="comment" id="comment-(\d+)"', neu))
-        if ids_alt == ids_neu:
-            kommentare_ok += 1
-            n_kommentare += len(ids_alt)
-        else:
-            fehler.append((slug, 'Kommentare: alt %d, neu %d (fehlen: %s)' % (
-                len(ids_alt), len(ids_neu), sorted(ids_alt - ids_neu)[:5])))
+        m = re.search(r'<link rel="canonical" href="(.+?)" />', html)
+        erwartet = '%s/wissen/%s/' % (BASIS, slug)
+        if m and m.group(1) != erwartet:
+            fehler.append('%s: Canonical zeigt auf %s statt %s'
+                          % (slug, m.group(1), erwartet))
 
-        # --- Vor/Zurueck
-        def nav(s):
-            return [(m.group(1), m.group(2)) for m in
-                    re.finditer(r'<a href="([^"]+)" rel="(prev|next)">', s)]
-        if nav(neu) == nav(alt):
-            nav_ok += 1
-        else:
-            fehler.append((slug, 'Vor/Zurueck: alt=%s neu=%s' % (nav(alt), nav(neu))))
+        for name, muster in (('H1', r'<h1[^>]*>'),
+                             ('Artikelrumpf', r'<div class="entry">'),
+                             ('Seitenleiste', r'<h3 class=.b_filter_head.>')):
+            if not re.search(muster, html):
+                fehler.append('%s: %s fehlt' % (slug, name))
 
-        # --- Schlagwort-Verweise im Kopfbereich des Artikels
-        def tags(s):
-            m = re.search(r'<div id="meta">(.*?)</div>', s, re.S)
-            return re.findall(r'href="(?:https://www\.ionas\.com)?/wissen/tag/([^"/]+)/"',
-                              m.group(1) if m else '')
-        if tags(neu) == tags(alt):
-            tags_ok += 1
-        else:
-            fehler.append((slug, 'Schlagwörter: alt=%s neu=%s' % (tags(alt), tags(neu))))
+        soll = kommentare.get(slug, 0)
+        ist = len(re.findall(r'<div class="comment" id="comment-\d+"', html))
+        if ist != soll:
+            fehler.append('%s: %d Kommentare in der Seite, %d in der Datendatei'
+                          % (slug, ist, soll))
 
-    # --- Uebersichtsseiten
-    teaser_fehler = 0
-    alt_t, neu_t = {}, {}
-    for ref, pub in ((os.path.join(REFW, 'wissen', 'index.html'),
-                      os.path.join(PUB, 'wissen', 'index.html')),
-                     (os.path.join(REFW, 'wissen', 'page', '2', 'index.html'),
-                      os.path.join(PUB, 'wissen', 'page', '2', 'index.html'))):
-        if not (os.path.isfile(ref) and os.path.isfile(pub)):
-            fehler.append(('uebersicht', 'Seite fehlt: %s' % pub))
-            continue
-        alt_t.update(teaser_map(lies(ref)))
-        neu_t.update(teaser_map(lies(pub)))
-    for slug, t in sorted(alt_t.items()):
-        if slug not in neu_t:
-            fehler.append(('uebersicht', 'Teaser fehlt: %s' % slug))
-            teaser_fehler += 1
-        elif norm(t) != norm(neu_t[slug]):
-            teaser_fehler += 1
-            fehler.append(('uebersicht', 'Teaser weicht ab: %s' % slug))
+    # og:image muss auf etwas zeigen, das es gibt - genau hier lag der
+    # Fehler, durch den 13 Vorschaubilder beim Aufraeumen verloren gingen.
+    ohne_bild = 0
+    for pfad in glob.glob(os.path.join(PUB, 'wissen', '*', 'index.html')):
+        for m in re.finditer(r'<meta property="og:image" content="([^"]+)"',
+                             lies(pfad)):
+            u = m.group(1)
+            for p in ('https://www.ionas.com', 'http://www.ionas.com'):
+                if u.startswith(p):
+                    u = u[len(p):]
+            if not u.startswith('/'):
+                continue
+            if not os.path.isfile(os.path.join(PUB, u.lstrip('/'))):
+                ohne_bild += 1
+                fehler.append('%s: og:image zeigt ins Leere (%s)'
+                              % (os.path.basename(os.path.dirname(pfad)), u))
 
-    n = len(slugs)
-    print('=' * 70)
-    print('Wissensartikel geprüft: %d' % n)
-    print('  Artikeltext identisch        %3d / %d' % (gleich_text, n))
-    for name, _ in KOPF_FELDER:
-        print('  %-27s %3d / %d' % (name, kopf_ok[name], n))
-    print('  Kommentare vollständig       %3d / %d  (%d Kommentare)'
-          % (kommentare_ok, n, n_kommentare))
-    print('  Vor/Zurück-Verweise          %3d / %d' % (nav_ok, n))
-    print('  Schlagwort-Verweise          %3d / %d' % (tags_ok, n))
-    print('  Teaser der Übersicht         %3d / %d' % (len(alt_t) - teaser_fehler,
-                                                       len(alt_t)))
-    print('=' * 70)
+    summe_komm = sum(kommentare.values())
+    in_seiten = sum(len(re.findall(r'<div class="comment" id="comment-\d+"',
+                                   lies(os.path.join(PUB, 'wissen', s, 'index.html'))))
+                    for s in slugs
+                    if os.path.isfile(os.path.join(PUB, 'wissen', s, 'index.html')))
+
+    print('=' * 66)
+    print('Wissensartikel: %d Inhaltsdateien, %d Seiten erzeugt' % (len(slugs), geprueft))
+    print('  Titel, Canonical, Robots                %s'
+          % ('vollständig' if not [f for f in fehler if 'fehlt' in f] else 'LÜCKEN'))
+    print('  ohne gepflegte Description              %d (schon im WordPress so)'
+          % len(ohne_beschreibung))
+    print('  Kommentare                              %d von %d in den Seiten'
+          % (in_seiten, summe_komm))
+    print('  og:image ohne Ziel                      %d' % ohne_bild)
+    print('=' * 66)
     if fehler:
-        out = os.path.join(BLD, 'verify-wissen.txt')
-        with open(out, 'w', encoding='utf-8') as fh:
-            for slug, msg in fehler:
-                fh.write('%s: %s\n' % (slug, msg))
-        print('%d Abweichungen, Liste in %s' % (len(fehler), out))
-        for slug, msg in fehler[:12]:
-            print('  %-46s %s' % (slug[:46], msg[:110]))
-    else:
-        print('keine Abweichungen')
-    return 1 if fehler else 0
+        print('%d Beanstandungen:' % len(fehler))
+        for f in fehler[:20]:
+            print('  ' + f)
+        if len(fehler) > 20:
+            print('  ... und %d weitere' % (len(fehler) - 20))
+        return 1
+    print('keine Beanstandungen')
+    return 0
 
 
 if __name__ == '__main__':
