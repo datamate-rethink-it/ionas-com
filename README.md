@@ -302,6 +302,26 @@ sind Platzhalter und unverändert.
 | WordPress-Suche (`?s=`) | Pagefind unter `/wissen/suche/`, Index aus 150 Artikeln. Die Seitenleiste zeigt dorthin |
 | Yoast SEO | `_partials/kopf-wissen.html` und `_partials/wissen-schema.html` |
 
+### Die Schrift liegt lokal
+
+Open Sans Condensed kam bis zum 21.10.2026 von `fonts.googleapis.com`. Damit
+ging bei jedem Seitenaufruf die IP-Adresse des Besuchers an Google – nach
+dem Urteil des LG München I (3 O 17493/20) ein DSGVO-Verstoß.
+
+Die Dateien liegen jetzt in `webroot-eigen/static/fonts/`, eingebunden über
+`webroot-eigen/static/css/fonts.css`. Übernommen sind nur die Bereiche
+`latin` und `latin-ext` in zwei Schnitten (300, 700), jeweils als `woff2`
+und `woff` – zusammen 122 KB, von denen ein Besucher typischerweise 15 KB
+lädt. Die Lizenz (SIL OFL 1.1) liegt als `/static/fonts/OFL.txt` daneben,
+wie die Lizenz es verlangt.
+
+Neu dabei: `font-display: swap`. Der Text ist sofort in der Ersatzschrift
+lesbar, statt bis zum Laden unsichtbar zu bleiben – Google lieferte das für
+diese ältere API-Fassung nicht mit.
+
+`_build/verify.py` normalisiert die eine geänderte `<link>`-Zeile, damit der
+Byte-Vergleich den Rest der Seite weiter prüft.
+
 ### Abweichungen im Erscheinungsbild
 
 - Die **Schriftgrößen der Schlagwortwolke** folgen der dokumentierten
@@ -479,12 +499,24 @@ Browser ignorieren es still.
 
 ## Naheliegende nächste Schritte
 
-**Google Fonts lokal hosten.** `layouts/baseof.html` lädt
-`//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700` – nach dem
-LG-München-Urteil ein DSGVO-Risiko. Zwei Dateien nach `webroot/static/fonts/`
-legen, `@font-face` in `webroot/static/css/ionas.css` ergänzen, die
-`<link>`-Zeile in `baseof.html` entfernen. Bewusst nicht gemacht, damit der
-Byte-Vergleich oben sauber bleibt.
+**Noch automatische Anfragen an Dritte.** Die Schrift ist lokal
+(siehe unten), aber beim Laden einer Seite gehen weiterhin Anfragen raus:
+
+| Ziel | Seiten | Auslöser |
+|---|---|---|
+| `www.youtube.com` | 80 | `<iframe>` mit `youtube.com/embed/…` – Städte- und Themenseiten zeigen alle dasselbe Video, dazu fünf Wissensartikel |
+| `www.datamate.org` | 1 | zwei `<img>` auf der Startseite |
+| `www.ionas-server.com` | 1 | ein `<img>` in einem Wissensartikel – liefert inzwischen 301 |
+
+Das YouTube-Einbetten ist davon der wuchtigste Punkt: es kontaktiert Google
+beim Seitenaufruf, nicht erst beim Klick. `youtube-nocookie.com` mildert das
+nur (keine Cookies vor dem Abspielen, aber die Anfrage bleibt). Sauber wäre
+ein Vorschaubild, das erst auf Klick das `<iframe>` nachlädt – das ist aber
+ein Eingriff in 80 Seiten und keine Nebenbei-Änderung.
+
+Die `rel="author"`/`rel="publisher"`-Verweise auf `plus.google.com` lösen
+keine Anfrage aus (Browser holen solche `<link>`-Elemente nicht), sind aber
+seit der Abschaltung von Google+ 2019 totes Markup.
 
 **Toten Code im `<head>` aufräumen.** `baseof.html` enthält noch
 `rel="author"`/`rel="publisher"` auf `plus.google.com` (Google+ ist seit 2019

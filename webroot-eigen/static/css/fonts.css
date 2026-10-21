@@ -1,0 +1,63 @@
+/* Open Sans Condensed, lokal ausgeliefert.
+ *
+ * Die Seite band die Schrift bisher ueber fonts.googleapis.com ein. Damit
+ * ging bei jedem Seitenaufruf die IP-Adresse des Besuchers an Google - nach
+ * dem Urteil des LG Muenchen I (3 O 17493/20, 20.01.2022) ein Verstoss
+ * gegen die DSGVO. Die Dateien liegen jetzt unter /static/fonts/.
+ *
+ * Quelle:  https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700
+ *          Open Sans Condensed v24, abgerufen am 21.10.2026
+ * Lizenz:  SIL Open Font License 1.1, siehe /static/fonts/OFL.txt
+ *
+ * Uebernommen sind nur die Bereiche latin und latin-ext. Die von Google
+ * zusaetzlich ausgelieferten Bereiche (kyrillisch, griechisch,
+ * vietnamesisch) braucht diese Seite nicht.
+ *
+ * font-display: swap ist neu: der Text ist sofort in der Ersatzschrift
+ * lesbar, statt bis zum Laden unsichtbar zu bleiben. Google lieferte das
+ * fuer diese aeltere API-Fassung nicht mit.
+ */
+
+/* latin-ext */
+@font-face {
+    font-family: 'Open Sans Condensed';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url('/static/fonts/open-sans-condensed-300-latin-ext.woff2') format('woff2'),
+         url('/static/fonts/open-sans-condensed-300-latin-ext.woff') format('woff');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'Open Sans Condensed';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url('/static/fonts/open-sans-condensed-300-latin.woff2') format('woff2'),
+         url('/static/fonts/open-sans-condensed-300-latin.woff') format('woff');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* latin-ext */
+@font-face {
+    font-family: 'Open Sans Condensed';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/static/fonts/open-sans-condensed-700-latin-ext.woff2') format('woff2'),
+         url('/static/fonts/open-sans-condensed-700-latin-ext.woff') format('woff');
+    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* latin */
+@font-face {
+    font-family: 'Open Sans Condensed';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('/static/fonts/open-sans-condensed-700-latin.woff2') format('woff2'),
+         url('/static/fonts/open-sans-condensed-700-latin.woff') format('woff');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}

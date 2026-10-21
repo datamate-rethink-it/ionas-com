@@ -133,6 +133,14 @@ site_head, header_html = head[:hi], head[hi:]
 write('layouts/_partials/site-header.html', header_html)
 # Der <head> des alten PHP-Teils. Die Wissensartikel haben einen eigenen
 # (Yoast-Metadaten, Theme-Stylesheet) - siehe kopf-wissen.html.
+# Die Schrift lag bisher bei fonts.googleapis.com - damit ging bei jedem
+# Seitenaufruf die Besucher-IP an Google. Jetzt lokal, siehe
+# webroot-eigen/static/css/fonts.css.
+GOOGLE_FONT = ("<link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed"
+               ":300,700' rel='stylesheet' type='text/css' />")
+EIGENE_FONT = '<link rel="stylesheet" href="/static/css/fonts.css" />'
+assert GOOGLE_FONT in site_head, 'Google-Fonts-Zeile nicht gefunden'
+site_head = site_head.replace(GOOGLE_FONT, EIGENE_FONT)
 write('layouts/_partials/kopf-ionas.html', site_head)
 
 # Fuss: footer.php + Skriptblock. Der Startseiten-Zusatzblock steckt

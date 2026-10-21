@@ -14,6 +14,10 @@ sie bewusst in Kauf genommen sind:
      Kommentare stehen weiterhin in layouts/baseof.html, nur nicht mehr im
      ausgelieferten HTML. Fuer Besucher und Suchmaschinen ohne Bedeutung.
 
+  3. Die Schrift Open Sans Condensed kam vom Google-CDN und liegt jetzt
+     lokal unter /static/css/fonts.css - die eine <link>-Zeile im Kopf
+     unterscheidet sich deshalb auf jeder Seite.
+
 Jede andere Abweichung ist ein Fehler und landet in verify-diff.txt.
 """
 import difflib
@@ -31,9 +35,21 @@ ENTITIES = [('&amp;', '&'), ('&#39;', "'"), ('&#34;', '"'),
             ('&rsquo;', '’'), ('&hellip;', '…')]
 
 
+# Die Schrift Open Sans Condensed kam bisher von fonts.googleapis.com und
+# liegt jetzt lokal. Beide Schreibweisen werden auf denselben Platzhalter
+# gebracht, damit der Vergleich den Rest der Seite weiter Byte fuer Byte
+# prueft.
+SCHRIFT = [
+    ("<link href='//fonts.googleapis.com/css?family=Open+Sans+Condensed"
+     ":300,700' rel='stylesheet' type='text/css' />"),
+    '<link rel="stylesheet" href="/static/css/fonts.css" />',
+]
+
 def normalize(text):
     for ent, raw in ENTITIES:
         text = text.replace(ent, raw)
+    for zeile in SCHRIFT:
+        text = text.replace(zeile, '@@SCHRIFT@@')
     text = re.sub(r'<!--.*?-->', '', text, flags=re.S)
     text = re.sub(r'[ \t]+\n', '\n', text)      # Leerraum am Zeilenende
     text = re.sub(r'\n{2,}', '\n', text)        # Leerzeilen zusammenfassen
