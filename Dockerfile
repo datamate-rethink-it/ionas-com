@@ -58,9 +58,10 @@ FROM caddy:${CADDY_VERSION}-alpine
 
 COPY deploy/Caddyfile.container /etc/caddy/Caddyfile
 
-# Zwei Schichten mit Absicht: die 102 MB Artikelbilder aendern sich fast
-# nie, der Rest bei jedem Textdurchgang. Ein Inhalts-Release uebertraegt
-# dadurch ~46 MB statt 148.
+# Zwei Schichten mit Absicht: die Artikelbilder aendern sich fast nie, der
+# Rest bei jedem Textdurchgang. Am Registry gemessen: 102,3 MB Bilder und
+# 24,0 MB Seite (komprimiert). Ein Inhalts-Release uebertraegt dadurch
+# 24 MB statt 151.
 COPY --from=builder /src/public/wissen/wp-content /srv/wissen/wp-content
 COPY --from=builder /src/site /srv
 

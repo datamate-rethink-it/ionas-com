@@ -187,9 +187,17 @@ docker compose pull && docker compose up -d
 Zurück auf eine ältere Fassung: alten Wert eintragen, dieselben zwei
 Befehle.
 
-Das Image ist zwei Schichten: 106 MB Artikelbilder, die sich fast nie
-ändern, und 48 MB für den Rest. Ein Durchgang, der nur Texte anfasst,
-überträgt deshalb 48 MB statt 154.
+Das Image ist zwei Schichten, damit ein Textdurchgang nicht den ganzen
+Bildbestand neu überträgt. Am Registry gemessen:
+
+| Schicht | komprimiert |
+|---|---|
+| Artikelbilder (`wissen/wp-content`) | 102,3 MB |
+| übrige Seite (HTML, Assets, Pagefind-Index) | 24,0 MB |
+| Caddy-Basis + Alpine | 24,9 MB |
+| **erster Pull** | **151,2 MB** |
+
+Ein Durchgang, der nur Texte anfasst, überträgt deshalb **24 MB**.
 
 ### Einmalig auf dem Server
 
