@@ -197,13 +197,25 @@ kleineren Teil.
 `_build/` enthält das vollständige Werkzeug. Es ist nicht nötig, um die Seite
 zu bauen – nur um die Umwandlung zu wiederholen oder zu prüfen:
 
+Der Referenz-Snapshot des alten PHP-Stands liegt mit im Repo
+(`_build/reference/`, 118 Seiten, 2,9 MB). `verify.py` braucht deshalb weder
+PHP noch den Tarball:
+
+```bash
+python3 _build/verify.py          # vergleicht public/ Seite für Seite
+```
+
+Die Umwandlung selbst wiederholen (braucht den entpackten Quellbaum):
+
 ```bash
 export IONAS_SRC=/pfad/zum/entpackten/website
-export IONAS_REF=/pfad/zum/referenz-snapshot
 _build/build.sh      # erzeugt hugo.toml, layouts/, content/, webroot/, data/
 hugo --gc
-_build/verify.py     # vergleicht public/ Seite für Seite mit dem Referenz-Snapshot
+python3 _build/verify.py
 ```
+
+Ein Neulauf von `build.sh` erzeugt bit-identisch denselben Stand – geprüft
+über `git status` nach einem `rm -rf layouts content webroot data`.
 
 Die Reihenfolge ist: `gen_layouts.py` (Gerüst aus dem Referenz-Render),
 `gen_tpl.py` (Städte- und Themen-Template aus der PHP-Quelle),

@@ -2,10 +2,14 @@
 """Gemeinsame Helfer fuer die ionas-Migration PHP -> Hugo."""
 import json, os, re, shutil, sys
 
-SRC = os.environ.get('IONAS_SRC')
-REF = os.environ.get('IONAS_REF')
-PRJ = os.environ.get('IONAS_PRJ', '/home/christoph/Dokumente/ionas-hugo')
+PRJ = os.environ.get('IONAS_PRJ',
+                     os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 BLD = os.path.join(PRJ, '_build')
+
+SRC = os.environ.get('IONAS_SRC')
+# Der Referenz-Snapshot des alten PHP-Stands liegt im Repo, damit verify.py
+# ohne PHP und ohne den Tarball laeuft.
+REF = os.environ.get('IONAS_REF') or os.path.join(BLD, 'reference')
 
 HEAD_MARK = '</header>'
 FOOT_MARK = '<footer class="footer-1'
