@@ -277,6 +277,15 @@ Mitgekommen sind auch:
 - Die **Bilder** bleiben unter `/wissen/wp-content/uploads/…`. Unschön, aber
   so brechen keine Verweise aus Google Bilder oder von fremden Seiten.
 
+Eine Stelle ist bewusst **nicht** wortgleich übernommen: In Kommentar 701
+hatte der Verfasser 2017 seine eigene Mailadresse genannt, weil sein Name
+für Spam-Versand missbraucht wurde. Sie stand seither öffentlich auf
+ionas.com und ist beim Umstieg durch `[E-Mail-Adresse entfernt]` ersetzt
+worden – in `_build/wp/comments.json` und im zugehörigen
+Referenz-Snapshot, damit sie auch beim Neuerzeugen nicht zurückkommt. Der
+Satz bleibt lesbar. Die drei `adresse1@gmx.de`-Adressen in Kommentar 352
+sind Platzhalter und unverändert.
+
 ### Drei Plugins ersetzt
 
 | vorher | jetzt |

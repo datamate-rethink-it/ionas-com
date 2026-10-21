@@ -7,6 +7,12 @@ Quellen:
   wp/tags.json      REST-API: 380 Schlagwoerter (Name, Slug, Anzahl)
   reference-wissen/ gerenderte Seiten der Live-Installation
 
+In _build/wp/comments.json und im passenden Referenz-Snapshot ist eine
+Mailadresse nachtraeglich durch "[E-Mail-Adresse entfernt]" ersetzt: ein
+Kommentator hatte 2017 seine eigene Adresse genannt, weil sein Name fuer
+Spam-Versand missbraucht wurde. Siehe README, Abschnitt "Die
+Wissensartikel".
+
 Der Artikeltext kommt aus den *gerenderten* Seiten, nicht aus der REST-API:
 nur dort steht die <span id="more-NNN">-Marke, an der WordPress den Teaser
 fuer die Uebersichtsseite abschneidet. Die REST-API verschluckt sie. An
