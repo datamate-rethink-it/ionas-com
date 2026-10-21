@@ -91,8 +91,11 @@ data/kommentare.yaml        280 übernommene Kommentare, nach Artikel gruppiert
 data/tagnamen.yaml          Anzeigenamen der 333 benutzten Schlagwörter
 webroot/                    124 MB, wird unverändert unter / ausgeliefert
   wissen/wp-content/uploads/    die Artikelbilder unter ihren alten Adressen
-deploy/Caddyfile            fertige Caddy-Konfiguration
-deploy/nginx-ionas.conf     Alternative für den bestehenden nginx
+Dockerfile                  Caddy + die gebaute Seite, zwei Schichten
+deploy/Caddyfile.container  die Regeln im Image
+deploy/nginx-vhost.conf     der vhost für das native nginx davor
+deploy/docker-compose.yml   für /opt/ionas.com/ auf dem Server
+.github/workflows/build.yml prüft jeden Push, veröffentlicht bei Tag
 _build/                     Einmal-Migrationswerkzeug, nach dem Umstieg löschbar
 ```
 
@@ -103,28 +106,116 @@ selbst einen Pfad `/static/` für CSS und JS benutzt – zwei Bedeutungen von
 
 ## Bauen und ausrollen
 
-```bash
-hugo --gc                                   # erzeugt public/
-npx pagefind --site public                  # Suchindex für /wissen/suche/
-rsync -a --delete public/ server:/var/www/ionas/
+Die Seite wird als Docker-Image ausgeliefert: Caddy mit dem fertig gebauten
+HTML. Davor steht das nativ installierte nginx des Servers.
+
+Diese Teilung hat einen Grund. Der fragile Teil dieser Migration sind nicht
+die Dateien, sondern die **Ausliefer-Regeln**: 16 Weiterleitungen, der
+`/agb`-Rewrite auf die AGB-PDF, der `/wissen/feed/`-Rewrite, `try_files` für
+die extensionslosen URLs, der 404-Handler. Die `/agb`-Regel stand bisher
+*nur* im nginx-vhost und nicht im Quellbaum – und sie hängt im Footer jeder
+einzelnen Seite. Im Image sind diese Regeln mit dem Inhalt zusammen
+versioniert und können nicht mehr durch einen unbeteiligten
+`nginx -s reload` verschwinden.
+
+Dazu: `docker compose up -d` tauscht die Seite in einem Zug. Ein `rsync` von
+148 MB ist nicht atomar – mitten im Lauf verweist eine Seite auf ein Bild,
+das noch nicht da ist. Und ein Rückschritt ist ein Tag.
+
+```
+Browser ──► nginx (nativ)        TLS, ionas.com ──► www.ionas.com
+                 │               deploy/nginx-vhost.conf
+                 ▼
+            Container :8081      alles Übrige: Weiterleitungen, /agb,
+            Caddy + HTML         Feed, try_files, 404, Cache-Header
+                                 deploy/Caddyfile.container
 ```
 
-Der Pagefind-Lauf ist nur für die Suche nötig. Ohne ihn steht die Seite
-`/wissen/suche/` da und meldet, dass die Suche nicht verfügbar ist – alles
-andere funktioniert.
-
-Kein `--minify`: das würde die Byte-Gleichheit mit dem alten Stand aufgeben.
-`[minify] disableHTML = true` in `hugo.toml` ist die Bremse, falls es doch
-mal jemand setzt.
-
-Lokal ansehen:
+### Lokal
 
 ```bash
-hugo server
+hugo --gc                        # erzeugt public/
+npx pagefind --site public       # Suchindex für /wissen/suche/
+hugo server                      # ansehen
 ```
 
-Vor dem ersten Ausrollen `caddy validate --config deploy/Caddyfile` laufen
-lassen – die Datei ist hier nie von Caddy selbst geprüft worden.
+Oder gleich als Image, so wie es auf dem Server läuft:
+
+```bash
+docker build -t ionas-com:dev .
+docker run --rm -p 127.0.0.1:8099:80 ionas-com:dev
+```
+
+Der Build ist in sich geschlossen: ein frischer Clone genügt, es braucht
+weder den alten PHP-Quellbaum noch Node. Hugo und Pagefind lädt das
+Dockerfile als Binärdateien, die Versionen stehen dort als `ARG`.
+
+Kein `--minify`: das gäbe die Byte-Gleichheit auf, die `_build/verify.py`
+nachweist. `[minify] disableHTML = true` in `hugo.toml` ist die Bremse,
+falls es doch jemand setzt.
+
+### Veröffentlichen
+
+```bash
+git tag 2026-10-21
+git push --tags
+```
+
+[`.github/workflows/build.yml`](.github/workflows/build.yml) prüft bei jedem
+Push die Ausgabe (`verify.py`, `verify_wissen.py`, `linkcheck.py`, plus
+`caddy validate`) und veröffentlicht bei einem Tag das Image nach
+`ghcr.io/datamate-rethink-it/ionas-com`. Die Werkzeugversionen liest der
+Workflow aus dem `Dockerfile`, damit CI und Image nicht auseinanderlaufen.
+
+### Ausrollen
+
+```bash
+cd /opt/ionas.com
+sed -i 's/^IONAS_VERSION=.*/IONAS_VERSION=2026-10-21/' .env
+docker compose pull && docker compose up -d
+```
+
+Zurück auf eine ältere Fassung: alten Wert eintragen, dieselben zwei
+Befehle.
+
+Das Image ist zwei Schichten: 106 MB Artikelbilder, die sich fast nie
+ändern, und 48 MB für den Rest. Ein Durchgang, der nur Texte anfasst,
+überträgt deshalb 48 MB statt 154.
+
+### Einmalig auf dem Server
+
+```bash
+mkdir -p /opt/ionas.com && cd /opt/ionas.com
+# deploy/docker-compose.yml hierher kopieren
+echo "IONAS_VERSION=2026-10-21" > .env
+docker compose up -d
+curl -sI http://127.0.0.1:8081/ | head -1        # erwartet: 200
+
+# deploy/nginx-vhost.conf nach /etc/nginx/sites-available/ionas.com,
+# Zertifikatspfade anpassen, verlinken, prüfen, neu laden:
+nginx -t && systemctl reload nginx
+```
+
+Der Container läuft `read_only` mit `cap_drop: ALL`; zurückgegeben wird nur
+`NET_BIND_SERVICE`, weil die Caddy-Binärdatei diese Capability als
+Datei-Capability trägt und sonst schon das `exec` scheitert.
+
+### Nach dem ersten Ausrollen prüfen
+
+Die Kette nginx → Caddy ist lokal durchgetestet, inklusive Byte-Gleichheit
+durch den Proxy. Diese vier Adressen trotzdem einmal von außen anfassen –
+es sind die, an denen so etwas erfahrungsgemäß bricht:
+
+```bash
+for u in / /pc-hilfe/münchen /agb /wissen/feed/ /wissen/suche/; do
+  curl -sI "https://www.ionas.com$u" | head -1
+done
+curl -sI https://www.ionas.com/pc-hilfe/muenchen | grep -i location   # 301
+```
+
+Und `/wissen/suche/` einmal im Browser öffnen und einen Begriff eintippen –
+die Pagefind-Oberfläche ist das einzige Stück, das hier nicht im Browser
+bedient wurde.
 
 ## Etwas ändern
 

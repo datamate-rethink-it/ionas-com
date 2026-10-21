@@ -1,0 +1,7 @@
+# Der Build braucht nur die Hugo-Quellen.
+.git
+.gitignore
+_build
+public
+resources
+.hugo_build.lock

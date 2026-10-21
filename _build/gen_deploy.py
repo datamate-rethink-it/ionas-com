@@ -1,161 +1,268 @@
 #!/usr/bin/env python3
-"""Erzeugt Caddyfile und nginx-Snippet aus den tatsaechlichen Aliasen."""
-import glob, json, os, re, sys
+"""Erzeugt die Auslieferungs-Konfiguration aus den tatsaechlichen Aliasen.
+
+Die Aufgaben sind auf zwei Stellen verteilt:
+
+  deploy/Caddyfile.container  Caddy im Image. Kennt nur :80 und macht alles,
+                              was zur Seite gehoert: Weiterleitungen,
+                              Rewrites, try_files, 404, Cache-Header. Diese
+                              Regeln sind damit mit dem Inhalt versioniert.
+  deploy/nginx-vhost.conf     Das native nginx davor. Macht nur, was dort
+                              hingehoert: TLS, ionas.com -> www.ionas.com
+                              und proxy_pass auf den Container.
+"""
+import glob
+import os
+import re
+import sys
+
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from gen_common import *
+from gen_common import PRJ, write  # noqa: E402
+
+PORT = 8081
+
+# Verweise, die auf Dateien zeigen, welche unter einer anderen Adresse
+# liegen. /agb stand bisher nur im nginx-vhost und nicht im Quellbaum.
+REWRITES = [
+    ('/agb', '/downloads/AGB-ionas.pdf', 'application/pdf',
+     'Die AGB-PDF unter ihrer bisherigen Adresse. Die URL steht im Footer\n\t# jeder Seite und in der Sitemap. nginx lieferte sie bisher mit dem\n\t# falschen Typ text/html aus.'),
+    ('/wissen/feed*', '/wissen/feed.xml', 'application/rss+xml; charset=utf-8',
+     'Hugo legt den Feed als /wissen/feed.xml ab; ausgeliefert wird er unter\n\t# der bisherigen Adresse, die im Footer jeder Seite verlinkt ist.'),
+]
+
+# Weiterleitungen, die nicht aus den Alias-Feldern kommen.
+EXTRA_REDIRS = [
+    ('/Datenschutz', '/datenschutz',
+     'So ist die URL in der Datenschutzerklaerung abgedruckt.'),
+    ('/drucker-druckt-nicht/', '/wissen/drucker-druckt-nicht/', None),
+    ('/datensicherung-mit-windows-bordmitteln/',
+     '/wissen/datensicherung-mit-windows-bordmitteln/', None),
+    ('/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/',
+     '/wissen/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/',
+     'Drei Wissensartikel verlinken aufeinander ohne das /wissen-Praefix.\n\t# Diese Adressen liefern auch im WordPress 404.'),
+    ('/wissen/wlan-passwort-auslesen-so-einfach-gehts/'
+     'wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/',
+     '/wissen/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/',
+     'Ein Artikel verlinkt einen anderen relativ ohne fuehrenden Slash, der\n\t# Verweis landet dadurch unterhalb der eigenen Adresse.'),
+]
+
+# Pfade mit langer Cache-Zeit. Alles andere sind Seiten und bekommt eine
+# kurze - dafuer braucht es einen Negativ-Matcher: die Seiten werden als
+# /dienstleistung/ ausgeliefert, ein Muster auf *.html greift nie.
+CACHE_LANG = ['/static/*', '/images/*', '/ionas-neu/*', '/senderlogos/*',
+              '/downloads/*', '/themen/*', '/wissen/wp-content/*',
+              '/pagefind/*']
 
 
-def aliases():
+def aliase():
     """Alias -> Zielpfad aus der Frontmatter aller Inhaltsdateien."""
     out = {}
     for cf in sorted(glob.glob(os.path.join(PRJ, 'content', '**', '*.html'),
                                recursive=True)):
         with open(cf, encoding='utf-8') as fh:
-            head = fh.read().split('\n---\n', 1)[0]
-        um = re.search(r'^url: "(.*?)"$', head, re.M)
+            kopf = fh.read().split('\n---\n', 1)[0]
+        um = re.search(r'^url: "(.*?)"$', kopf, re.M)
         if not um:
             continue
-        target = um.group(1)
-        block = re.search(r'^aliases:\n((?:  - ".*"\n)+)', head + '\n', re.M)
+        block = re.search(r'^aliases:\n((?:  - ".*"\n)+)', kopf + '\n', re.M)
         if not block:
             continue
         for a in re.findall(r'^  - "(.*?)"$', block.group(1), re.M):
-            out[a] = target
+            out[a] = um.group(1)
     return out
 
 
-def main():
-    al = aliases()
-    redirs = '\n'.join('\tredir %s %s permanent' % (a, t)
-                       for a, t in sorted(al.items()))
+def caddyfile(al):
+    zeilen = ['# Caddy im Container ionas-com. Kein TLS, kein Hostname: davor',
+              '# steht das native nginx (siehe deploy/nginx-vhost.conf).',
+              '#',
+              '# Pruefen:',
+              '#   docker run --rm -v ./deploy/Caddyfile.container:/c:ro \\',
+              '#     caddy:2.11.7-alpine caddy validate --adapter caddyfile --config /c',
+              '',
+              ':80 {',
+              '\troot * /srv',
+              '\tencode zstd gzip',
+              '']
+    zeilen.append('\t# --- Weiterleitungen ------------------------------------------')
+    zeilen.append('\t# ASCII-Schreibweisen der Umlaut-Landingpages und /rescue-stick.')
+    zeilen.append('\t# Die canonical-Tags zeigten schon vorher auf die Umlaut-Variante,')
+    zeilen.append('\t# der Inhalt wurde aber unter beiden Adressen mit 200 ausgeliefert.')
+    for a, z in sorted(al.items()):
+        zeilen.append('\tredir %s %s permanent' % (a, z))
+    for a, z, kommentar in EXTRA_REDIRS:
+        zeilen.append('')
+        if kommentar:
+            zeilen.append('\t# ' + kommentar)
+        zeilen.append('\tredir %s %s permanent' % (a, z))
+    zeilen.append('')
 
-    write('deploy/Caddyfile', '''# ionas.com - statisch aus Hugo, /wissen weiterhin WordPress.
+    for pfad, ziel, typ, kommentar in REWRITES:
+        zeilen.append('\t# --- %s %s' % (pfad, '-' * max(0, 56 - len(pfad))))
+        zeilen.append('\t# ' + kommentar)
+        zeilen.append('\thandle %s {' % pfad)
+        zeilen.append('\t\theader Content-Type "%s"' % typ)
+        zeilen.append('\t\trewrite * %s' % ziel)
+        zeilen.append('\t\tfile_server')
+        zeilen.append('\t}')
+        zeilen.append('')
+
+    zeilen += [
+        '\t# --- statische Auslieferung -----------------------------------',
+        '\t# try_files bedient /dienstleistung und /dienstleistung/ gleich,',
+        '\t# ohne Weiterleitung - genau wie das alte PHP.',
+        '\thandle {',
+        '\t\ttry_files {path} {path}/index.html',
+        '\t\tfile_server',
+        '\t}',
+        '',
+        '\thandle_errors {',
+        '\t\trewrite * /404.html',
+        '\t\tfile_server',
+        '\t}',
+        '',
+        '\t# Lange Cache-Zeiten fuer Medien, kurze fuer die Seiten selbst.',
+        '\t@medien path ' + ' '.join(CACHE_LANG),
+        '\t@seiten not path ' + ' '.join(CACHE_LANG),
+        '\theader @medien Cache-Control "public, max-age=2592000"',
+        '\theader @seiten Cache-Control "public, max-age=300"',
+        '',
+        '\tlog {',
+        '\t\toutput stdout',
+        '\t\tformat console',
+        '\t}',
+        '}',
+    ]
+    write('deploy/Caddyfile.container', '\n'.join(zeilen) + '\n')
+
+
+def nginx():
+    write('deploy/nginx-vhost.conf', '''# vhost fuer das nativ installierte nginx auf dem Server.
 #
-# Deploy:  hugo --gc
-#          npx pagefind --site public        (Suchindex fuer /wissen/suche/)
-#          rsync -a --delete public/ server:/var/www/ionas/
-# Pruefen: caddy validate --config /etc/caddy/Caddyfile
+# Hier steht nur, was zum Server gehoert: TLS, der kanonische Hostname und
+# die Weitergabe an den Container. Alles, was zur Seite gehoert - die
+# Weiterleitungen, /agb, der Feed, try_files, 404 - steckt im Image und ist
+# dort mit dem Inhalt zusammen versioniert.
+#
+# Pfade zu den Zertifikaten an die bestehende Installation anpassen.
 
 # Die Seite lief bisher ohne Host-Weiterleitung auf ionas.com UND
 # www.ionas.com. Alle canonical-Tags zeigen auf www, deshalb hier eine
 # echte 301 auf den kanonischen Host.
-ionas.com {
-\tredir https://www.ionas.com{uri} permanent
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ionas.com www.ionas.com;
+    return 301 https://www.ionas.com$request_uri;
 }
 
-www.ionas.com {
-\troot * /var/www/ionas
-\tencode zstd gzip
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name ionas.com;
 
-\t# --- /wissen/feed/ ----------------------------------------------
-\t# Hugo legt den Feed als /wissen/feed.xml ab; ausgeliefert wird er
-\t# unter der bisherigen Adresse, die im Footer jeder Seite steht.
-\thandle /wissen/feed* {
-\t\theader Content-Type "application/rss+xml; charset=utf-8"
-\t\trewrite * /wissen/feed.xml
-\t\tfile_server
-\t}
+    ssl_certificate     /etc/letsencrypt/live/ionas.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ionas.com/privkey.pem;
 
-\t# --- /agb liefert die AGB als PDF -------------------------------
-\t# Das war bisher eine Rewrite-Regel im nginx-vhost (und lieferte das
-\t# PDF faelschlich als text/html aus). Die URL steht in der Sitemap und
-\t# im Footer jeder Seite, muss also erhalten bleiben.
-\thandle /agb {
-\t\theader Content-Type application/pdf
-\t\trewrite * /downloads/AGB-ionas.pdf
-\t\tfile_server
-\t}
-
-\t# --- Weiterleitungen --------------------------------------------
-\t# In der Datenschutzerklaerung ist die URL mit grossem D abgedruckt.
-\tredir /Datenschutz /datenschutz permanent
-
-\t# Drei Wissensartikel verlinken aufeinander ohne das /wissen-Praefix.
-\t# Diese Adressen liefern auch im WordPress 404; die Weiterleitung
-\t# repariert sie, ohne die Artikeltexte anzufassen.
-\tredir /drucker-druckt-nicht/ /wissen/drucker-druckt-nicht/ permanent
-\tredir /datensicherung-mit-windows-bordmitteln/ /wissen/datensicherung-mit-windows-bordmitteln/ permanent
-\tredir /malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ /wissen/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ permanent
-
-\t# Ein Artikel verlinkt einen anderen relativ ohne fuehrenden Slash, der
-\t# Verweis landet dadurch unterhalb der eigenen Adresse. Auch im
-\t# WordPress eine 404.
-\tredir /wissen/wlan-passwort-auslesen-so-einfach-gehts/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/ /wissen/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/ permanent
-
-\t# ASCII-Schreibweisen der Umlaut-Landingpages. Hugo legt dafuer
-\t# zusaetzlich meta-refresh-Seiten ab; diese 301 ist das Saubere und
-\t# greift zuerst.
-%s
-
-\t# --- statische Auslieferung -------------------------------------
-\t# try_files bedient /dienstleistung und /dienstleistung/ gleich,
-\t# ohne Weiterleitung - genau wie bisher.
-\thandle {
-\t\ttry_files {path} {path}/index.html
-\t\tfile_server
-\t}
-
-\thandle_errors {
-\t\trewrite * /404.html
-\t\tfile_server
-\t}
-
-\t# Lange Cache-Zeiten fuer Assets, keine fuer HTML.
-\t@assets path /static/* /images/* /ionas-neu/* /senderlogos/* /wissen/wp-content/* /pagefind/*
-\theader @assets Cache-Control "public, max-age=2592000"
-\theader /*.html Cache-Control "public, max-age=300"
-}
-''' % redirs)
-
-    nginx = '\n'.join('    rewrite ^%s$ %s permanent;' % (re.escape(a), t)
-                      for a, t in sorted(al.items()))
-    write('deploy/nginx-ionas.conf', '''# Variante fuer den bestehenden nginx, falls kein Caddy zum Einsatz kommt.
-# In den server-Block fuer www.ionas.com einsetzen.
-
-root /var/www/ionas;
-charset utf-8;
-
-# /wissen/feed/ liefert die von Hugo erzeugte /wissen/feed.xml
-location ~ ^/wissen/feed/?$ {
-    default_type "application/rss+xml; charset=utf-8";
-    alias /var/www/ionas/wissen/feed.xml;
+    return 301 https://www.ionas.com$request_uri;
 }
 
-# Drei Wissensartikel verlinken aufeinander ohne /wissen-Praefix
-location = /drucker-druckt-nicht/ { return 301 /wissen/drucker-druckt-nicht/; }
-location = /datensicherung-mit-windows-bordmitteln/ { return 301 /wissen/datensicherung-mit-windows-bordmitteln/; }
-location = /malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ { return 301 /wissen/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/; }
-location = /wissen/wlan-passwort-auslesen-so-einfach-gehts/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/ { return 301 /wissen/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/; }
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    http2 on;
+    server_name www.ionas.com;
 
-# /agb lieferte bisher downloads/AGB-ionas.pdf - hier mit korrektem Typ.
-location = /agb {
-    default_type application/pdf;
-    alias /var/www/ionas/downloads/AGB-ionas.pdf;
+    ssl_certificate     /etc/letsencrypt/live/ionas.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ionas.com/privkey.pem;
+
+    access_log /var/log/nginx/ionas.com.access.log;
+    error_log  /var/log/nginx/ionas.com.error.log;
+
+    # Die Artikelbilder sind bis zu mehrere Megabyte gross.
+    client_max_body_size 1m;
+
+    location / {
+        proxy_pass http://127.0.0.1:%d;
+        proxy_http_version 1.1;
+
+        proxy_set_header Host              $host;
+        proxy_set_header X-Real-IP         $remote_addr;
+        proxy_set_header X-Forwarded-For   $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+
+        # Caddy komprimiert selbst; nginx soll das nicht nochmal anfassen.
+        proxy_set_header Accept-Encoding $http_accept_encoding;
+
+        proxy_connect_timeout 5s;
+        proxy_read_timeout    30s;
+    }
 }
+''' % PORT)
 
-location = /Datenschutz { return 301 /datenschutz; }
 
-# ASCII-Schreibweisen der Umlaut-Landingpages
-%s
+def compose():
+    write('deploy/docker-compose.yml', '''# Auf dem Server nach /opt/ionas.com/docker-compose.yml kopieren.
+#
+#   cd /opt/ionas.com
+#   echo "IONAS_VERSION=2026-10-21" > .env
+#   docker compose pull && docker compose up -d
+#
+# Ausrollen einer neuen Fassung: Version in .env aendern, dann dieselben
+# zwei Befehle. Zurueck auf eine aeltere Fassung: alten Wert eintragen,
+# dieselben zwei Befehle.
 
-# Extensionslose URLs auf die Verzeichnis-Indizes
-location / {
-    try_files $uri $uri/index.html $uri/ =404;
-}
+services:
+    ionas-com:
+        image: ${IONAS_IMAGE:-ghcr.io/datamate-rethink-it/ionas-com}:${IONAS_VERSION:?Bitte IONAS_VERSION in .env setzen, z.B. 2026-10-21}
+        container_name: ionas-com
+        restart: unless-stopped
+        # Nur lokal erreichbar - davor steht das native nginx.
+        ports:
+            - 127.0.0.1:%d:80
+        read_only: true
+        tmpfs:
+            - /tmp
+            - /config
+            - /data
+        cap_drop:
+            - ALL
+        cap_add:
+            # Die Caddy-Binaerdatei traegt cap_net_bind_service als
+            # Datei-Capability. Ohne diese eine Rueckgabe scheitert schon das
+            # exec ("operation not permitted").
+            - NET_BIND_SERVICE
+        security_opt:
+            - no-new-privileges:true
+        healthcheck:
+            test: ['CMD', 'wget', '--spider', '-q', 'http://127.0.0.1/']
+            interval: 30s
+            timeout: 5s
+            retries: 3
+            start_period: 5s
+        logging:
+            driver: json-file
+            options:
+                max-size: 10m
+                max-file: '3'
+''' % PORT)
 
-error_page 404 /404.html;
-location = /404.html { internal; }
 
-location ~* ^/(static|images|ionas-neu|senderlogos|pagefind|wissen/wp-content)/ {
-    expires 30d;
-    add_header Cache-Control "public";
-}
-''' % nginx)
-
-    print('deploy/Caddyfile und deploy/nginx-ionas.conf erzeugt (%d Weiterleitungen)'
-          % len(al))
-    for a, t in sorted(al.items()):
-        print('   %-28s -> %s' % (a, t))
+def main():
+    al = aliase()
+    for alt in ('deploy/Caddyfile', 'deploy/nginx-ionas.conf'):
+        pfad = os.path.join(PRJ, alt)
+        if os.path.isfile(pfad):
+            os.remove(pfad)
+    caddyfile(al)
+    nginx()
+    compose()
+    print('deploy/ erzeugt:')
+    print('  Caddyfile.container   %d Weiterleitungen aus Aliasen + %d weitere, '
+          '%d Rewrites' % (len(al), len(EXTRA_REDIRS), len(REWRITES)))
+    print('  nginx-vhost.conf      TLS, ionas.com -> www, proxy_pass :%d' % PORT)
+    print('  docker-compose.yml    fuer /opt/ionas.com/ auf dem Server')
 
 
 if __name__ == '__main__':

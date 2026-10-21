@@ -1,0 +1,85 @@
+# Caddy im Container ionas-com. Kein TLS, kein Hostname: davor
+# steht das native nginx (siehe deploy/nginx-vhost.conf).
+#
+# Pruefen:
+#   docker run --rm -v ./deploy/Caddyfile.container:/c:ro \
+#     caddy:2.11.7-alpine caddy validate --adapter caddyfile --config /c
+
+:80 {
+	root * /srv
+	encode zstd gzip
+
+	# --- Weiterleitungen ------------------------------------------
+	# ASCII-Schreibweisen der Umlaut-Landingpages und /rescue-stick.
+	# Die canonical-Tags zeigten schon vorher auf die Umlaut-Variante,
+	# der Inhalt wurde aber unter beiden Adressen mit 200 ausgeliefert.
+	redir /pc-hilfe/duesseldorf /pc-hilfe/düsseldorf permanent
+	redir /pc-hilfe/koeln /pc-hilfe/köln permanent
+	redir /pc-hilfe/luebeck /pc-hilfe/lübeck permanent
+	redir /pc-hilfe/moenchengladbach /pc-hilfe/mönchengladbach permanent
+	redir /pc-hilfe/muelheim /pc-hilfe/mülheim permanent
+	redir /pc-hilfe/muenchen /pc-hilfe/münchen permanent
+	redir /pc-hilfe/muenster /pc-hilfe/münster permanent
+	redir /pc-hilfe/nuernberg /pc-hilfe/nürnberg permanent
+	redir /pc-hilfe/osnabrueck /pc-hilfe/osnabrück permanent
+	redir /pc-hilfe/saarbruecken /pc-hilfe/saarbrücken permanent
+	redir /rescue-stick /usb-stick permanent
+
+	# So ist die URL in der Datenschutzerklaerung abgedruckt.
+	redir /Datenschutz /datenschutz permanent
+
+	redir /drucker-druckt-nicht/ /wissen/drucker-druckt-nicht/ permanent
+
+	redir /datensicherung-mit-windows-bordmitteln/ /wissen/datensicherung-mit-windows-bordmitteln/ permanent
+
+	# Drei Wissensartikel verlinken aufeinander ohne das /wissen-Praefix.
+	# Diese Adressen liefern auch im WordPress 404.
+	redir /malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ /wissen/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ permanent
+
+	# Ein Artikel verlinkt einen anderen relativ ohne fuehrenden Slash, der
+	# Verweis landet dadurch unterhalb der eigenen Adresse.
+	redir /wissen/wlan-passwort-auslesen-so-einfach-gehts/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/ /wissen/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/ permanent
+
+	# --- /agb ----------------------------------------------------
+	# Die AGB-PDF unter ihrer bisherigen Adresse. Die URL steht im Footer
+	# jeder Seite und in der Sitemap. nginx lieferte sie bisher mit dem
+	# falschen Typ text/html aus.
+	handle /agb {
+		header Content-Type "application/pdf"
+		rewrite * /downloads/AGB-ionas.pdf
+		file_server
+	}
+
+	# --- /wissen/feed* -------------------------------------------
+	# Hugo legt den Feed als /wissen/feed.xml ab; ausgeliefert wird er unter
+	# der bisherigen Adresse, die im Footer jeder Seite verlinkt ist.
+	handle /wissen/feed* {
+		header Content-Type "application/rss+xml; charset=utf-8"
+		rewrite * /wissen/feed.xml
+		file_server
+	}
+
+	# --- statische Auslieferung -----------------------------------
+	# try_files bedient /dienstleistung und /dienstleistung/ gleich,
+	# ohne Weiterleitung - genau wie das alte PHP.
+	handle {
+		try_files {path} {path}/index.html
+		file_server
+	}
+
+	handle_errors {
+		rewrite * /404.html
+		file_server
+	}
+
+	# Lange Cache-Zeiten fuer Medien, kurze fuer die Seiten selbst.
+	@medien path /static/* /images/* /ionas-neu/* /senderlogos/* /downloads/* /themen/* /wissen/wp-content/* /pagefind/*
+	@seiten not path /static/* /images/* /ionas-neu/* /senderlogos/* /downloads/* /themen/* /wissen/wp-content/* /pagefind/*
+	header @medien Cache-Control "public, max-age=2592000"
+	header @seiten Cache-Control "public, max-age=300"
+
+	log {
+		output stdout
+		format console
+	}
+}
