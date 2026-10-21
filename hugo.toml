@@ -1,0 +1,46 @@
+baseURL = 'https://www.ionas.com/'
+locale = 'de-de'
+title = 'ionas - Ihr Online Assistent'
+defaultContentLanguage = 'de'
+
+# Die Seite ist ein Archiv: keine Taxonomien, kein RSS. Die sitemap.xml
+# ist ein Index, der auch auf das WordPress unter /wissen zeigt, und liegt
+# deshalb als statische Datei in static/ - erzeugt wird nur sitemap/main.xml.
+disableKinds = ['taxonomy', 'term', 'rss', 'sitemap']
+
+# Umlaut-URLs wie /pc-hilfe/muenchen -> /pc-hilfe/münchen muessen erhalten
+# bleiben, sonst brechen indexierte Landingpages weg.
+removePathAccents = false
+disablePathToLower = true
+
+disableHugoGeneratorInject = true  # kein <meta name="generator">
+enableRobotsTXT = false  # robots.txt kommt unveraendert aus webroot/
+
+# Alles, was unveraendert unter / ausgeliefert wird, liegt in webroot/.
+# (Hugos Standardname waere static/ - das waere hier verwirrend, weil die
+# Seite selbst einen Pfad /static/ fuer CSS und JS benutzt.)
+staticDir = 'webroot'
+
+[outputs]
+home = ['html', 'mainsitemap']
+
+# sitemap/main.xml - gleicher Pfad wie bisher, damit sitemap.xml weiter stimmt
+[outputFormats.mainsitemap]
+mediaType = 'application/xml'
+path = 'sitemap'
+baseName = 'main'
+isPlainText = true
+notAlternative = true
+
+[markup.goldmark.renderer]
+unsafe = true
+
+# Die Inhalte sind reine HTML-Dateien (direkt aus den alten PHP-Templates
+# uebernommen), kein Markdown. Hugo sperrt text/html als Inhaltsformat seit
+# 0.16x per Default - hier unbedenklich, weil alle Inhalte aus dem eigenen
+# Repository kommen und kein fremder Autor schreibt.
+[security]
+allowContent = ['^text/html$', '^text/markdown$']
+
+[minify]
+disableHTML = true

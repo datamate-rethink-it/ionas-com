@@ -1,0 +1,67 @@
+# Sitemap-Eintraege, die keine Hugo-Seiten sind (PDFs, /agb).
+# priority/changefreq/lastmod uebernommen aus der alten sitemap/main.xml.
+urls:
+  - loc: "/agb"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2018-11-01"
+  - loc: "/downloads/InnovationspreisIT2015-ionasServerSB.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2015-06-18"
+  - loc: "/downloads/ionas-unternehmensflyer.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2015-06-18"
+  - loc: "/static/presse/1508_Lange_Nacht_der_Startups.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1508_PM_ionas_Start.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1508_Presseagentur_GAcoml.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1509_private_cloud_bitkom.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1510_Reibungslos_zusammen_arbeiten.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1511_Chiptest_Servicesieger.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1512_Odoo_PubMedien.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1512_Odoo_TechMedien.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1512_Weihnachtsangebot.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1601_ionas_expandiert_nach_Italien.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1601_ionas_sagt_danke.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1602_Update_3.1_Exchange_Alternative.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-04"
+  - loc: "/static/presse/1602_ionas-Server_CeBIT_2016.pdf"
+    priority: "0.6"
+    changefreq: monthly
+    lastmod: "2016-02-08"

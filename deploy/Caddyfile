@@ -1,0 +1,70 @@
+# ionas.com - statisch aus Hugo, /wissen weiterhin WordPress.
+#
+# Deploy:  hugo --gc  &&  rsync -a --delete public/ server:/var/www/ionas/
+# Pruefen: caddy validate --config /etc/caddy/Caddyfile
+
+# Die Seite lief bisher ohne Host-Weiterleitung auf ionas.com UND
+# www.ionas.com. Alle canonical-Tags zeigen auf www, deshalb hier eine
+# echte 301 auf den kanonischen Host.
+ionas.com {
+	redir https://www.ionas.com{uri} permanent
+}
+
+www.ionas.com {
+	root * /var/www/ionas
+	encode zstd gzip
+
+	# --- WordPress bleibt, wo es ist ---------------------------------
+	# Alles unter /wissen geht unveraendert an das bestehende WordPress.
+	# Adresse an die eigene Installation anpassen.
+	handle /wissen* {
+		reverse_proxy 127.0.0.1:8080
+	}
+
+	# --- /agb liefert die AGB als PDF -------------------------------
+	# Das war bisher eine Rewrite-Regel im nginx-vhost (und lieferte das
+	# PDF faelschlich als text/html aus). Die URL steht in der Sitemap und
+	# im Footer jeder Seite, muss also erhalten bleiben.
+	handle /agb {
+		header Content-Type application/pdf
+		rewrite * /downloads/AGB-ionas.pdf
+		file_server
+	}
+
+	# --- Weiterleitungen --------------------------------------------
+	# In der Datenschutzerklaerung ist die URL mit grossem D abgedruckt.
+	redir /Datenschutz /datenschutz permanent
+
+	# ASCII-Schreibweisen der Umlaut-Landingpages. Hugo legt dafuer
+	# zusaetzlich meta-refresh-Seiten ab; diese 301 ist das Saubere und
+	# greift zuerst.
+	redir /pc-hilfe/duesseldorf /pc-hilfe/düsseldorf permanent
+	redir /pc-hilfe/koeln /pc-hilfe/köln permanent
+	redir /pc-hilfe/luebeck /pc-hilfe/lübeck permanent
+	redir /pc-hilfe/moenchengladbach /pc-hilfe/mönchengladbach permanent
+	redir /pc-hilfe/muelheim /pc-hilfe/mülheim permanent
+	redir /pc-hilfe/muenchen /pc-hilfe/münchen permanent
+	redir /pc-hilfe/muenster /pc-hilfe/münster permanent
+	redir /pc-hilfe/nuernberg /pc-hilfe/nürnberg permanent
+	redir /pc-hilfe/osnabrueck /pc-hilfe/osnabrück permanent
+	redir /pc-hilfe/saarbruecken /pc-hilfe/saarbrücken permanent
+	redir /rescue-stick /usb-stick permanent
+
+	# --- statische Auslieferung -------------------------------------
+	# try_files bedient /dienstleistung und /dienstleistung/ gleich,
+	# ohne Weiterleitung - genau wie bisher.
+	handle {
+		try_files {path} {path}/index.html
+		file_server
+	}
+
+	handle_errors {
+		rewrite * /404.html
+		file_server
+	}
+
+	# Lange Cache-Zeiten fuer Assets, keine fuer HTML.
+	@assets path /static/* /images/* /ionas-neu/* /senderlogos/*
+	header @assets Cache-Control "public, max-age=2592000"
+	header /*.html Cache-Control "public, max-age=300"
+}

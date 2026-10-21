@@ -1,0 +1,4 @@
+# See http://www.robotstxt.org/
+User-agent: *
+Disallow: 
+Sitemap: https://www.ionas.com/sitemap.xml

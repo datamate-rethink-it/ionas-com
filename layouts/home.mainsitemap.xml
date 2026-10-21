@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="//www.ionas.com/sitemap/sitemap_style.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{{- range $p := sort site.Pages "Params.sitemap_loc" }}{{ with $p.Params.sitemap_loc }}
+ <url>
+  <loc>https://www.ionas.com{{ . }}</loc>
+  <priority>{{ $p.Params.sitemap_priority | default "0.5" }}</priority>
+  <changefreq>{{ $p.Params.sitemap_changefreq | default "monthly" }}</changefreq>
+{{- with $p.Params.sitemap_lastmod }}
+  <lastmod>{{ . }}</lastmod>
+{{- end }}
+ </url>
+{{- end }}{{ end }}
+{{- range hugo.Data.sitemap_extra.urls }}
+ <url>
+  <loc>https://www.ionas.com{{ .loc }}</loc>
+  <priority>{{ .priority }}</priority>
+  <changefreq>{{ .changefreq }}</changefreq>
+{{- with .lastmod }}
+  <lastmod>{{ . }}</lastmod>
+{{- end }}
+ </url>
+{{- end }}
+</urlset>

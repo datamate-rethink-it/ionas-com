@@ -1,0 +1,232 @@
+
+<section class="content-10 pc-hilfe">
+    <div class="container">
+
+        <a href="/"><i class="fa fa-home"></i></a> &nbsp; / &nbsp; <a href="/pc-hilfe">PC-Hilfe</a>
+        {{ if in (slice "Reinickendorf" "Charlottenburg" "Pankow" "Prenzlauer Berg" "Steglitz" "Tempelhof") .Params.stadt }}&nbsp; / &nbsp; <a href="/pc-hilfe/berlin">Berlin</a>{{ end }}{{ if ne .Params.canonical "pc-hilfe/" }}&nbsp; / &nbsp; {{ printf `<a href="/%s">%s</a>` .Params.canonical .Params.stadt | safeHTML }}{{ end }}
+	    <h1>PC-Hilfe {{ .Params.stadt }}</h1>
+
+		<div class="row">
+	        <div class="col-sm-7">
+	            <p>Warten Sie nicht länger auf Hilfe, sondern rufen Sie uns jetzt unverbindlich an. Wir beraten und helfen an 365 Tagen im Jahr per Telefon und Fernwartung.</p>
+
+                <!--<p></p>
+                Berlin - Berlin - pc-hilfe/berlin
+                -->
+
+	            <div class="row">
+	                <div class="col-sm-3">
+	                    <h3>1. Anrufen</h3>
+	                    <p>Sie werden sofort mit einem Experten von ionas verbunden.</p>
+	                </div>
+	                <div class="col-sm-5">
+	                    <h3>2. TeamViewer herunterladen</h3>
+	                    <p>Mit dem Fernwartungstool von unserer Webseite kann Ihr Online Assistent eine Verbindung mit Ihrem PC aufbauen.</p>
+	                </div>
+	                <div class="col-sm-4">
+	                    <h3>3. Hilfe bekommen</h3>
+	                    <p>Verfolgen Sie an Ihrem Monitor, wie unsere Computerexperten Ihr Problem lösen. Es ist als würden wir neben Ihnen sitzen.</p>
+	                </div>
+	            </div>
+	            
+	            <div class="row">
+	                <div class="col-sm-8" style='margin-bottom: 30px;'>
+	                    <h2 style='color: #be1e2d;' class='mtop-30'>Testen Sie uns jetzt!</h2>
+	                    <p>Unsere Mitarbeiter stehen jetzt sofort unter der folgenden Nummer für Sie bereit!<br/><span style='font-size: 2em;'><i class="fa fa-phone" ></i> +49 (0)6131 327070</span></p>
+	                </div>
+	            </div>
+	        </div>
+	        <div class="col-sm-5">
+            	<iframe width="100%" height="300" src="https://www.youtube.com/embed/5thSDTYpTzc" allowfullscreen></iframe>
+            </div>
+		</div>
+
+		<hr/>
+
+		<div class="row">
+            <div class="col-sm-7"> 
+                {{ .Params.text1 | safeHTML }}            </div>
+            <div class="col-sm-4 col-sm-offset-1 coloredBackground2">
+            	<h2 class='withborder mtop-10'>Was beinhaltet die PC-Hilfe {{ .Params.stadt }}?</h2>
+            	<table class='price'>
+            		<tr><td><i class="fa fa-check-circle "></i> Informieren</td><td>kostenlos</td></tr>
+            		<tr><td><i class="fa fa-check-circle "></i> Problembeschreibung</td><td>kostenlos</td></tr>
+            		<tr><td><i class="fa fa-check-circle "></i> Beratungsminute</td><td>€ 1,35</td></tr>
+            		<tr><td><i class="fa fa-check-circle "></i> monatl. Grundgebühr</td><td>€ 10,00</td></tr>
+            		<tr><td colspan="2"><i class="fa fa-check-circle "></i> inkl. <a href='/inspektion'>Quartalsinspektion</a></td></tr>
+            		<tr><td colspan="2"><i class="fa fa-check-circle "></i> inkl. Jahreslizenz für Update-Checker <a href='/wissen/ninite-bequem-alle-wichtigen-anwendungsprogramme-aktuell-halten/'>Ninite</a></td></tr>
+            		<tr><td colspan="2"><i class="fa fa-check-circle "></i> beliebige Anzahl von Mitbenutzern</td></tr>
+            		<tr><td colspan="2"><i class="fa fa-check-circle "></i> monatliche Rechnungsstellung</td></tr>
+            		<tr><td colspan="2"><i class="fa fa-check-circle "></i> jederzeit kündbar</td></tr>
+            	</table>
+            </div>
+        </div>
+
+        <hr/>
+
+        <div class="row">
+                        <div class="col-sm-12">
+        		{{ .Params.text2 | safeHTML }}        	</div>
+        </div>
+
+        {{ if eq .Params.stadt "Berlin" }}            <div class="row">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1>Stadtbezirke Berlin</h1>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <ul class='liste_neu2'>
+                        <li><a href='/pc-hilfe/charlottenburg'>PC Hilfe Charlottenburg</a></li>
+                        <li><a href='/pc-hilfe/pankow'>PC Hilfe Pankow</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                    <ul class='liste_neu2'>
+                        <li><a href='/pc-hilfe/prenzlauer_berg'>PC Hilfe Prenzlauer Berg</a></li>
+                        <li><a href='/pc-hilfe/reinickendorf'>PC Hilfe Reinickendorf</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                    <ul class='liste_neu2'>
+                        <li><a href='/pc-hilfe/steglitz'>PC Hilfe Steglitz</a></li>
+                        <li><a href='/pc-hilfe/tempelhof'>PC Hilfe Tempelhof</a></li>
+                    </ul>
+                </div>
+            </div>
+        {{ end }}    </div>
+</section>
+
+{{ if eq .Params.stadt "" }}<section class="content-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>PC Hilfe im gesamten deutsprachigen Raum</h1>
+            </div>
+        </div>
+                    
+        <div class="row">
+            <div class="col-sm-3">
+            	<ul class='liste_neu2'>
+                    <li><a href="/pc-hilfe/aachen">Aachen</a></li>
+                    <li><a href="/pc-hilfe/augsburg">Augsburg</a></li>
+					<li><a href="/pc-hilfe/berlin">Berlin</a></li>
+                    <li><a href="/pc-hilfe/bielefeld">Bielefeld</a></li>
+                    <li><a href="/pc-hilfe/bochum">Bochum</a></li>
+                    <li><a href="/pc-hilfe/bonn">Bonn</a></li>
+                    <li><a href="/pc-hilfe/braunschweig">Braunschweig</a></li>
+                    <li><a href="/pc-hilfe/bremen">Bremen</a></li>
+                    <li><a href="/pc-hilfe/chemnitz">Chemnitz</a></li>
+                    <li><a href="/pc-hilfe/dortmund">Dortmund</a></li>
+                    <li><a href="/pc-hilfe/dresden">Dresden</a></li>
+                    <li><a href="/pc-hilfe/duisburg">Duisburg</a></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-3">
+            	<ul class='liste_neu2'>
+                    <li><a href="/pc-hilfe/düsseldorf">Düsseldorf</a></li>
+                    <li><a href="/pc-hilfe/erfurt">Erfurt</a></li>
+                    <li><a href="/pc-hilfe/essen">Essen</a></li>
+                    <li><a href="/pc-hilfe/frankfurt">Frankfurt</a></li>
+                    <li><a href="/pc-hilfe/freiburg">Freiburg im Breisgau</a></li>
+                    <li><a href="/pc-hilfe/gelsenkirchen">Gelsenkirchen</a></li>
+                    <li><a href="/pc-hilfe/hagen">Hagen</a></li>
+                    <li><a href="/pc-hilfe/halle">Halle</a></li>
+                    <li><a href="/pc-hilfe/hamburg">Hamburg</a></li>
+                    <li><a href="/pc-hilfe/hamm">Hamm</a></li>
+                    <li><a href="/pc-hilfe/hannover">Hannover</a></li>
+                    <li><a href="/pc-hilfe/kassel">Kassel</a></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-3">
+            	<ul class='liste_neu2'>
+                    <li><a href="/pc-hilfe/kiel">Kiel</a></li>
+					<li><a href="/pc-hilfe/krefeld">Krefeld</a></li>
+                    <li><a href="/pc-hilfe/karlsruhe">Karlsruhe</a></li>
+                    <li><a href="/pc-hilfe/köln">Köln</a></li>
+                    <li><a href="/pc-hilfe/leipzig">Leipzig</a></li>
+                    <li><a href="/pc-hilfe/leverkusen">Leverkusen</a></li>
+                    <li><a href="/pc-hilfe/ludwigshafen">Ludwigshafen</a></li>
+                    <li><a href="/pc-hilfe/lübeck">Lübeck</a></li>
+                    <li><a href="/pc-hilfe/magdeburg">Magdeburg</a></li>
+                    <li><a href="/pc-hilfe/mainz">Mainz</a></li>
+                    <li><a href="/pc-hilfe/mannheim">Mannheim</a></li>
+                    <li><a href="/pc-hilfe/mönchengladbach">Mönchengladbach</a></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-3">
+            	<ul class='liste_neu2'>
+                    <li><a href="/pc-hilfe/mülheim">Mülheim</a></li>
+                    <li><a href="/pc-hilfe/münchen">München</a></li>
+                    <li><a href="/pc-hilfe/münster">Münster</a></li>
+					<li><a href="/pc-hilfe/nürnberg">Nürnberg</a></li>
+                    <li><a href="/pc-hilfe/oberhausen">Oberhausen</a></li>
+                    <li><a href="/pc-hilfe/oldenburg">Oldenburg</a></li>
+                    <li><a href="/pc-hilfe/osnabrueck">Osnabrück</a></li>
+                    <li><a href="/pc-hilfe/rostock">Rostock</a></li>
+                    <li><a href="/pc-hilfe/saarbrücken">Saarbrücken</a></li>
+                    <li><a href="/pc-hilfe/stuttgart">Stuttgart</a></li>
+                    <li><a href="/pc-hilfe/wiesbaden">Wiesbaden</a></li>
+                    <li><a href="/pc-hilfe/wuppertal">Wuppertal</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+{{ end }}
+
+
+<section class="content-10">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Die Dienstleistungen von ionas im Überblick</h2>
+            </div>
+        </div>
+                    
+        <div class="row">
+            <div class="col-sm-2">
+                <img src='/ionas-neu/assistenz.jpg' alt='Computerhilfe und Assistenz durch ionas' style='float: left;'>
+            </div>
+            <div class="col-sm-4 overview">
+                <h5>Computerhilfe und Assistenz</h5>
+                <p>Wir bieten fallbezogene Hilfe bei Fragen zum Computer oder bei Problemen in der Computernutzung über das Telefon und per Computer-Fernwartung. Wir sind 365 Tage im Jahr von 8 - 20 Uhr für Sie erreichbar. Ein Anruf genügt.</p>
+                <p><a href='/assistenz'><i class="fa fa-angle-double-right"></i> Erfahren Sie mehr über die <u>Computerhilfe und Assistenz</u>.</a></p>
+            </div>
+
+	        <div class="col-sm-2">
+	            <img src='/ionas-neu/inspektion.jpg' alt='Inspektion und Vorsorge durch Ihren Online Assistenten' style='float: left;'>
+	        </div>
+	        <div class="col-sm-4 overview">
+	            <h5>Inspektion und Vorsorge</h5>
+	            <p>Unseren Kunden bieten wir eine regelmäßige, systematische Computer-Wartung zur Problemvorbeugung und als Abwehrmaßnahme gegen Cyber-Kriminalität. Verlassen Sie sich nicht auf irgendwelche Software sondern lassen Sie Ihr System vom Experten prüfen.</p>
+	            <p><a href='/inspektion'><i class="fa fa-angle-double-right"></i> Weiterführende Informationen zur <u>Inspektion</u> finden Sie hier.</a></p>
+	        </div>
+	    </div>
+
+    	<hr/>
+
+        <div class="row">
+            <div class="col-sm-2">
+                <img src='/ionas-neu/datasync.jpg' alt='Datensicherung- und Synchronisationslösungen von ionas' style='float: left;'>
+            </div>
+            <div class="col-sm-4 overview">
+                <h5>Datensicherung und -synchronisation</h5>
+                <p>Stellen Sie sich vor, dass ein Virus all Ihre gespeicherten Urlaubsfotos und sämtliche Dokumente zerstört. Haben Sie ein Backup von allen Daten und sind Sie ausreichend geschützt? Wenn nicht, helfen wir gerne Ihre private Backupstrategie zu entwickeln. </p>
+                <p><a href='/datensicherung'><i class="fa fa-angle-double-right"></i> Erfahren Sie mehr über die <u>Backupstrategien</u> unserer Experten.</a></p>
+            </div>
+
+            <div class="col-sm-2">
+                <img src='/ionas-neu/ionas-usb.jpg' alt='ionas-Rescue Stick' style='float: left;'>
+            </div>
+            <div class="col-sm-4 overview">
+                <h5>ionas-Rescue Stick</h5>
+                <p>Wollen Sie Windows neu installieren und Ihnen fehlt die passende Installations-CD? Haben Sie einen Virus und mehrere Virenscans durchführen? Möchten Sie Daten von Ihrer Festplatte retten? Der ionas-Rescue Stick hilft Ihnen in allen Fällen, da er alle Windows Installationsmedien und mehrere Live-Rettungssysteme enthält.</p>
+                <p><a href='/rescue-stick'><i class="fa fa-angle-double-right"></i> Hier geht es zur Auflistung sämtlicher enthaltener <u>Installationsmedien</u>.</a></p>
+            </div>
+        </div>
+	</div>
+</section>
