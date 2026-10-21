@@ -17,10 +17,16 @@ disablePathToLower = true
 disableHugoGeneratorInject = true  # kein <meta name="generator">
 enableRobotsTXT = false  # robots.txt kommt unveraendert aus webroot/
 
-# Alles, was unveraendert unter / ausgeliefert wird, liegt in webroot/.
+# Alles, was unveraendert unter / ausgeliefert wird.
 # (Hugos Standardname waere static/ - das waere hier verwirrend, weil die
 # Seite selbst einen Pfad /static/ fuer CSS und JS benutzt.)
-staticDir = 'webroot'
+#
+#   webroot/        der uebernommene Dateibestand. Wird von
+#                   _build/gen_static.py neu erzeugt - nichts hineinlegen,
+#                   was man behalten will.
+#   webroot-eigen/  selbst geschriebene Dateien (lightbox.js, suche.js),
+#                   wird nie neu erzeugt. Hugo mischt beide Verzeichnisse.
+staticDir = ['webroot', 'webroot-eigen']
 
 [outputs]
 home = ['html', 'mainsitemap']

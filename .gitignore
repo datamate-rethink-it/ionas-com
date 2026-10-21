@@ -2,3 +2,5 @@
 /resources/
 /.hugo_build.lock
 _build/verify-diff.txt
+_build/verify-wissen.txt
+_build/__pycache__/

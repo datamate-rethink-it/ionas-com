@@ -89,8 +89,12 @@ layouts/                    1095 Zeilen – das gesamte Seitengerüst
 data/sitemap_extra.yaml     Sitemap-Einträge, die keine Seiten sind (PDFs, /agb)
 data/kommentare.yaml        280 übernommene Kommentare, nach Artikel gruppiert
 data/tagnamen.yaml          Anzeigenamen der 333 benutzten Schlagwörter
-webroot/                    124 MB, wird unverändert unter / ausgeliefert
+webroot/                    124 MB übernommener Dateibestand, unter /
   wissen/wp-content/uploads/    die Artikelbilder unter ihren alten Adressen
+webroot-eigen/              selbst geschriebene Dateien, ebenfalls unter /
+  static/js/lightbox.js         Bildvergrößerung (ersetzt simple-lightbox)
+  static/js/suche.js            bindet Pagefind auf /wissen/suche/ ein
+  static/css/lightbox.css
 Dockerfile                  Caddy + die gebaute Seite, zwei Schichten
 deploy/Caddyfile.container  die Regeln im Image
 deploy/nginx-vhost.conf     der vhost für das native nginx davor
@@ -101,8 +105,13 @@ _build/                     Einmal-Migrationswerkzeug, nach dem Umstieg löschba
 
 `webroot/` heißt absichtlich nicht `static/` (Hugos Standard), weil die Seite
 selbst einen Pfad `/static/` für CSS und JS benutzt – zwei Bedeutungen von
-„static" im selben Projekt wären verwirrend. Gesetzt über `staticDir` in
-`hugo.toml`.
+„static" im selben Projekt wären verwirrend.
+
+Es sind zwei Verzeichnisse, weil `_build/gen_static.py` `webroot/` jedes Mal
+neu aus dem alten Quellbaum erzeugt. Was dort hineingelegt wird, ist beim
+nächsten Lauf weg. Selbst geschriebene Dateien gehören deshalb nach
+`webroot-eigen/`; Hugo mischt beide über `staticDir = ['webroot',
+'webroot-eigen']`.
 
 ## Bauen und ausrollen
 
@@ -478,14 +487,25 @@ geprüft. Die Oberfläche selbst wurde nicht im Browser bedient; hier stand
 keine Browser-Verbindung zur Verfügung. Nach dem Deploy einmal
 `/wissen/suche/` öffnen und einen Begriff eintippen.
 
-## Migration nachvollziehen oder wiederholen
+## Was in `_build/` liegt und warum
 
-`_build/` enthält das vollständige Werkzeug. Es ist nicht nötig, um die Seite
-zu bauen – nur um die Umwandlung zu wiederholen oder zu prüfen:
+`_build/` ist Migrationswerkzeug – aber **nicht** vollständig wegwerfbar,
+denn zwei Teile daraus werden dauerhaft gebraucht:
 
-Der Referenz-Snapshot des alten PHP-Stands liegt mit im Repo
-(`_build/reference/`, 118 Seiten, 2,9 MB). `verify.py` braucht deshalb weder
-PHP noch den Tarball:
+| | |
+|---|---|
+| `verify.py`, `verify_wissen.py`, `linkcheck.py` | Die drei Prüfungen. Laufen bei **jedem Push** in GitHub Actions und sind das Sicherheitsnetz gegen stille Regressionen. |
+| `reference/`, `reference-wissen/` (12 MB) | Die 270 gerenderten Seiten des alten Stands, gegen die geprüft wird. Ohne sie laufen `verify.py` und `verify_wissen.py` nicht. |
+| `wp/` (9,6 MB) | Beiträge, Kommentare, Schlagwörter und Teaser als JSON. Sobald die WordPress-Datenbank abgeschaltet ist, ist das die **letzte maschinenlesbare Kopie** dieser Daten. |
+| `gen_*.py`, `build.sh`, `tok.php`, `router-head.php` | Erzeugen `layouts/`, `content/`, `webroot/`, `data/` und `deploy/` aus dem alten Quellbaum. Nach dem Umstieg nur noch nötig, um die Umwandlung nachzuvollziehen. |
+| `nicht-ausliefern.txt` | Die Liste der verwaisten Dateien. Wird von `gen_static.py` und `gen_wissen.py` gelesen. |
+
+> **Achtung:** `build.sh` überschreibt `layouts/`, `content/`, `webroot/` und
+> `data/` aus dem alten Quellbaum. Es ist ein Einmalwerkzeug. Wer die Seite
+> pflegt, bearbeitet `content/` und `layouts/` direkt und ruft `build.sh`
+> nicht mehr auf.
+
+### Die Prüfungen laufen lassen
 
 ```bash
 python3 _build/verify.py          # PHP-Teil, Seite für Seite
@@ -497,30 +517,25 @@ python3 _build/linkcheck.py       # alle seiteninternen Verweise
 `/wissen/feed/`, die Weiterleitungen) und die zwölf Verweise, die schon vor
 der Migration ins Leere liefen. Es meldet nur, was **neu** kaputt ist.
 
-Die Umwandlung selbst wiederholen (braucht den entpackten Quellbaum):
+### Die Umwandlung wiederholen
+
+Braucht den entpackten alten Quellbaum:
 
 ```bash
 export IONAS_SRC=/pfad/zum/entpackten/website
-_build/build.sh      # erzeugt hugo.toml, layouts/, content/, webroot/, data/
+_build/build.sh
 hugo --gc
-python3 _build/verify.py
+python3 _build/verify.py && python3 _build/verify_wissen.py
 ```
 
-Ein Neulauf von `build.sh` erzeugt bit-identisch denselben Stand – geprüft
-über `git status` nach einem `rm -rf layouts content webroot data`.
+Ein Neulauf erzeugt bit-identisch denselben Stand – geprüft über
+`git status` nach einem `rm -rf layouts content webroot data`.
 
 Die Reihenfolge ist: `gen_layouts.py` (Gerüst aus dem Referenz-Render),
 `gen_tpl.py` (Städte- und Themen-Template aus der PHP-Quelle),
 `gen_content.py` (96 Seiten), `gen_static.py` (Assets + Sitemap),
 `gen_wissen.py` (150 Artikel, Kommentare, Schlagwörter, Archive),
-`gen_deploy.py` (Caddy/nginx).
-
-Die handgeschriebenen Templates des Wissensbereichs liegen als lesbare
-Dateien in `_build/templates/`, die Skripte in `_build/assets/`;
-`gen_wissen.py` kopiert sie nach `layouts/` bzw. `webroot/`. Die
-WordPress-Daten liegen als JSON in `_build/wp/` (Beiträge, Kommentare,
-Schlagwörter, Teaser) und die gerenderten Vergleichsseiten in
-`_build/reference-wissen/`.
+`gen_deploy.py` (Caddy, nginx, compose).
 
 `gen_tpl.py` lässt PHP selbst tokenisieren (`tok.php`), statt mit Regexen
 HTML von PHP zu trennen: in `pc-hilfe.php` überspannt ein `/* */`-Kommentar
@@ -529,12 +544,12 @@ PHP-Abschnitt ist dort einzeln auf sein Hugo-Pendant abgebildet; ein
 unbekannter Abschnitt bricht den Lauf ab, statt stillschweigend Inhalt zu
 verschlucken.
 
-Den Referenz-Snapshot neu erzeugen:
+Den Referenz-Snapshot des PHP-Teils neu erzeugen:
 
 ```bash
 cd /pfad/zum/entpackten/website && php -S 127.0.0.1:8899 index.php &
 grep -oP "case\s+'\K[^']+" index.php | sort -u | while read r; do
-  out="$IONAS_REF/${r#/}"; [ "$r" = startseite ] && out="$IONAS_REF"
+  out="_build/reference/${r#/}"; [ "$r" = startseite ] && out="_build/reference"
   mkdir -p "$out"
   curl -sG --data-urlencode "p=$r" http://127.0.0.1:8899/ > "$out/index.html"
 done
@@ -544,8 +559,6 @@ Eine Ausnahme: `/preise` zieht zwei Kundenstimmen per `SELECT` aus der
 MySQL-Tabelle `bewertungen` und ist die einzige Seite, die ohne Datenbank in
 einen Fatal Error läuft. Deren Referenz stammt deshalb von der Live-Seite;
 die beiden Kundenstimmen stehen jetzt als HTML in `content/preise.html`.
-
----
 
 ## Zum alten Quellbaum
 

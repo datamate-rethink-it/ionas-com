@@ -47,31 +47,6 @@ WP_CSS = [
 UPLOAD_SKIP = ('backwpup-0c97aa-logs', 'backwpup-0c97aa-temp',
                'nginx-helper', 'wp-statistics')
 
-# Handgeschriebene Templates und Skripte liegen als Dateien in _build/,
-# damit sie lesbar bleiben, und werden von hier aus installiert.
-TEMPLATES = {
-    'kopf-wissen.html':        'layouts/_partials/kopf-wissen.html',
-    'wissen-sidebar.html':     'layouts/_partials/wissen-sidebar.html',
-    'wissen-kommentare.html':  'layouts/_partials/wissen-kommentare.html',
-    'wissen-liste.html':       'layouts/_partials/wissen-liste.html',
-    'wissen-schema.html':      'layouts/_partials/wissen-schema.html',
-    'section-wissen.html':     'layouts/wissen/section.html',
-    'page-wissen.html':        'layouts/wissen/page.html',
-    'section-wissenfeed.xml':  'layouts/wissen/section.wissenfeed.xml',
-    'term.html':               'layouts/term.html',
-    'page-archiv.html':        'layouts/wissen-archiv/page.html',
-    'sitemap-post.xml':        'layouts/wissen/section.wissenpostsitemap.xml',
-    'sitemap-page.xml':        'layouts/wissen/section.wissenpagesitemap.xml',
-    'sitemap-index.xml':       'layouts/wissen/section.wissensitemapindex.xml',
-}
-
-ASSETS = {
-    'lightbox.js':  'webroot/static/js/lightbox.js',
-    'lightbox.css': 'webroot/static/css/lightbox.css',
-    'suche.js':     'webroot/static/js/suche.js',
-}
-
-
 def jload(name):
     with open(os.path.join(WP, name), encoding='utf-8') as fh:
         return json.load(fh)
@@ -341,23 +316,6 @@ def kopiere_assets(posts):
     return n, skip
 
 
-def installiere_dateien():
-    n = 0
-    for name, ziel in sorted(TEMPLATES.items()):
-        src = os.path.join(BLD, 'templates', name)
-        dst = os.path.join(PRJ, ziel)
-        os.makedirs(os.path.dirname(dst), exist_ok=True)
-        shutil.copy2(src, dst)
-        n += 1
-    for name, ziel in sorted(ASSETS.items()):
-        src = os.path.join(BLD, 'assets', name)
-        dst = os.path.join(PRJ, ziel)
-        os.makedirs(os.path.dirname(dst), exist_ok=True)
-        shutil.copy2(src, dst)
-        n += 1
-    return n
-
-
 def main():
     posts = jload('posts.json')
     comments = jload('comments.json')
@@ -383,7 +341,6 @@ def main():
     n_tags, n_leer = schreibe_tags(tags)
     n_monate = schreibe_archiv(posts)
     n_assets, n_skip = kopiere_assets(posts)
-    n_dateien = installiere_dateien()
 
     print('Wissensbereich erzeugt:')
     print('  %3d Artikel in content/wissen/' % len(posts))
@@ -394,7 +351,6 @@ def main():
     print('  %3d Monatsarchive in content/wissen-archiv/' % n_monate)
     print('  %3d Dateien nach webroot/ (%d ungenutzte Bildgroessen uebersprungen)'
           % (n_assets, n_skip))
-    print('  %3d Templates und Skripte installiert' % n_dateien)
 
 
 if __name__ == '__main__':
