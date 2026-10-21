@@ -322,6 +322,22 @@ diese ältere API-Fassung nicht mit.
 `_build/verify.py` normalisiert die eine geänderte `<link>`-Zeile, damit der
 Byte-Vergleich den Rest der Seite weiter prüft.
 
+### Toter Code im Kopf entfernt
+
+Drei Zeilen standen wirkungslos in jeder Seite:
+
+| | |
+|---|---|
+| `rel="author"`/`rel="publisher"` auf `plus.google.com` | Google+ ist seit April 2019 abgeschaltet |
+| `alexaVerifyID` | Alexa ist seit Mai 2022 eingestellt |
+
+Dazu eine Korrektur: `og:image` zeigte über **http** auf
+`/images/ionas-logo-facebook.jpg` – eine Datei, die es nie gab und die auch
+auf der alten Seite 404 lieferte. Jede Freigabe bei Facebook, LinkedIn oder
+WhatsApp blieb deshalb ohne Vorschaubild. Jetzt über https auf
+`/static/presse/ionas_logo_freigestellt.png`, das einzige eigene Bild, das
+Facebooks Mindestmaß erfüllt (1000×479).
+
 ### Abweichungen im Erscheinungsbild
 
 - Die **Schriftgrößen der Schlagwortwolke** folgen der dokumentierten
@@ -415,9 +431,10 @@ Zusätzlich an totem Code entfernt:
 - `demo/`, `storage/`, `phpmailer/`, `cronjob/`, `external/`, die
   `*.php`-Generatoren in `sitemap/`
 
-Zusätzlich fallen **419 Dateien mit 68 MB** weg, auf die keine einzige
+Zusätzlich fallen **406 Dateien mit 67 MB** weg, auf die keine einzige
 ausgelieferte Seite verweist – weder per `src`/`href`/`srcset` noch über
-`url()` in einem Stylesheet noch aus einer Sitemap:
+`url()` in einem Stylesheet, `content` eines `<meta>` oder aus einer
+Sitemap:
 
 | | |
 |---|---|
@@ -435,6 +452,13 @@ Eine pauschale Regel wäre hier die falsche Wahl gewesen: unter
 `static/js/parallax/` liegen 20 MB Demobilder der Library – aber eines davon
 bindet die Startseite tatsächlich ein. Deshalb entscheidet der tatsächliche
 Verweis, nicht der Ordner.
+
+Der Scanner las anfangs nur `src`, `href`, `srcset` und `url()` – und
+übersah damit `<meta property="og:image">`. 13 Bilder, die nur als
+Vorschaubild für Facebook und Co. verlinkt sind, flogen dadurch raus; in der
+ersten ausgerollten Fassung (`2026-10-21`) liefern sie 404, auf der alten
+Seite taten sie es nicht. `linkcheck.py` und `verwaiste_assets.py` lesen
+jetzt auch Bildangaben aus `<meta>`.
 
 Damit sinkt das Auszuliefernde von rund 240 MB auf **124 MB**, davon
 105 MB Artikelbilder.
@@ -514,13 +538,15 @@ nur (keine Cookies vor dem Abspielen, aber die Anfrage bleibt). Sauber wäre
 ein Vorschaubild, das erst auf Klick das `<iframe>` nachlädt – das ist aber
 ein Eingriff in 80 Seiten und keine Nebenbei-Änderung.
 
-Die `rel="author"`/`rel="publisher"`-Verweise auf `plus.google.com` lösen
-keine Anfrage aus (Browser holen solche `<link>`-Elemente nicht), sind aber
-seit der Abschaltung von Google+ 2019 totes Markup.
+Die `rel="author"`/`rel="publisher"`-Verweise auf `plus.google.com` lösten
+keine Anfrage aus (Browser holen solche `<link>`-Elemente nicht) und sind
+inzwischen entfernt.
 
-**Toten Code im `<head>` aufräumen.** `baseof.html` enthält noch
-`rel="author"`/`rel="publisher"` auf `plus.google.com` (Google+ ist seit 2019
-abgeschaltet) und eine `alexaVerifyID` (Alexa seit 2022 eingestellt).
+**`google-site-verification` und `msvalidate.01` stehen noch im Kopf.**
+Bewusst: daran kann die Bestätigung der Property in der Search Console bzw.
+bei Bing hängen, und ein Entfernen würde erst Monate später auffallen. Wer
+prüft, dass beide Properties inzwischen per DNS oder Datei bestätigt sind,
+kann die zwei Zeilen streichen.
 
 **Bilder neu kodieren.** `webroot/` ist mit 124 MB weiter vom Bildbestand
 der Artikel bestimmt. Ungenutzte Zwischengrößen und verwaiste Dateien sind
