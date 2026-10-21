@@ -89,7 +89,7 @@ layouts/                    1095 Zeilen – das gesamte Seitengerüst
 data/sitemap_extra.yaml     Sitemap-Einträge, die keine Seiten sind (PDFs, /agb)
 data/kommentare.yaml        280 übernommene Kommentare, nach Artikel gruppiert
 data/tagnamen.yaml          Anzeigenamen der 333 benutzten Schlagwörter
-webroot/                    169 MB, wird unverändert unter / ausgeliefert
+webroot/                    124 MB, wird unverändert unter / ausgeliefert
   wissen/wp-content/uploads/    die Artikelbilder unter ihren alten Adressen
 deploy/Caddyfile            fertige Caddy-Konfiguration
 deploy/nginx-ionas.conf     Alternative für den bestehenden nginx
@@ -278,7 +278,29 @@ Zusätzlich an totem Code entfernt:
 - `demo/`, `storage/`, `phpmailer/`, `cronjob/`, `external/`, die
   `*.php`-Generatoren in `sitemap/`
 
-Damit sinkt das Auszuliefernde von rund 100 MB auf **41 MB**.
+Zusätzlich fallen **419 Dateien mit 68 MB** weg, auf die keine einzige
+ausgelieferte Seite verweist – weder per `src`/`href`/`srcset` noch über
+`url()` in einem Stylesheet noch aus einer Sitemap:
+
+| | |
+|---|---|
+| 179 | nie in einem Artikel verwendete Uploads |
+| 176 | Bilder unter `/static/img`, darunter 3,2 MB GIMP-Quelldateien (`.xcf`) |
+| 15 + 7 | Skripte und Stylesheets, teils mit Namen wie `own_old.css`, `style_veraltet_alt.css` |
+| 19 + 10 + 10 | ungenutzte Dateien unter `/images`, `/ionas-neu`, `/senderlogos` |
+| 3 | PDFs, darunter eine ältere AGB-Fassung |
+
+Die Liste steht in `_build/nicht-ausliefern.txt` und wird von
+`_build/verwaiste_assets.py --schreiben` gegen ein fertig gebautes `public/`
+erzeugt; `gen_static.py` und `gen_wissen.py` lesen sie.
+
+Eine pauschale Regel wäre hier die falsche Wahl gewesen: unter
+`static/js/parallax/` liegen 20 MB Demobilder der Library – aber eines davon
+bindet die Startseite tatsächlich ein. Deshalb entscheidet der tatsächliche
+Verweis, nicht der Ordner.
+
+Damit sinkt das Auszuliefernde von rund 240 MB auf **124 MB**, davon
+105 MB Artikelbilder.
 
 ## Weiterleitungen (in `deploy/Caddyfile`)
 
@@ -351,12 +373,12 @@ Byte-Vergleich oben sauber bleibt.
 `rel="author"`/`rel="publisher"` auf `plus.google.com` (Google+ ist seit 2019
 abgeschaltet) und eine `alexaVerifyID` (Alexa seit 2022 eingestellt).
 
-**Bilder verkleinern.** `webroot/` ist mit 169 MB vom Bildbestand der
-Artikel bestimmt; einzelne Originale sind mehrere Megabyte groß und werden
-im Artikel auf 450 px angezeigt. 823 ungenutzte Zwischengrößen sind schon
-weggefallen. Eine Runde `cwebp` oder ein Resize der Originale würde den
-Rest deutlich drücken – ändert aber ausgelieferte Dateien und wurde deshalb
-nicht nebenbei gemacht.
+**Bilder neu kodieren.** `webroot/` ist mit 124 MB weiter vom Bildbestand
+der Artikel bestimmt. Ungenutzte Zwischengrößen und verwaiste Dateien sind
+weg; was bleibt, sind benutzte Bilder, von denen einige mehrere Megabyte
+groß sind und im Artikel auf 450 px angezeigt werden. Eine Runde `cwebp`
+oder ein Resize würde das deutlich drücken – ändert aber ausgelieferte
+Dateien und ist deshalb kein Aufräumen mehr, sondern eine Entscheidung.
 
 **Die Suchoberfläche einmal anklicken.** Der Pagefind-Index baut (150
 Seiten, 16 027 Wörter) und `pagefind-ui.js` setzt `window.PagefindUI` mit
@@ -375,8 +397,14 @@ Der Referenz-Snapshot des alten PHP-Stands liegt mit im Repo
 PHP noch den Tarball:
 
 ```bash
-python3 _build/verify.py          # vergleicht public/ Seite für Seite
+python3 _build/verify.py          # PHP-Teil, Seite für Seite
+python3 _build/verify_wissen.py   # Wissensartikel
+python3 _build/linkcheck.py       # alle seiteninternen Verweise
 ```
+
+`linkcheck.py` kennt die Adressen, die erst der Webserver auflöst (`/agb`,
+`/wissen/feed/`, die Weiterleitungen) und die zwölf Verweise, die schon vor
+der Migration ins Leere liefen. Es meldet nur, was **neu** kaputt ist.
 
 Die Umwandlung selbst wiederholen (braucht den entpackten Quellbaum):
 

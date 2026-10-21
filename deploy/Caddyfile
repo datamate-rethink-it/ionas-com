@@ -46,6 +46,11 @@ www.ionas.com {
 	redir /datensicherung-mit-windows-bordmitteln/ /wissen/datensicherung-mit-windows-bordmitteln/ permanent
 	redir /malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ /wissen/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ permanent
 
+	# Ein Artikel verlinkt einen anderen relativ ohne fuehrenden Slash, der
+	# Verweis landet dadurch unterhalb der eigenen Adresse. Auch im
+	# WordPress eine 404.
+	redir /wissen/wlan-passwort-auslesen-so-einfach-gehts/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/ /wissen/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/ permanent
+
 	# ASCII-Schreibweisen der Umlaut-Landingpages. Hugo legt dafuer
 	# zusaetzlich meta-refresh-Seiten ab; diese 301 ist das Saubere und
 	# greift zuerst.

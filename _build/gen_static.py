@@ -3,7 +3,7 @@
 import os, re, sys, json, shutil, glob
 import xml.etree.ElementTree as ET
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from gen_common import *
+from gen_common import *  # noqa: F401,F403
 
 WEBROOT = os.path.join(PRJ, 'webroot')
 
@@ -12,23 +12,36 @@ COPY_DIRS = ['images', 'ionas-neu', 'static', 'downloads', 'senderlogos']
 COPY_FILES = ['robots.txt', 'ads.txt', 'themen/windows_support.png',
               'sitemap/sitemap_style.xsl']
 
-# Nachweislich toter Ballast (von keiner ausgelieferten Seite und keinem
-# eingebundenen Stylesheet referenziert):
-#   staedte/    15 MB Stadtfotos - nur aus auskommentiertem Code verlinkt
-#   static/js/parallax/*.jpg|png|gif  20 MB Demobilder der Parallax-Library
-#   demo/ storage/ phpmailer/ cronjob/ external/ sitemap/*.php
+# Nie Webinhalt, unabhaengig von Verweisen: PHP-Quellen und die beiden
+# Bibliotheken, die nur die alten Formulare gebraucht haben.
+# (staedte/ mit 15 MB Stadtfotos faellt schon weg, weil es nicht in
+# COPY_DIRS steht - der Code, der sie einbindet, ist auskommentiert.)
+#
+# Alles weitere steuert _build/nicht-ausliefern.txt: Dateien, auf die keine
+# ausgelieferte Seite verweist. Eine pauschale Regel war hier zu grob -
+# unter static/js/parallax/ liegen 20 MB Demobilder der Library, aber eines
+# davon bindet die Startseite tatsaechlich ein.
 EXCLUDE_RE = re.compile(
-    r'^static/js/parallax/.*\.(jpg|jpeg|png|gif)$'
-    r'|^static/pdf-creation/'
+    r'^static/pdf-creation/'
     r'|^static/formsAndValidation/'
     r'|\.php$',
     re.I)
 
 
+# Die Presse-PDF liegt im Quellbaum mit Unterstrichen, /presse verlinkt
+# sie mit Leerzeichen - der Verweis laeuft deshalb seit immer in eine 404.
+# Hier wird sie unter dem verlinkten Namen ausgeliefert.
+UMBENENNEN = {
+    'static/presse/1510_Gewinner_ Mainzer_Wirtschaftspreis-2015.pdf':
+        'static/presse/1510_Gewinner Mainzer Wirtschaftspreis-2015.pdf',
+}
+
+
 def copy_assets():
     if os.path.isdir(WEBROOT):
         shutil.rmtree(WEBROOT)
-    n = skipped = 0
+    ohne = nicht_ausliefern()
+    n = skipped = verwaist = 0
     for d in COPY_DIRS:
         for root, _dirs, files in os.walk(os.path.join(SRC, d)):
             for f in files:
@@ -37,7 +50,10 @@ def copy_assets():
                 if EXCLUDE_RE.search(rel):
                     skipped += 1
                     continue
-                dst = os.path.join(WEBROOT, rel)
+                if rel in ohne:
+                    verwaist += 1
+                    continue
+                dst = os.path.join(WEBROOT, UMBENENNEN.get(rel, rel))
                 os.makedirs(os.path.dirname(dst), exist_ok=True)
                 shutil.copy2(full, dst)
                 n += 1
@@ -56,8 +72,9 @@ def copy_assets():
     n += 1
     size = sum(os.path.getsize(os.path.join(r, f))
                for r, _d, fs in os.walk(WEBROOT) for f in fs)
-    print('webroot/: %d Dateien, %.1f MB (%d Dateien als toter Ballast uebersprungen)'
-          % (n, size / 1e6, skipped))
+    print('webroot/: %d Dateien, %.1f MB' % (n, size / 1e6))
+    print('  %d Dateien als toter Ballast uebersprungen, %d ohne jeden Verweis'
+          % (skipped, verwaist))
 
 
 def sitemap_meta():

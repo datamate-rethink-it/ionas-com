@@ -20,7 +20,8 @@ import shutil
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from gen_common import BLD, PRJ, SRC, write, yaml_block  # noqa: E402
+from gen_common import (BLD, PRJ, SRC, nicht_ausliefern, write,  # noqa: E402
+                        yaml_block)
 
 WP = os.environ.get('IONAS_WP') or os.path.join(BLD, 'wp')
 REFW = os.environ.get('IONAS_REFW') or os.path.join(BLD, 'reference-wissen')
@@ -41,7 +42,6 @@ WP_CSS = [
     'wissen/wp-content/plugins/tablepress/css/default.min.css',
     # von default.min.css per @font-face eingebunden
     'wissen/wp-content/plugins/tablepress/css/tablepress.woff',
-    'wissen/wp-content/plugins/tablepress/css/tablepress.woff2',
 ]
 
 UPLOAD_SKIP = ('backwpup-0c97aa-logs', 'backwpup-0c97aa-temp',
@@ -312,6 +312,7 @@ def kopiere_assets(posts):
                 u.split('/wp-content/uploads/', 1)[1].split('?')[0]))
 
     variante = re.compile(r'-\d+x\d+\.(jpg|jpeg|png|gif|webp)$', re.I)
+    ohne = nicht_ausliefern()
     n = skip = 0
     for root, _dirs, files in os.walk(up_src):
         rel_dir = os.path.relpath(root, up_src)
@@ -322,6 +323,9 @@ def kopiere_assets(posts):
             # Originale behalten (koennen extern verlinkt sein), ungenutzte
             # Zwischengroessen nicht.
             if rel not in wanted and variante.search(rel):
+                skip += 1
+                continue
+            if 'wissen/wp-content/uploads/' + rel in ohne:
                 skip += 1
                 continue
             dst = os.path.join(WEBROOT, 'wissen/wp-content/uploads', rel)

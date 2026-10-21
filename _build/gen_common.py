@@ -51,3 +51,22 @@ def yaml_block(key, value, indent='  '):
     for ln in lines:
         out.append(indent + ln if ln.strip() else '')
     return '\n'.join(out)
+
+
+def nicht_ausliefern():
+    """Pfade aus _build/nicht-ausliefern.txt (ohne fuehrenden Slash).
+
+    Die Liste erzeugt verwaiste_assets.py --schreiben gegen ein fertig
+    gebautes public/. Sie enthaelt nur Dateien, auf die keine einzige
+    ausgelieferte Seite verweist.
+    """
+    pfad = os.path.join(BLD, 'nicht-ausliefern.txt')
+    if not os.path.isfile(pfad):
+        return set()
+    out = set()
+    with open(pfad, encoding='utf-8') as fh:
+        for zeile in fh:
+            zeile = zeile.strip()
+            if zeile and not zeile.startswith('#'):
+                out.add(zeile.lstrip('/'))
+    return out

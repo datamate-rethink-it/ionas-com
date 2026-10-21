@@ -77,6 +77,11 @@ www.ionas.com {
 \tredir /datensicherung-mit-windows-bordmitteln/ /wissen/datensicherung-mit-windows-bordmitteln/ permanent
 \tredir /malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ /wissen/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ permanent
 
+\t# Ein Artikel verlinkt einen anderen relativ ohne fuehrenden Slash, der
+\t# Verweis landet dadurch unterhalb der eigenen Adresse. Auch im
+\t# WordPress eine 404.
+\tredir /wissen/wlan-passwort-auslesen-so-einfach-gehts/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/ /wissen/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/ permanent
+
 \t# ASCII-Schreibweisen der Umlaut-Landingpages. Hugo legt dafuer
 \t# zusaetzlich meta-refresh-Seiten ab; diese 301 ist das Saubere und
 \t# greift zuerst.
@@ -120,6 +125,7 @@ location ~ ^/wissen/feed/?$ {
 location = /drucker-druckt-nicht/ { return 301 /wissen/drucker-druckt-nicht/; }
 location = /datensicherung-mit-windows-bordmitteln/ { return 301 /wissen/datensicherung-mit-windows-bordmitteln/; }
 location = /malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/ { return 301 /wissen/malware-die-allgegenwaertige-vermeidbare-gefahr-fuer-ihren-computer/; }
+location = /wissen/wlan-passwort-auslesen-so-einfach-gehts/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/ { return 301 /wissen/wlan-funktioniert-nicht-schritt-fuer-schritt-zum-ziel/; }
 
 # /agb lieferte bisher downloads/AGB-ionas.pdf - hier mit korrektem Typ.
 location = /agb {
